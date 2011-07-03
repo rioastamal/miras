@@ -24,3 +24,13 @@ if (!mysql_select_db(DB_NAME)) {
 	exit('Error saat milih database');
 }
 
+/**
+ * Global variabel untuk menampung error database
+ */
+
+// menyimpan query terakhir
+$_db_query = '';
+
+// menyimpan query error
+$_db_error_msg = '';
+$_db_error_no = '';
