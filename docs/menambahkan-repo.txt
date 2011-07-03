@@ -1,0 +1,54 @@
+Developer Baru (Cloning Repo)
+=============================
+1. Masuk ke direktori dimana aplikasi berita21 dapat diakses oleh web server
+   misal, /opt/lampp/htdocs
+   (Diasumsikan owner htdocs adalah user yang sama yang menjalankan perintah
+   cloning. Lihat footnote [1])
+   
+   $ cd /opt/lampp/htdocs
+
+2. Mulai cloning
+   $ git clone http://repo.stikom.edu/~c0kr3x/berita21.git
+   
+3. Rename repo origin menjadi repoutama
+   $ git remote rename origin repoutama
+   
+[1] Ubah permission htdocs jika perlu
+$ chown -R user:user /opt/lampp/htdocs
+dimana user adalah user account linux yang anda gunakan
+
+Developer Lama
+==============
+1. Tambahkan repoutama jika belum ada, repo ini hanya digunakan untuk pull/fetch
+   $ git remote add repoutama http://repo.stikom.edu/~c0kr3x/berita21.git
+   
+2. Tambahkan repo kolaborasi, repo ini digunakan untuk push perubahan yang telah
+   anda buat. Pastikan anda sudah mengirim SSH Public Key ke email saya, lihat
+   http://repo.stikom.edu/~c0kr3x/berita21/docs/passwordless-ssh.txt.
+   
+   $ git remote add repokolaborasi ssh://git@repo.stikom.edu:42222/home/git/berita21.git
+
+Contoh Workflow
+================   
+Contoh, jika alfa ingin melakukan push branch alfa maka lakukan ke 
+repokolaborasi.
+   
+$ git push repokolaborasi alfa
+
+Jika user bunga ingin menpush perubahan branch bunga maka lakukan hal yang sama.
+
+$ git push repokolaborasi bunga
+
+Project manager (Rio) akan melakukan review code dan melakukan merging untuk
+dipush ke Repo Utama. Setelah rio melakukan push ke repo utama, bunga dan alfa
+dapat mengambil (pull) perubahan terakhir yang terjadi diproject berita21
+melalui repo utama. Direkomendasikan agar ke branch master waktu melakukan 
+pull agar branch kerja tetap utuh.
+
+$ git checkout master
+$ git pull repoutama master
+
+Lalu bunga dan alfa dapat melihat perubahan yang terjadi di project yang telah
+di merging oleh project manager.
+
+$ git log
