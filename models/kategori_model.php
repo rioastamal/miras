@@ -22,14 +22,14 @@ function get_all_kategori($jumlah_artikel=TRUE) {
 	// apakah jumlah artikel juga diikutkan dalam hasil query?
 	if ($jumlah_artikel) {
 		// oh yeah, ikutkan...
-		$query = "SELECT kt.*, COUNT(ak.artikel_id) jml_artikel FROM kategori kt 
+		$query = 'SELECT kt.*, COUNT(ak.artikel_id) jml_artikel FROM kategori kt 
 					LEFT JOIN artikel_kategori ak ON ak.kategori_id=kt.kategori_id
 					GROUP BY kt.kategori_id
-					ORDER BY kt.kategori_nama";
+					ORDER BY kt.kategori_nama';
 	} else {
 		// Sepertinya pemanggil fungsi tidak butuh jumlah artikel
 		// mari lakukan simple query saja
-		$query = "SELECT * FROM kategori ORDER BY kategori_nama";
+		$query = 'SELECT * FROM kategori ORDER BY kategori_nama';
 	}
 	$result = mysql_query($query);
 	if (!$result) {
