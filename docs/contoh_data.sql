@@ -28,6 +28,17 @@ INSERT INTO `artikel` (`artikel_id`, `artikel_judul`, `artikel_isi`, `artikel_tg
 (2, 'Google mengeluarkan layanan sosial network bernama: Google+', 'Upaya terbaru Google untuk menjadi lebih sosial dengan Google+ tampaknya sangat berkesan bagi early adopters ditandakan oleh berbagai ulasandan tanggapan positif atas layanan ini.\r\n\r\nBagi mereka yang belum mendapatkan undangan dan menunggu untuk diundang, sayangnya undangan Google+ ditangguhkan kemarin siang karena permintaan yang membludak. Sepertinya ini menjadi cara khas Google dalam menciptakan, memelihara, dan memperpanjang kehebohan setelah peluncuran produk mereka, karena jika ada perusahaan yang sangat mahir tentang scaling, ituadalah Google.\r\n\r\nWalau begitu, masih ada cara untuk mendapatkan undangan Google+ tanpa ‘benar-benar diundang’, yaitu melalui email.\r\n\r\nKetika Anda berbagi posting di Google+ Anda harus menentukan penerima sebelum posting dibagikan. Anda dapat memilih lingkaran tertentu dari kontak yang Anda miliki atau berbagi ke alamat email penerima yang Anda inginkan. Dengan berbagi posting Anda melalui email, penerima dapat melihat apa yang Anda posting di Google+ dan jika mereka mengikuti tautan yang mengatakan, “Pelajari lebih lanjut tentang Google+”, mereka akan dibawa ke Google+ untuk mengaktifkan profil mereka.', '2011-07-03 09:11:33');
 
 --
+-- Dumping data for table `kategori`
+--
+
+INSERT INTO `kategori` (`kategori_id`, `kategori_nama`) VALUES
+(1, 'Sosial Budaya'),
+(2, 'Politik'),
+(3, 'Ekonomi'),
+(4, 'Teknologi');
+
+
+--
 -- Dumping data for table `artikel_kategori`
 --
 
@@ -38,17 +49,6 @@ INSERT INTO `artikel_kategori` (`artikel_id`, `kategori_id`) VALUES
 --
 -- Dumping data for table `artikel_komentar`
 --
-
-
---
--- Dumping data for table `kategori`
---
-
-INSERT INTO `kategori` (`kategori_id`, `kategori_nama`) VALUES
-(1, 'Sosial Budaya'),
-(2, 'Politik'),
-(3, 'Ekonomi'),
-(4, 'Teknologi');
 
 --
 -- Dumping data for table `komentar`
