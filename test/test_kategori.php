@@ -20,6 +20,8 @@ include_once ($current_path . '/../libs/boot_strap.php');
 // load model kategori, tidak perlu menyebutkan nama file lengkap
 load_model('kategori');
 
+echo ("<pre>\n");
+
 // mari coba meload menggunakan salah satu fungsi pada model kategori.
 // code berikut mengambil semua kategori dan jumlah artikel pada tiap kategori tersebut
 $kat = get_all_kategori();
@@ -30,3 +32,5 @@ echo ("\n");
 // code berikut hanya mengambil semua kategori tanpa jumlah artikel
 $kat = get_all_kategori(FALSE);
 print_r($kat);
+
+echo ("</pre>\n");
