@@ -14,7 +14,8 @@
  */
 
 // include boot strap file untuk meload semua library yang dibutuhkan
-include_once ('libs/boot_strap.php');
+$current_path = dirname(__FILE__);
+include_once ($current_path . '/../libs/boot_strap.php');
 
 // load model kategori, tidak perlu menyebutkan nama file lengkap
 load_model('kategori');
