@@ -30,7 +30,18 @@ print_r($kat);
 echo ("\n");
 
 // code berikut hanya mengambil semua kategori tanpa jumlah artikel
-$kat = get_all_kategori(FALSE);
-print_r($kat);
+$kat_nocount = get_all_kategori(FALSE);
+print_r($kat_nocount);
+
+/**
+ * Menampilkan kategori dalam bentuk HTML List
+ * Author: Rio Astamal <me@rioatamal.net>
+ */
+$list = "<ul>\n";
+foreach ($kat as $k) {
+	$list .= '<li>' . $k->kategori_nama . ' (' . $k->jml_artikel . ')' . "\n";
+}
+$list .= "</ul>\n";
+echo ($list); 	// cetak LIST
 
 echo ("</pre>\n");
