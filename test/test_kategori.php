@@ -45,3 +45,5 @@ $list .= "</ul>\n";
 echo ($list); 	// cetak LIST
 
 echo ("</pre>\n");
+
+echo ("irianto ganteng");
