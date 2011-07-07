@@ -21,7 +21,8 @@
 function get_last_commented_article($last=5) {
 	// query mengambil 5 komentar terakhir
 	$query = 'SELECT kmt.*, art.artikel_id, art.artikel_judul
-				FROM artikel AS art RIGHT JOIN (artikel_komentar AS ak) ON (art.artikel_id=ak.artikel_id)
+				FROM artikel AS art 
+				RIGHT JOIN (artikel_komentar AS ak) ON (art.artikel_id=ak.artikel_id)
 				RIGHT JOIN (komentar kmt) ON (ak.komentar_id=kmt.komentar_id)
 				ORDER BY kmt.komentar_tgl DESC
 				limit '.$last;
