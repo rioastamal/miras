@@ -38,9 +38,9 @@ function get_all_kategori($jumlah_artikel=TRUE) {
 	}
 	
 	$artikel = array();
-	while ($data = mysql_fetch_object($result)) {
+	while ($row = mysql_fetch_object($result)) {
 		// masukkan setiap result object ke array $artikel
-		$artikel[] = $data;
+		$artikel[] = $row;
 	}
 	// kembalikan hasil
 	return $artikel;
