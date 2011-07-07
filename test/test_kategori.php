@@ -46,4 +46,4 @@ echo ($list); 	// cetak LIST
 
 echo ("</pre>\n");
 
-echo ("irianto ganteng");
+echo ("irianto jelek tenan");
