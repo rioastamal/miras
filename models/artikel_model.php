@@ -4,9 +4,10 @@
  * File ini berisi fungsi-fungsi (query) yang berhubungan dengan tabel artikel
  */
 
-/**
+ 
+ /**
  * Fungsi untuk menampilkan artikel terbaru dari masing-masing kategori
- * @author Alfa Radito Sii Anak Ganteng <qwertqwe16@yahoo.co.id>
+ * @author Alfa Radito Sii Anak Ganteng <qwertqwe16@yahoo.co.id>, Miftah Faridl
  * @since version 1.0
  * @example BASE_PATH/models/artikel_model.php
  */
@@ -41,5 +42,4 @@ function get_latest_article($last=10) {
 function get_most_commented_article($last=5) {
 	
 }
-
 
