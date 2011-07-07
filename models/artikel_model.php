@@ -17,7 +17,7 @@ function get_latest_article($last=10) {
 			LEFT JOIN artikel a ON ak.artikel_id = a.artikel_id
 			LEFT JOIN kategori k ON ak.kategori_id = k.kategori_id
 			ORDER BY a.artikel_tgl DESC
-			LIMIT 10';
+			LIMIT ' . $last;
 			
 	$result = mysql_query($query);
 	
