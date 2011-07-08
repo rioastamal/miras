@@ -8,6 +8,7 @@
  /**
  * Fungsi untuk menampilkan artikel terbaru dari masing-masing kategori
  * @author : Miftah Faridl
+ * @email  : vcode84@gmail.com
  * @since Version 1.0
  * @example BASE_PATH/test/test_kategori.php
  */
