@@ -7,7 +7,7 @@
  
  /**
  * Fungsi untuk menampilkan artikel terbaru dari masing-masing kategori
- * @author Alfa Radito Sii Anak Ganteng <qwertqwe16@yahoo.co.id>, Miftah Faridl
+ * @author Alfa Radito Sii Anak Ganteng <qwertqwe16@yahoo.co.id>, Miftah Faridl <vcode84@gmail.com>
  * @since version 1.0
  * @example BASE_PATH/models/artikel_model.php
  */
