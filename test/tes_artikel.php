@@ -47,3 +47,21 @@ echo ($list); 	// cetak LIST
 
 echo ("</pre>\n");
 
+// ====================================== ambil artikel berdasarkan judul dan isi ========================
+
+echo "<h2>Ambil Artikel Berdasarkan Judul dan Isi</h2>";
+
+$ber = get_article_based_on("Gang Dolly", "Google");
+print_r($ber);
+
+echo ("\n");
+
+$list = "<ul>\n";
+foreach ($ber as $b) {
+	$list .= '<li>' . $b->artikel_judul . ' Isi Artikel : (' . $b->artikel_isi . ')' . "\n";
+}
+$list .= "</ul>\n";
+echo ($list); 	// cetak LIST
+
+echo ("</pre>\n");
+

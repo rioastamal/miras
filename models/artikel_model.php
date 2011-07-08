@@ -43,3 +43,26 @@ function get_most_commented_article($last=5) {
 	
 }
 
+/**
+ * Fungsi untuk menampilkan artikel berdasarkan judul dan isi
+ */
+function get_article_based_on($judul, $isi) {
+	$query = 'SELECT * FROM artikel
+			  WHERE artikel_judul LIKE \'%'.$judul.'%\' OR artikel_isi LIKE \'%'.$isi.'%\'';
+	
+	$result = mysql_query($query);
+	
+	if (!$result) {
+		// query error
+		return FALSE;
+	}
+	
+	$artikel = array();
+	while ($data = mysql_fetch_object($result)) {
+		// masukkan data setiap result object ke array $artikel
+		$artikel[] = $data;
+	}
+	// kembalikan hasil
+	return $artikel;
+}
+
