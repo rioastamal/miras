@@ -51,7 +51,39 @@ echo ("</pre>\n");
 
 echo "<h2>Ambil Artikel Berdasarkan Judul dan Isi</h2>";
 
-$ber = get_article_based_on("Gang Dolly", "Google");
+$ber = get_article_based_on();
+print_r($ber);
+
+echo ("\n");
+
+$list = "<ul>\n";
+foreach ($ber as $b) {
+	$list .= '<li>' . $b->artikel_judul . ' Isi Artikel : (' . $b->artikel_isi . ')' . "\n";
+}
+$list .= "</ul>\n";
+echo ($list); 	// cetak LIST
+
+echo ("</pre>\n");
+
+echo "<h2>Ambil Artikel Dengan Judul = 'Gang Dolly'</h2>";
+
+$ber = get_article_based_on('Gang Dolly');
+print_r($ber);
+
+echo ("\n");
+
+$list = "<ul>\n";
+foreach ($ber as $b) {
+	$list .= '<li>' . $b->artikel_judul . ' Isi Artikel : (' . $b->artikel_isi . ')' . "\n";
+}
+$list .= "</ul>\n";
+echo ($list); 	// cetak LIST
+
+echo ("</pre>\n");
+
+echo "<h2>Ambil Artikel Dengan Isi = 'Google'</h2>";
+
+$ber = get_article_based_on('', 'Google');
 print_r($ber);
 
 echo ("\n");
