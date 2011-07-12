@@ -91,3 +91,27 @@ function get_article_based_on($judul='', $isi='') {
 	return $artikel;
 }
 
+/**
+ * @author : Miftah Faridl
+ * @email  : vcode84@gmail.com
+ * @date   : July,12,2011
+ */ 
+ 
+function insert_artikel($art) {
+	/**
+	 * Atribut dari parameter pertama $art diharapkan seperti berikut :
+	 * $art->artikel_judul
+	 */
+	 
+	 $query = "INSERT INTO artikel (artikel_judul, artikel_isi, artikel_tgl) VALUES 
+				('{$art->artikel_judul}','{$art->artikel_isi}','{$art->artikel_tgl}')";
+				
+	 $result = mysql_query($query);
+	 
+	 if (!$result) {
+		 //query error
+		 return FALSE;
+	 }
+	 return TRUE; //jika sampai di sini everythings gonna be OK 
+}
+
