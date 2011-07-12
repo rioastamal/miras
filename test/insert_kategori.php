@@ -33,7 +33,7 @@ if (isset($_POST['submit_kategori'])) {
 	}
 }
 
-$kat = get_all_kategori(); ?>	
+$kat = get_all_kategori(); ?>
 
 <form action="insert_kategori.php" method="post">
 	<label>Nama Kategori</label><br/>

@@ -46,12 +46,6 @@ function get_all_kategori($jumlah_artikel=TRUE) {
 	return $artikel;
 }
 
-/**
- * Fungi untuk mendapatkan 
- */
-function get_most_commented_article($last=5) {
-	
-}
 
 /**
  * Method untuk memasukkan kategori
