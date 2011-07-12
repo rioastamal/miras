@@ -78,3 +78,6 @@ function get_article_based_on($judul='', $isi='') {
 	return $artikel;
 }
 
+function insert_artikel($art){
+	$query = "INSERT INTO artikel (artikel_judul, artikel_isi, artikel_tgl) VALUES ('')";
+}
