@@ -42,4 +42,28 @@ function get_last_commented_article($last=5) {
 	// kembalikan hasil
 	return $komentar;
 }
+
+function get_most_commented_article() {
+	// query mengambil jumlah kometar terbanyak pada artikel tersebut
+	$query = 'SELECT art.artikel_judul ,count(ak.artikel_id) as jml
+				FROM artikel_komentar AS ak
+				LEFT JOIN (artikel AS art) ON (ak.artikel_id=art.artikel_id)
+				GROUP BY ak.artikel_id
+				ORDER BY jml DESC';
+	$result = mysql_query($query);
+	
+	if (!$result) {
+		// query error
+		return false;
+	}
+	
+	$komentar = array();
+	while ($data = mysql_fetch_object($result)) {
+		// masukkan setiap result object ke array $komentar
+		$komentar[] = $data;
+	}
+	
+	// kembalikan hasil
+	return $komentar;
+}
 ?>

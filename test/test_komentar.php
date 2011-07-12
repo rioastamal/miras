@@ -25,6 +25,10 @@ echo ("<pre>\n");
 // code berikut mengambil 5 komentar terakhir pada artikel
 $kat = get_last_commented_article();
 print_r($kat);
+
+$jml_kom = get_most_commented_article();
+print_r($jml_kom);
+
 echo ("\n");
 echo ("</pre>\n");
 
