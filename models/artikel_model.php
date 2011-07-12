@@ -104,6 +104,13 @@ function insert_artikel($art) {
 	 $id_artikel = mysql_insert_id();
 	 
 	 $query2 = "INSERT INTO artikel_kategori (artikel_id, kategori_id) VALUES
-				('{$id_artikel}','{$art->kategori_id}')"
+				('{$id_artikel}','{$art->kategori_id}')";
+	 $result = mysql_query($query2);
+	 
+	 if (!$result) {
+		 //query error
+		 return FALSE;
+	 }
+	 
 	 return TRUE; //jika sampai di sini everythings gonna be OK 
 }

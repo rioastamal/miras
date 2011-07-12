@@ -58,8 +58,8 @@ $get_art = get_latest_article(); ?>
 <h3>Isi Artikel</h3>
 <ul>
 <?php foreach ($get_art as $g) : ?>
-	<li><?php echo ($g->artikel_judul);?></li>
-	<li><?php echo ($g->artikel_isi);?></li>
-	<li><?php echo ($g->artikel_tgl);?></li>
+	<li><?php echo ("Judul Artikel : " . $g->artikel_judul);?></li>
+	<li><?php echo ("Isi Artikel : " .$g->artikel_isi);?></li>
+	<li><?php echo ("Tanggal Artikel : " .$g->artikel_tgl);?></li>
 <?php endforeach; ?>
 </ul>
