@@ -100,5 +100,10 @@ function insert_artikel($art) {
 		 //query error
 		 return FALSE;
 	 }
+	 
+	 $id_artikel = mysql_insert_id();
+	 
+	 $query2 = "INSERT INTO artikel_kategori (artikel_id, kategori_id) VALUES
+				('{$id_artikel}','{$art->kategori_id}')"
 	 return TRUE; //jika sampai di sini everythings gonna be OK 
 }
