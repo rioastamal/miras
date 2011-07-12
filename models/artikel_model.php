@@ -78,6 +78,7 @@ function get_article_based_on($judul='', $isi='') {
 	return $artikel;
 }
 
+
 /**
  * @author : Miftah Faridl
  * @email  : vcode84@gmail.com
@@ -101,4 +102,3 @@ function insert_artikel($art) {
 	 }
 	 return TRUE; //jika sampai di sini everythings gonna be OK 
 }
-
