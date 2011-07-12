@@ -7,22 +7,9 @@
  
  /**
  * Fungsi untuk menampilkan artikel terbaru dari masing-masing kategori
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @author : Miftah Faridl
- * @email  : vcode84@gmail.com
- * @since Version 1.0
- * @example BASE_PATH/test/test_kategori.php
-=======
  * @author Alfa Radito Sii Anak Ganteng <qwertqwe16@yahoo.co.id>, Miftah Faridl
  * @since version 1.0
  * @example BASE_PATH/models/artikel_model.php
->>>>>>> 3336cced8df455f8436caf3f3c2cec7891f7dd5c
-=======
- * @author Alfa Radito Sii Anak Ganteng <qwertqwe16@yahoo.co.id>, Miftah Faridl <vcode84@gmail.com>
- * @since version 1.0
- * @example BASE_PATH/models/artikel_model.php
->>>>>>> master
  */
 function get_latest_article($last=10) {
 	// query untuk menampilkan 10 artikel terbaru
