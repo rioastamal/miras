@@ -46,9 +46,21 @@ function get_most_commented_article($last=5) {
 /**
  * Fungsi untuk menampilkan artikel berdasarkan judul dan isi
  */
-function get_article_based_on($judul, $isi) {
-	$query = 'SELECT * FROM artikel
+function get_article_based_on($judul='', $isi='') {
+	
+	if ($judul=='' && $isi!='') {
+		$query = 'SELECT * FROM artikel
+			  WHERE artikel_isi LIKE \'%'.$isi.'%\'';
+	} elseif ($judul!='' && $isi=='') {
+		$query = 'SELECT * FROM artikel
+			  WHERE artikel_judul LIKE \'%'.$judul.'%\'';
+	} elseif ($judul!='' && $isi!='') {
+		$query = 'SELECT * FROM artikel
 			  WHERE artikel_judul LIKE \'%'.$judul.'%\' OR artikel_isi LIKE \'%'.$isi.'%\'';
+	} else {
+		
+		return array();
+	}
 	
 	$result = mysql_query($query);
 	
