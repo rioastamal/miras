@@ -37,13 +37,6 @@ function get_latest_article($last=10) {
 }
 
 /**
- * Fungsi untuk menampilkan artikel yang paling banyak terkomentari
- */
-function get_most_commented_article($last=5) {
-	
-}
-
-/**
  * Fungsi untuk menampilkan artikel berdasarkan judul dan isi
  */
 function get_article_based_on($judul='', $isi='') {
@@ -78,3 +71,23 @@ function get_article_based_on($judul='', $isi='') {
 	return $artikel;
 }
 
+function get_all_article() {
+	// query untuk menampilkan 10 artikel terbaru
+	$query = 'SELECT *
+				FROM artikel';
+			
+	$result = mysql_query($query);
+	
+	if (!$result) {
+		// query error
+		return FALSE;
+	}
+	
+	$artikel = array();
+	while ($data = mysql_fetch_object($result)) {
+		// masukkan data setiap result object ke array $artikel
+		$artikel[] = $data;
+	}
+	// kembalikan hasil
+	return $artikel;
+}

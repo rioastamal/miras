@@ -66,4 +66,30 @@ function get_most_commented_article() {
 	// kembalikan hasil
 	return $komentar;
 }
+
+/**
+ * Method untuk memasukkan komentar
+ * @param object $kmt object komentar yang akan passing ke query
+ * @return boolean SUKSES atau gagalnya query dilakukan
+ */
+function insert_komentar($kmt) {
+	/**
+	 * Attribut dari parameter pertama $kmt diharapkan seperti berikut:
+	 * $kmt->komentar_nama
+	 * 
+	 */
+	$query = "INSERT INTO komentar (komentar_nama, komentar_email, komentar_isi, komentar_tgl) VALUES ('{$kmt->komentar_nama}', '{$kmt->komentar_email}', '{$kmt->komentar_isi}', '{$kmt->komentar_tgl}')";
+	$result = mysql_query($query);
+	$kmt_id = mysql_insert_id();
+	
+	$query = "INSERT INTO artikel_komentar (artikel_id, komentar_id) VALUES ('{$kmt->artikel_id}', '$kmt_id')";
+	$result = mysql_query($query);
+	
+	if (!$result) {
+		// query error
+		return FALSE;
+	}
+	
+	return TRUE;	// jika sampai disini maka everything is ok
+}
 ?>
