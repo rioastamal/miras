@@ -39,7 +39,7 @@ if (isset($_POST['submit_komentar'])) {
 }
 
 $kmt = get_last_commented_article();
-$art = get_all_article();
+$art = get_latest_article(100);
 ?>
 
 <form action="insert_komentar.php" method="post">
