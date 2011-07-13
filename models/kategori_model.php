@@ -46,9 +46,23 @@ function get_all_kategori($jumlah_artikel=TRUE) {
 	return $artikel;
 }
 
+
 /**
- * Fungi untuk mendapatkan 
+ * Method untuk memasukkan kategori
+ * @param object $kat object kategori yang akan passing ke query
+ * @return boolean SUKSES atau gagalnya query dilakukan
  */
-function get_most_commented_article($last=5) {
+function insert_kategori($kat) {
+	/**
+	 * Attribut dari parameter pertama $kat diharapkan seperti berikut:
+	 * $kat->kategori_nama
+	 */
+	$query = "INSERT INTO kategori (kategori_nama) VALUES ('{$kat->kategori_nama}')";
+	$result = mysql_query($query);
+	if (!$result) {
+		// query error
+		return FALSE;
+	}
 	
+	return TRUE;	// jika sampai disini maka everything is ok
 }

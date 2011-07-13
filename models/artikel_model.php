@@ -7,7 +7,7 @@
  
  /**
  * Fungsi untuk menampilkan artikel terbaru dari masing-masing kategori
- * @author Alfa Radito Sii Anak Ganteng <qwertqwe16@yahoo.co.id>, Miftah Faridl <vcode84@gmail.com>
+ * @author Alfa Radito Sii Anak Ganteng <qwertqwe16@yahoo.co.id>, Miftah Faridl
  * @since version 1.0
  * @example BASE_PATH/models/artikel_model.php
  */
@@ -78,3 +78,39 @@ function get_article_based_on($judul='', $isi='') {
 	return $artikel;
 }
 
+
+/**
+ * @author : Miftah Faridl
+ * @email  : vcode84@gmail.com
+ * @date   : July,12,2011
+ */ 
+ 
+function insert_artikel($art) {
+	/**
+	 * Atribut dari parameter pertama $art diharapkan seperti berikut :
+	 * $art->artikel_judul
+	 */
+	 
+	 $query = "INSERT INTO artikel (artikel_judul, artikel_isi, artikel_tgl) VALUES 
+				('{$art->artikel_judul}','{$art->artikel_isi}','{$art->artikel_tgl}')";
+				
+	 $result = mysql_query($query);
+	 
+	 if (!$result) {
+		 //query error
+		 return FALSE;
+	 }
+	 
+	 $id_artikel = mysql_insert_id();
+	 
+	 $query2 = "INSERT INTO artikel_kategori (artikel_id, kategori_id) VALUES
+				('{$id_artikel}','{$art->kategori_id}')";
+	 $result = mysql_query($query2);
+	 
+	 if (!$result) {
+		 //query error
+		 return FALSE;
+	 }
+	 
+	 return TRUE; //jika sampai di sini everythings gonna be OK 
+}
