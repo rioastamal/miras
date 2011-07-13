@@ -37,13 +37,6 @@ function get_latest_article($last=10) {
 }
 
 /**
- * Fungsi untuk menampilkan artikel yang paling banyak terkomentari
- */
-function get_most_commented_article($last=5) {
-	
-}
-
-/**
  * Fungsi untuk menampilkan artikel berdasarkan judul dan isi
  */
 function get_article_based_on($judul='', $isi='') {
@@ -77,7 +70,6 @@ function get_article_based_on($judul='', $isi='') {
 	// kembalikan hasil
 	return $artikel;
 }
-
 
 /**
  * @author : Miftah Faridl
