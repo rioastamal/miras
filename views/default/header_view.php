@@ -1,6 +1,7 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 	<head>
-		<title></title>
+	<title><?php echo ($_site_title);?></title>
 	</head>
-</body>
+<body>
+
