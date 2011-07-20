@@ -1,4 +1,25 @@
-
+	
+	<?
+		// jika variabel $_POST['submit_komentar'] diset maka ini adalah proses submit
+		// (user mengklik tombol SIMPAN
+		if (isset($_POST['submit_komentar'])) {
+			$new_kmt = new stdClass();
+			$new_kmt->komentar_nama = trim( $_POST['nama_kmt'] );	// hilangkan spasi awal dan akhir
+			$new_kmt->komentar_email = trim( $_POST['email_kmt'] );
+			$new_kmt->komentar_isi= trim( $_POST['isi_kmt'] );
+			$new_kmt->komentar_tgl = trim( $_POST['tgl_kmt'] );
+			$new_kmt->artikel_id = trim( $_POST['id_art'] );
+			
+			// mulai masukkan ke database
+			// hasil dari fungsi insert_komentar() selalu boolean jadi dapat dicocokkan dengan if
+			if (!insert_komentar($new_kmt)) {
+				echo ("Live is adventure, try again<br/>");
+			} else {
+				echo ("Yes......!<br/>");
+			}
+		}	
+	?>
+	
 	<!-- BEGIN CONTENT -->
 	<div id="content">
 		<h1>Tambah Komentar</h1>
