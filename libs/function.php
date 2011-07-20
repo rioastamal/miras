@@ -153,7 +153,7 @@ function get_flash_message() {
 		return '';
 	}
 	
-	$mesg = '<div class="' . $_B21['flash_class'] . '">' . $_B21['flash_message'] . '</div>' . "\n";
+	$mesg = '<div class="flash ' . $_B21['flash_class'] . '">' . $_B21['flash_message'] . '</div>' . "\n";
 	return $mesg;
 }
 
