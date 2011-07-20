@@ -2,6 +2,9 @@
 	<!-- BEGIN CONTENT -->
 	<div id="content">
 		<h1>Tambah Kategori</h1>
+		
+		<?php echo (get_flash_message());?>
+		
 		<form action="" method="post">
 			<label>Nama Kategori</label>
 			<input type="text" name="nama_kat" value="" id="" /><br/>

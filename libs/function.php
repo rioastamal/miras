@@ -121,3 +121,53 @@ function set_page_title($title='') {
 	
 	$_B21['title'] = $title;
 }
+
+/**
+ * Fungsi untuk men-set nilai dari variabel flash message
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param string $message pesan flash message yang akan diberikan
+ * @return void
+ */
+function set_flash_message($message='') {
+	global $_B21;
+	
+	$_B21['flash_message'] = $message;
+}
+
+/**
+ * Fungsi untuk mengambil nilai dari flash message
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @return string flash message
+ */
+function get_flash_message() {
+	global $_B21;
+	
+	if (!$_B21['flash_message']) {
+		// jika tidak ada sesuatu di flash message, kembalikan saja kosongan
+		return '';
+	}
+	
+	$mesg = '<div class="' . $_B21['flash_class'] . '">' . $_B21['flash_message'] . '</div>' . "\n";
+	return $mesg;
+}
+
+/**
+ * Fungsi untuk men-set nilai dari variabel flash class
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param string $clas CSS class dari div flash message
+ * @return void
+ */
+function set_flash_class($class='') {
+	global $_B21;
+	
+	$_B21['flash_class'] = $message;
+}
