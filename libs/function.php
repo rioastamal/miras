@@ -169,5 +169,5 @@ function get_flash_message() {
 function set_flash_class($class='') {
 	global $_B21;
 	
-	$_B21['flash_class'] = $message;
+	$_B21['flash_class'] = $class;
 }
