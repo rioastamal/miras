@@ -16,11 +16,31 @@ include_once ($current_path . '/../libs/boot_strap.php');
 
 set_page_title('Test Artikel View');
 
-// load model kategori
+// load model artikel
 load_model('artikel');
 
-// masukan artikel ke dalam variabel $data_view, sehingga
+// load model kategori
+load_model('kategori');
+
+if (isset($_POST['submit_artikel'])) {
+	$new_art = new stdClass();
+	$new_art->artikel_judul = trim( $_POST['judul_art'] );
+	$new_art->artikel_isi = trim( $_POST['isi_art'] );	// hilangkan spasi awal dan akhir
+	$new_art->artikel_tgl = trim( $_POST['tgl_art'] );
+	$new_art->kategori_id = trim( $_POST['kategori_id'] );
+	
+	// mulai masukkan ke database
+	// hasil dari fungsi insert_kategori() selalu boolean jadi dapat dicocokkan dengan if
+	if (!insert_artikel($new_art)) {
+		echo ("JANCOK onok opo gak iso nyimpen<br/>");
+	} else {
+		echo ("Oh! masuk mas <br/>");
+	}
+}
+
+// masukan artikel dan daftar kategori ke dalam variabel $data_view, sehingga
 $data_view['daftar_artikel'] = get_latest_article(10);
+$data_view['daftar_kategori'] = get_all_kategori(FALSE);
 
 // Load view dengan urutan 1. header 2. content utama 3. sidebar 4. footer
 load_view('header');
