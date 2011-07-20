@@ -14,7 +14,16 @@
 $current_path = dirname(__FILE__);
 include_once ($current_path . '/../libs/boot_strap.php');
 
-$_site_title = 'Google';
+set_page_title('Test Kategori View');
 
-include_once ($current_path . '/../views/' . $_theme . '/header_view.php');
-include_once ($current_path . '/../views/' . $_theme . '/footer_view.php');
+// load model kategori
+load_model('kategori');
+
+// masukan kategori ke dalam variabel $data_view, sehingga
+$data_view['daftar_kategori'] = get_all_kategori(FALSE);
+
+// Load view dengan urutan 1. header 2. content utama 3. sidebar 4. footer
+load_view('header');
+load_view('add_kategori', $data_view);
+load_view('sidebar');
+load_view('footer');

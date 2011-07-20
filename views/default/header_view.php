@@ -1,11 +1,18 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-	<head>
-	<title><?php echo ($_site_title);?></title>
-	</head>
+<head>
+	<title><?php echo (get_page_title());?></title>
+	<link rel="stylesheet" type="text/css" href="<?php echo (get_theme_url());?>style.css" />
+</head>
 <body>
 
+<!-- BEGIN WRAPPER -->
 <div id="wrapper">
+	
+	<!-- BEGIN HEADER -->
+	<div id="header">
+	</div>
+	<!-- END HEADER -->
+	
+	<!-- BEGIN MAIN -->
 	<div id="main">
-	
-	
