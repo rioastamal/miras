@@ -12,7 +12,9 @@
 
 // include boot strap file untuk meload semua library yang dibutuhkan
 $current_path = dirname(__FILE__);
-include_once ($current_path . '/../libs/boot_strap.php');
+// karena BASE_PATH dipindah ke index maka create konstanta BASE_PATH secara manual
+define('BASE_PATH', dirname( $current_path . '/../..'));
+include_once (BASE_PATH . '/libs/boot_strap.php');
 
 set_page_title('Test Komentar View');
 
