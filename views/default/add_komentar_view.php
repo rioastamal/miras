@@ -11,14 +11,14 @@
 		<?php endforeach; ?>	
 			</select><br/>
 			<label>Nama </label><br/>
-			<input type="text" name="nama_kmt" value="" size="15" /><br/>
+			<input class="text" type="text" name="nama_kmt" value="" size="15" /><br/>
 			<label>Email</label><br/>
-			<input type="text" name="email_kmt" value="" size="15" /><br/>
+			<input class="text" type="text" name="email_kmt" value="" size="15" /><br/>
 			<label>Komentar</label><br/>
-			<textarea type="text" name="isi_kmt" value="" size="100" ></textarea><br/>
+			<textarea class="text" type="text" name="isi_kmt" value="" size="100" ></textarea><br/>
 			<label>tgl</label><br/>
-			<input type="text" name="tgl_kmt" value="" size="15" /><br/>
-			<input type="submit" name="submit_komentar" value="SIMPAN" />
+			<input class="text" type="text" name="tgl_kmt" value="" size="15" /><br/>
+			<input class="button" type="submit" name="submit_komentar" value="SIMPAN" />
 		</form>
 		
 		<h3>Daftar Komentar</h3>
