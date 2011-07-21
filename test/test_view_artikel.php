@@ -46,10 +46,10 @@ if (isset($_POST['submit_artikel'])) {
 		set_flash_message("Gagal menyimpan tanggal artikel '{$tgl_art}'.");
 		set_flash_message("Gagal menyimpan kategori artikel '{$kategori_id}'.");
 	} else {
-		set_flash_message("Berhasil menyimpan judul artikel '{$judul_art}'.");
-		set_flash_message("Berhasil menyimpan isi artikel '{$isi_art}'.");
-		set_flash_message("Berhasil menyimpan tanggal artikel '{$tgl_art}'.");
-		set_flash_message("Berhasil menyimpan kategori artikel '{$kategori_id}'.");
+		set_flash_message("Berhasil menyimpan artikel dengan judul '{$judul_art}'.");
+		//set_flash_message("Berhasil menyimpan isi artikel '{$isi_art}'.");
+		//set_flash_message("Berhasil menyimpan tanggal artikel '{$tgl_art}'.");
+		//set_flash_message("Berhasil menyimpan kategori artikel '{$kategori_id}'.");
 	}
 }
 
