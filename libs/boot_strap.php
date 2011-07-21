@@ -5,10 +5,6 @@
  * konfigurasi yang diperlukan
  */
 
-// deklarasi BASE_PATH
-// BASE_PATH adalah lokasi absolute path sampai ke berita21
-define('BASE_PATH', dirname( dirname(__FILE__) . '../') );
-
 include_once(BASE_PATH . '/libs/' . 'db_config.php');
 include_once(BASE_PATH . '/libs/' . 'function.php');
 

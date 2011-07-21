@@ -16,3 +16,17 @@ $_B21['flash_message'] = '';
 
 // CSS class dari div pesan flash
 $_B21['flash_class'] = 'flash-warning';
+
+// Nama file yang menghandle mapping ke file controller
+$_B21['index_page'] = 'index.php';
+
+// nama default controller jika user datang tanpa menyebutkan nama controller
+$_B21['default_controller'] = 'main';
+
+// status debugging diaktifkan atau tidak
+// TRUE => Aktif
+// FALSE => Tidak Diaktifkan
+$_B21['debug_mode'] = TRUE;
+
+// pesan debugging akan disimpan pada variabel ini
+$_B21['debug_message'] = '';
