@@ -32,9 +32,13 @@ if (isset($_POST['submit_artikel'])) {
 	// mulai masukkan ke database
 	// hasil dari fungsi insert_kategori() selalu boolean jadi dapat dicocokkan dengan if
 	if (!insert_artikel($new_art)) {
-		echo ("JANCOK onok opo gak iso nyimpen<br/>");
+		set_flash_class('flash-error');
+		set_flash_message("Gagal menyimpan judul artikel '{$judul_art}'.");
+		set_flash_message("Gagal menyimpan isi artikel '{$isi_art}'.");
+		set_flash_message("Gagal menyimpan tanggal artikel '{$tgl_art}'.");
+		set_flash_message("Gagal menyimpan kategori artikel '{$kategori_id}'.");
 	} else {
-		echo ("Oh! masuk mas <br/>");
+		echo ("Oh YEAHH..!!! <br/>");
 	}
 }
 
