@@ -208,6 +208,20 @@ function set_flash_class($class='') {
 	$_B21['flash_class'] = $class;
 }
 
+/**
+ * Fungsi untuk melakukan routing dari URL ke sebuah file controller
+ *
+ * <code>
+ * // jika ada sebuah URL seperti berikut:
+ * //  http://localhost/berita21/index.php/foo-bar
+ * $controller = map_controller();
+ *
+ * // maka nila dari controller (asumsi lokasi root direktori webserver adalah /opt/lampp/htdocs)
+ * // adalah /opt/lampp/htdocs/controllers/foo_bar_ctl.php
+ * // sehingga file contrroler dapat di include dengan peritnah
+ * include_once( $controller );
+ * </code>
+ */
 function map_controller() {
 	global $_B21;
 	
@@ -242,5 +256,6 @@ function map_controller() {
 		return $file;
 	}
 	
+	// jika sampai disini maka controller tidak ditemukan jadi thrown exception
 	throw new Exception ("Controller {$controller} tidak ditemukan.");
 }
