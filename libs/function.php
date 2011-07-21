@@ -112,6 +112,25 @@ function get_base_url() {
 }
 
 /**
+ * Fungsi untuk mengembalikan nilai dari konfigurasi base_url + index_page, views dapat
+ * menggunaman fungsi ini untuk meload URL lengkap css dan javascript
+ *
+ * Contoh jika konfigurasi index_page adalah index.php maka output dari fungsi
+ * ini adalah:
+ * http://example.com/index.php
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @return string base url + index_page dari aplikasi
+ */
+function get_site_url() {
+	global $_B21;
+	
+	return $_B21['base_url'] . $_B21['index_page'];
+}
+
+/**
  * Fungsi untuk mengembalikan nilai dari konfigurasi base_url + nama theme + '/' 
  * yang saat ini digunakan. Views dapat menggunaman fungsi ini untuk meload URL 
  * lengkap css dan javascript.
