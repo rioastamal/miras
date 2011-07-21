@@ -4,6 +4,8 @@
 	<!-- BEGIN CONTENT -->
 	<div id="content">
 		<h1>Tambah Artikel</h1>
+		<?php echo (get_flash_message());?>
+		
 		<form action="test_view_artikel.php" method="post">
 			<label>Judul Artikel</label><br/>
 			<input type="text" name="judul_art" value="" size="15" /><br/>
