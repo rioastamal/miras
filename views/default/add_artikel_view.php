@@ -6,7 +6,7 @@
 		<h1>Tambah Artikel</h1>
 		<?php echo (get_flash_message());?>
 		
-		<form action="test_view_artikel.php" method="post" class="b21">
+		<form action="<?php echo (get_site_url());?>/add-artikel" method="post" class="b21">
 			<label>Judul Artikel</label><br/>
 			<input type="text" class="text" name="judul_art" value="" id="" size="15" /><br/>
 			
