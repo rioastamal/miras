@@ -40,6 +40,7 @@ function load_model($model_name) {
  * @since Version 1.0
  *
  * @param string $view_name nama dari view yang akan diload
+ * @param array $data data yang akan di passing ke views
  * @return void
  */
 function load_view($view_name, &$data=NULL) {
