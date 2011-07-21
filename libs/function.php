@@ -1,6 +1,41 @@
 <?php
 
 /**
+ * Fungsi untuk menampilkan debugging info jika diaktifkan dalam konfigurasi
+ *
+ * @param string $message pesan yang akan ditampilkan di debugging
+ * @param string $title judul dari info debugging
+ * @return void
+ */
+function site_debug($message, $title='DEBUG: ') {
+	global $_B21;
+	
+	// jika debug mode diaktifkan maka jalankan proses debugging
+	if ($_B21['debug_mode']) {
+		$debug = $title . "\n";
+		$debug .= $message . "\n";
+		
+		$_B21['debug_message'] .= $debug;
+	}
+}
+
+/**
+ * Fungsi untuk mencetak pesan debugging
+ *
+ * @return void
+ */
+function show_debug() {
+	global $_B21;
+	
+	if ($_B21['debug_mode']) {
+		echo ("\n<hr/>\n");
+		echo ('<pre><h2>DEBUGGING MESSAGE</h2>' . "\n");
+		echo ($_B21['debug_message']);
+		echo ('</pre>');
+	}
+}
+ 
+/**
  * Fungsi untuk meload model database.
  *
  * <code>
@@ -171,4 +206,41 @@ function set_flash_class($class='') {
 	global $_B21;
 	
 	$_B21['flash_class'] = $class;
+}
+
+function map_controller() {
+	global $_B21;
+	
+	$file = '';
+	$index = $_B21['index_page'];
+	$controller = $_B21['default_controller'];
+	$uri = $_SERVER['REQUEST_URI'];
+	
+	// fix slash ganda // dengan single / jika memang terjadi
+	$uri = preg_replace('@//+@', '/', $uri);
+	
+	// split $index dari the uri 
+	$split = explode($index, $uri);		
+	site_debug( print_r($split, TRUE), 'URI INDEX' );
+	
+	// get the controller
+	if (@$split[1]) {
+		preg_match('@/([a-zA-Z0-9\-_]+)(.*)@', $split[1], $matches);
+		site_debug( print_r($matches, TRUE), 'CONTROLLER MATCHING' );
+		$controller = $matches[1];
+	}
+	
+	// semua controller harus diconvert ke underscore karena konvensi nama file
+	// controller diharuskan seperti itu (sesuai dengan coding guide awal)
+	$controller = str_replace('-', '_', $controller);
+	
+	// map controller ke file yang bersangkutan
+	$file = BASE_PATH . '/controllers/' . $controller . '_ctl.php';
+	
+	// file exists?
+	if (file_exists($file)) {
+		return $file;
+	}
+	
+	throw new Exception ("Controller {$controller} tidak ditemukan.");
 }
