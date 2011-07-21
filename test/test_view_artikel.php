@@ -12,7 +12,10 @@
 
 // include boot strap file untuk meload semua library yang dibutuhkan
 $current_path = dirname(__FILE__);
-include_once ($current_path . '/../libs/boot_strap.php');
+
+// karena BASE_PATH dipindah ke index maka create konstanta BASE_PATH secara manual
+define('BASE_PATH', dirname( $current_path . '/../..'));
+include_once (BASE_PATH . '/libs/boot_strap.php');
 
 set_page_title('Test Artikel View');
 
@@ -23,6 +26,11 @@ load_model('artikel');
 load_model('kategori');
 
 if (isset($_POST['submit_artikel'])) {
+	$judul_art = $_POST['judul_art'];
+	$isi_art = $_POST['isi_art'];
+	$tgl_art = $_POST['tgl_art'];
+	$kategori_id = $_POST['kategori_id'];
+	
 	$new_art = new stdClass();
 	$new_art->artikel_judul = trim( $_POST['judul_art'] );
 	$new_art->artikel_isi = trim( $_POST['isi_art'] );	// hilangkan spasi awal dan akhir
@@ -38,7 +46,10 @@ if (isset($_POST['submit_artikel'])) {
 		set_flash_message("Gagal menyimpan tanggal artikel '{$tgl_art}'.");
 		set_flash_message("Gagal menyimpan kategori artikel '{$kategori_id}'.");
 	} else {
-		echo ("Oh YEAHH..!!! <br/>");
+		set_flash_message("Berhasil menyimpan judul artikel '{$judul_art}'.");
+		set_flash_message("Berhasil menyimpan isi artikel '{$isi_art}'.");
+		set_flash_message("Berhasil menyimpan tanggal artikel '{$tgl_art}'.");
+		set_flash_message("Berhasil menyimpan kategori artikel '{$kategori_id}'.");
 	}
 }
 
