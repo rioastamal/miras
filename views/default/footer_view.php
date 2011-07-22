@@ -1,11 +1,10 @@
 
+		<div class="clear"> 
+		</div>
 	</div>	
 	<!-- END MAIN -->
 	
 	<!-- BEGIN FOOTER -->
-	<div class="clear"> 
-	</div>
-	
 	<div id="footer">
 	</div>
 	<!-- END FOOTER -->
