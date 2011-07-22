@@ -32,6 +32,11 @@ function get_all_kategori($jumlah_artikel=TRUE) {
 		$query = 'SELECT * FROM kategori ORDER BY kategori_nama';
 	}
 	$result = mysql_query($query);
+	
+	// masukkan data query
+	set_last_query($query);
+	increase_query_number();
+	
 	if (!$result) {
 		// query error
 		return FALSE;
@@ -49,6 +54,10 @@ function get_all_kategori($jumlah_artikel=TRUE) {
 
 /**
  * Method untuk memasukkan kategori
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
  * @param object $kat object kategori yang akan passing ke query
  * @return boolean SUKSES atau gagalnya query dilakukan
  */
@@ -59,6 +68,11 @@ function insert_kategori($kat) {
 	 */
 	$query = "INSERT INTO kategori (kategori_nama) VALUES ('{$kat->kategori_nama}')";
 	$result = mysql_query($query);
+	
+	// masukkan query ke variabel global last_query
+	set_last_query($query);
+	increase_query_number();
+	
 	if (!$result) {
 		// query error
 		return FALSE;

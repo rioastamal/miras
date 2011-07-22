@@ -3,6 +3,9 @@
 /**
  * Fungsi untuk menampilkan debugging info jika diaktifkan dalam konfigurasi
  *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
  * @param string $message pesan yang akan ditampilkan di debugging
  * @param string $title judul dari info debugging
  * @return void
@@ -21,6 +24,9 @@ function site_debug($message, $title='DEBUG: ') {
 
 /**
  * Fungsi untuk mencetak pesan debugging
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
  *
  * @return void
  */
@@ -240,6 +246,12 @@ function set_flash_class($class='') {
  * // sehingga file contrroler dapat di include dengan peritnah
  * include_once( $controller );
  * </code>
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @return string lokasi dari file controller
+ * @throws Exception
  */
 function map_controller() {
 	global $_B21;
@@ -280,4 +292,65 @@ function map_controller() {
 	
 	// jika sampai disini maka controller tidak ditemukan jadi thrown exception
 	throw new Exception ("Controller {$controller} tidak ditemukan.");
+}
+
+/**
+ * Fungsi untuk menambah jumlah query yang telah dieksekusi. Setiap fungsi model
+ * SEHARUSNYA mengeksekusi fungsi ini setiap kali selesai melakukan query
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @return void
+ */
+function increase_query_number() {
+	global $_B21;
+	
+	// tambah dengan satu
+	$_B21['query_number'] += 1;
+}
+
+/**
+ * Fungsi untuk mendapatkan jumlah query yang telah dilakukan oleh model
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @return int jumlah query yang telah dilakukan
+ */
+function get_query_number() {
+	global $_B21;
+	
+	return $_B21['query_number'];
+}
+
+/**
+ * Fungsi untuk menyimpan query terakhir yang dilakukan oleh suatu model. Setiap
+ * fungsi model SEHARUSNYA mengeksekusi fungsi ini setiap kali selesai melakukan
+ * query
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param string $query query yang dijalankan
+ * @return void
+ */
+function set_last_query($query) {
+	global $_B21;
+	
+	$_B21['last_query'] = $query;
+}
+
+/**
+ * Fungsi untuk mendapatkan query terakhir yang dilakukan oleh suatu model.
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @return string query terakhir yang dijalankan
+ */
+function get_last_query() {
+	global $_B21;
+	
+	return $_B21['last_query'];
 }

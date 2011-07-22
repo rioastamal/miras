@@ -22,6 +22,10 @@ if (isset($_POST['submit-kat']) && strlen($_POST['nama_kat']) > 0) {
 // masukan kategori ke dalam variabel $data_view, sehingga
 $data_view['daftar_kategori'] = get_all_kategori(FALSE);
 
+// beberapa informasi debug yang mungkin berguna
+site_debug(get_last_query(), 'QUERY TERAKHIR');
+site_debug(get_query_number(), 'JUMLAH QUERY');
+
 // Load view dengan urutan 1. header 2. content utama 3. sidebar 4. footer
 load_view('header');
 load_view('add_kategori', $data_view);
