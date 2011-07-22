@@ -258,9 +258,12 @@ function map_controller() {
 	
 	// get the controller
 	if (@$split[1]) {
-		preg_match('@/([a-zA-Z0-9\-_]+)(.*)@', $split[1], $matches);
-		site_debug( print_r($matches, TRUE), 'CONTROLLER MATCHING' );
-		$controller = $matches[1];
+		// cek apakah potongan URI setelah index.php cocok dengan REGEX
+		// seperti dibawah ini
+		if (preg_match('@/([a-zA-Z0-9\-_]+)(.*)@', $split[1], $matches)) {
+			site_debug( print_r($matches, TRUE), 'CONTROLLER MATCHING' );
+			$controller = $matches[1];
+		}
 	}
 	
 	// semua controller harus diconvert ke underscore karena konvensi nama file
