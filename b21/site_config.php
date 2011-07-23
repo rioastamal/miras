@@ -50,3 +50,6 @@ $_B21['query_number'] = 0;
 
 // variabel yang menyimpan SQL query terakhir yang dijalankan
 $_B21['last_query'] = '';
+
+// librari yang diload secara otomatis saat bootstrap
+$_B21['autoload_libraries'] = array('template');

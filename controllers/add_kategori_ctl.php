@@ -29,6 +29,9 @@ site_debug(get_query_number(), 'JUMLAH QUERY');
 $loaded_models = print_r($_B21['loaded_models'], TRUE);
 site_debug($loaded_models, 'MODEL YANG DILOAD');
 
+$loaded_libs = print_r($_B21['loaded_libraries'], TRUE);
+site_debug($loaded_libs, 'LIBRARY YANG DILOAD');
+
 // Load view dengan urutan 1. header 2. content utama 3. sidebar 4. footer
 load_view('header');
 load_view('add_kategori', $data_view);

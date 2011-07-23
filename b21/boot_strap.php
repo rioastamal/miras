@@ -10,3 +10,8 @@ include_once(BASE_PATH . '/b21/' . 'function.php');
 
 // site config
 include_once(BASE_PATH . '/b21/' . 'site_config.php');
+
+// load library yang sifatnya auto-load
+foreach ($_B21['autoload_libraries'] as $lib) {
+	load_library($lib);
+}

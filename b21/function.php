@@ -83,6 +83,46 @@ function load_model($model_name) {
 }
 
 /**
+ * Fungsi untuk meload sebuah library.
+ *
+ * <code>
+ * // jika akan meload library dengan nama 'kategori_lib.php' maka cara penulisannya adalah
+ * load_library('kategori');
+ * </code>
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param string $lib_name nama dari library yang akan diload
+ * @return void
+ */
+function load_library($lib_name) {
+	global $_B21;
+	
+	// cek apakah model sudah pernah diload atau belum
+	if (in_array($lib_name, $_B21['loaded_libraries'])) {
+		// model sudah diload, jadi tidak perlu dilanjutkan
+		// save CPU and memory ;)
+		return;
+	}
+	
+	// load model dari base path
+	// hasilnya adalah /path/to/berita21/libraries/nama_lib.php
+	$path_file = BASE_PATH . '/libraries/' . $lib_name . '_lib.php';
+	
+	// jika file tidak ada maka library tidak bisa diload
+	if (!file_exists($path_file)) {
+		// keluar dari sistem
+		exit ("Library '{$lib_name}' tidak ada pada path system.");
+	}
+	
+	// masukkan $lib_name ke daftar model yang sudah diload
+	$_B21['loaded_libraries'][] = $lib_name;
+	
+	include_once ($path_file);
+}
+
+/**
  * Fungsi untuk meload view HTML.
  *
  * <code>

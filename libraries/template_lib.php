@@ -24,4 +24,28 @@ function tpl_get_kategori($user_config=array()) {
 		'tag_open' => '<li>',
 		'tag_close' => '</li>'
 	);
+	
+	// gabungkan kedua configurasi
+	// jika keys dari $user_config ada maka nilai dari key tersebut yang akan digunakan
+	// bukan dari $defaul_config
+	$config = $default_config + $user_config;
+	
+	$result = '';
+	
+	// load kategori model
+	load_model('kategori');
+	$kategori = get_all_kategori();
+	
+	// hasil kosong atau terjadi error
+	if (!$kategori) {
+		return $result;
+	}
+	
+	// jika sampai disini maka terdapat item pada $kategori
+	foreach ($kategori as $kat) {
+		$artikel_count = ($config['article_count'] ? " ({$kat->jml_artikel}) " : '');
+		$result .= $config['tag_open'] . $kat->kategori_nama . $artikel_count . "\n";
+	}
+	
+	return $result;
 }

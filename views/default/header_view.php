@@ -13,9 +13,7 @@
 	<div id="header">
 		<div id="menu">
 			<ul>
-				<li><a class="active" href="#">Menu 1</a></li>
-				<li><a href="#">Menu 2</a></li>
-				<li><a href="#">Menu 3</a></li>
+				<?php echo (tpl_get_kategori()); ?>
 			</ul>
 		</div>
 	</div>
