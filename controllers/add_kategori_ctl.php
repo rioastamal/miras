@@ -25,6 +25,9 @@ $data_view['daftar_kategori'] = get_all_kategori(FALSE);
 // beberapa informasi debug yang mungkin berguna
 site_debug(get_last_query(), 'QUERY TERAKHIR');
 site_debug(get_query_number(), 'JUMLAH QUERY');
+// lihat PHP Manual untuk keterangan seputar fungsi print_r
+$loaded_models = print_r($_B21['loaded_models'], TRUE);
+site_debug($loaded_models, 'MODEL YANG DILOAD');
 
 // Load view dengan urutan 1. header 2. content utama 3. sidebar 4. footer
 load_view('header');

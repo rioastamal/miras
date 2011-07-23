@@ -8,14 +8,15 @@
  *
  * @param string $message pesan yang akan ditampilkan di debugging
  * @param string $title judul dari info debugging
+ * @param string $separator string pemisah antara judul dan pesan
  * @return void
  */
-function site_debug($message, $title='DEBUG: ') {
+function site_debug($message, $title='DEBUG: ', $separator='==>') {
 	global $_B21;
 	
 	// jika debug mode diaktifkan maka jalankan proses debugging
 	if ($_B21['debug_mode']) {
-		$debug = $title . "\n";
+		$debug = '<strong>' . $title . '</strong> ' . $separator . ' ';
 		$debug .= $message . "\n";
 		
 		$_B21['debug_message'] .= $debug;
@@ -65,6 +66,10 @@ function load_model($model_name) {
 		// keluar dari sistem
 		exit ("Model '{$model_name}' tidak ada pada path system.");
 	}
+	
+	// masukkan $model_name ke daftar model yang sudah diload
+	global $_B21;
+	$_B21['loaded_models'][] = $model_name;
 	
 	include_once ($path_file);
 }
