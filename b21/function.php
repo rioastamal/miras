@@ -57,6 +57,15 @@ function show_debug() {
  * @return void
  */
 function load_model($model_name) {
+	global $_B21;
+	
+	// cek apakah model sudah pernah diload atau belum
+	if (in_array($model_name, $_B21['loaded_models'])) {
+		// model sudah diload, jadi tidak perlu dilanjutkan
+		// save CPU and memory ;)
+		return;
+	}
+	
 	// load model dari base path
 	// hasilnya adalah /path/to/berita21/models/nama_model.php
 	$path_file = BASE_PATH . '/models/' . $model_name . '_model.php';
@@ -68,7 +77,6 @@ function load_model($model_name) {
 	}
 	
 	// masukkan $model_name ke daftar model yang sudah diload
-	global $_B21;
 	$_B21['loaded_models'][] = $model_name;
 	
 	include_once ($path_file);
