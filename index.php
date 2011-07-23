@@ -5,7 +5,7 @@
 define('BASE_PATH', dirname(__FILE__));
 
 // loading boot-strap file
-include_once (BASE_PATH . '/libs/boot_strap.php');
+include_once (BASE_PATH . '/b21/boot_strap.php');
 
 try {
 	$controller = map_controller();
