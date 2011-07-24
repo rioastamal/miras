@@ -14,7 +14,7 @@
 	<div id="header">
 		<div id="menu">
 			<ul>
-				<?php echo (tpl_get_kategori()); ?>
+				<?php echo (tpl_build_menu()); ?>
 			</ul>
 		</div>
 	</div>

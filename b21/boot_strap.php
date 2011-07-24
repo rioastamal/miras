@@ -18,3 +18,6 @@ foreach ($_B21['autoload_libraries'] as $lib) {
 
 // load plugins
 load_plugins();
+
+// load menu
+include_once(BASE_PATH . '/b21/' . 'menu.php');

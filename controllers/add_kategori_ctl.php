@@ -1,5 +1,6 @@
 <?php
 
+set_active_menu('add_kategori');
 set_page_title('Test Kategori View');
 
 // load model kategori

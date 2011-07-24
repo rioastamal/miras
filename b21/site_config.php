@@ -60,5 +60,8 @@ $_B21['last_query'] = '';
 // librari yang diload secara otomatis saat bootstrap
 $_B21['autoload_libraries'] = array('plugin', 'template');
 
+// variabel yang menyimpan daftar menu
+$_B21['menus'] = array();
+
 // variabel yang menyimpan daftar menu yang aktif
 $_B21['active_menu'] = array();
