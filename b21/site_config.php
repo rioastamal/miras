@@ -45,6 +45,12 @@ $_B21['loaded_libraries'] = array();
 // variabel yang menyimpan nama-nama helper yang telah diload ke memory
 $_B21['loaded_helpers'] = array();
 
+// variabel yang menyimpan nama-nama plugin yang diload
+$_B21['loaded_plugins'] = array();
+
+// variabel yang menyimpan nama-nama hooks
+$_B21['hooks'] = array();
+
 // variabel yang menyimpan banyaknya query yang telah dieksekusi
 $_B21['query_number'] = 0;
 
@@ -52,4 +58,7 @@ $_B21['query_number'] = 0;
 $_B21['last_query'] = '';
 
 // librari yang diload secara otomatis saat bootstrap
-$_B21['autoload_libraries'] = array('template');
+$_B21['autoload_libraries'] = array('plugin', 'template');
+
+// variabel yang menyimpan daftar menu yang aktif
+$_B21['active_menu'] = array();

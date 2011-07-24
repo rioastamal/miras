@@ -3,6 +3,7 @@
 <head>
 	<title><?php echo (get_page_title());?></title>
 	<link rel="stylesheet" type="text/css" href="<?php echo (get_theme_url());?>style.css" />
+	<?php run_hooks('page_head'); ?>
 </head>
 <body>
 

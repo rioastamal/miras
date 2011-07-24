@@ -1,5 +1,4 @@
 <?php
-
 /**
  * File ini berisi fungsi-fungsi (query) yang berhubungan dengan tabel kategori
  *

@@ -1,0 +1,9 @@
+{
+	"name": "Hello Dolly",
+	"version": "1.0",
+	"author": "Rio Astamal",
+	"email": "me@rioastamal.net",
+	"website": "http://rioastamal.net/hello-dolly",
+	"description": "Test plugin",
+	"priority": "5"
+}

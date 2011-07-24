@@ -42,9 +42,16 @@ function tpl_get_kategori($user_config=array()) {
 	}
 	
 	// jika sampai disini maka terdapat item pada $kategori
-	foreach ($kategori as $kat) {
-		$artikel_count = ($config['article_count'] ? " ({$kat->jml_artikel}) " : '');
-		$result .= $config['tag_open'] . $kat->kategori_nama . $artikel_count . "\n";
+	foreach ($kategori as $kat) {		
+		$menu_object = new stdClass();
+		$menu_object->link_tag_open = '<a>';
+		$menu_object->link_label = $kat->kategori_nama;
+		$menu_object->link_tag_close = '</a>';
+		$menu_object->object = $kat;
+		
+		run_hooks('build_kategori_tpl', $menu_object);
+		
+		$result .= $config['tag_open'] . $menu_object->link_tag_open . $menu_object->link_label . $menu_object->link_tag_close . $config['tag_close'] . "\n";
 	}
 	
 	return $result;

@@ -15,3 +15,6 @@ include_once(BASE_PATH . '/b21/' . 'site_config.php');
 foreach ($_B21['autoload_libraries'] as $lib) {
 	load_library($lib);
 }
+
+// load plugins
+load_plugins();
