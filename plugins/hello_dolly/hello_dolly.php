@@ -1,5 +1,6 @@
 <?php
 
+// koment titik ae
 /**
  * Internal Function
  */
