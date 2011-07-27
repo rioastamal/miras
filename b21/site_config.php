@@ -65,3 +65,6 @@ $_B21['menus'] = array();
 
 // variabel yang menyimpan daftar menu yang aktif
 $_B21['active_menu'] = array();
+
+// menggunakan query cache atau tidak
+$_B21['enable_query_cache'] = FALSE;
