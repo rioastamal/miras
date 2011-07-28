@@ -30,22 +30,48 @@ function get_all_kategori($jumlah_artikel=TRUE) {
 		// mari lakukan simple query saja
 		$query = 'SELECT * FROM kategori ORDER BY kategori_nama';
 	}
+		
+	// cek apakah query cache diaktifkan?
+	if (query_cache_status() == TRUE) {
+		// OK, query cache diaktifkan 
+		// sekarang mari coba ambil cache dari file
+		$result = query_cache_data($query);
+		site_debug(print_r($result, TRUE), "CACHE QUERY");
+		
+		// cek $result, jika tidak FALSE maka query cache ada, jadi
+		// berhenti sampai disini saja. Namun jika tidka ada maka jalankan
+		// query biasa (atau lanjut terus ke kode dibawah)
+		if ($result !== FALSE) {
+			return $result;
+		}
+	} 
+	
 	$result = mysql_query($query);
-	
-	// masukkan data query
-	set_last_query($query);
-	increase_query_number();
-	
 	if (!$result) {
 		// query error
 		return FALSE;
 	}
+	
+	// query OK
+	
+	// increment status dari jumlah query yang telah dijalankan
+	increase_query_number();
+	
+	// masukkan data query terakhir
+	set_last_query($query);
 	
 	$artikel = array();
 	while ($row = mysql_fetch_object($result)) {
 		// masukkan setiap result object ke array $artikel
 		$artikel[] = $row;
 	}
+	
+	// masukkan hasil query ke cache
+	if (query_cache_status() == TRUE) {
+		site_debug(print_r($result, TRUE), "WRITE QUERY CACHE");
+		query_cache_write($query, $artikel);
+	}
+	
 	// kembalikan hasil
 	return $artikel;
 }

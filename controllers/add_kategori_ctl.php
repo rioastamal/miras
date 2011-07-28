@@ -3,6 +3,10 @@
 set_active_menu('add_kategori');
 set_page_title('Test Kategori View');
 
+// load query cache library
+load_library('query_cache');
+query_cache_enable();
+
 // load model kategori
 load_model('kategori');
 

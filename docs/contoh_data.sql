@@ -21,15 +21,6 @@ INSERT INTO artikel (artikel_id, artikel_judul, artikel_isi, artikel_tgl) VALUES
 INSERT INTO artikel (artikel_id, artikel_judul, artikel_isi, artikel_tgl) VALUES(2, 'Google mengeluarkan layanan sosial network bernama: Google+', 'Upaya terbaru Google untuk menjadi lebih sosial dengan Google+ tampaknya sangat berkesan bagi early adopters ditandakan oleh berbagai ulasandan tanggapan positif atas layanan ini.\r\n\r\nBagi mereka yang belum mendapatkan undangan dan menunggu untuk diundang, sayangnya undangan Google+ ditangguhkan kemarin siang karena permintaan yang membludak. Sepertinya ini menjadi cara khas Google dalam menciptakan, memelihara, dan memperpanjang kehebohan setelah peluncuran produk mereka, karena jika ada perusahaan yang sangat mahir tentang scaling, ituadalah Google.\r\n\r\nWalau begitu, masih ada cara untuk mendapatkan undangan Google+ tanpa ‘benar-benar diundang’, yaitu melalui email.\r\n\r\nKetika Anda berbagi posting di Google+ Anda harus menentukan penerima sebelum posting dibagikan. Anda dapat memilih lingkaran tertentu dari kontak yang Anda miliki atau berbagi ke alamat email penerima yang Anda inginkan. Dengan berbagi posting Anda melalui email, penerima dapat melihat apa yang Anda posting di Google+ dan jika mereka mengikuti tautan yang mengatakan, “Pelajari lebih lanjut tentang Google+”, mereka akan dibawa ke Google+ untuk mengaktifkan profil mereka.', '2011-07-03 09:11:33');
 
 --
--- Dumping data for table 'artikel_komentar'
---
-
-INSERT INTO artikel_komentar (artikel_id, komentar_id) VALUES(1, 1);
-INSERT INTO artikel_komentar (artikel_id, komentar_id) VALUES(1, 2);
-INSERT INTO artikel_komentar (artikel_id, komentar_id) VALUES(1, 3);
-INSERT INTO artikel_komentar (artikel_id, komentar_id) VALUES(2, 4);
-
---
 -- Dumping data for table 'komentar'
 --
 
@@ -37,4 +28,13 @@ INSERT INTO komentar (komentar_id, komentar_nama, komentar_email, komentar_isi, 
 INSERT INTO komentar (komentar_id, komentar_nama, komentar_email, komentar_isi, komentar_tgl) VALUES(2, 'yegi', 'yegi@menenk.com', 'silent rweek...., ojok banter" :))', '2011-07-05 17:04:05');
 INSERT INTO komentar (komentar_id, komentar_nama, komentar_email, komentar_isi, komentar_tgl) VALUES(3, 'alfa', 'alfa@ganteng.com', 'saya tidak tau hal itu', '2010-07-21 19:06:58');
 INSERT INTO komentar (komentar_id, komentar_nama, komentar_email, komentar_isi, komentar_tgl) VALUES(4, 'agenk', 'agenk@hoax.com', 'saya tidak berbohong', '2011-07-21 19:06:58');
+
+--
+-- Dumping data for table 'artikel_komentar'
+--
+
+INSERT INTO artikel_komentar (artikel_id, komentar_id) VALUES(1, 1);
+INSERT INTO artikel_komentar (artikel_id, komentar_id) VALUES(1, 2);
+INSERT INTO artikel_komentar (artikel_id, komentar_id) VALUES(1, 3);
+INSERT INTO artikel_komentar (artikel_id, komentar_id) VALUES(2, 4);
 
