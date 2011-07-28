@@ -116,7 +116,7 @@ function load_library($lib_name) {
 		exit ("Library '{$lib_name}' tidak ada pada path system.");
 	}
 	
-	// masukkan $lib_name ke daftar model yang sudah diload
+	// masukkan $lib_name ke daftar library yang sudah diload
 	$_B21['loaded_libraries'][] = $lib_name;
 	
 	include_once ($path_file);
