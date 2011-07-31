@@ -145,12 +145,13 @@ function insert_komentar($kmt) {
 	
 	// masukkan query ke variabel global last_query
 	set_last_query($query);
-	increase_query_number();
 	
 	if (!$result) {
 		// query error
 		return FALSE;
 	}
+	
+	increase_query_number();
 	
 	return TRUE;	// jika sampai disini maka everything is ok
 }
