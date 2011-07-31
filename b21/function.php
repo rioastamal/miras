@@ -99,14 +99,14 @@ function load_model($model_name) {
 function load_library($lib_name) {
 	global $_B21;
 	
-	// cek apakah model sudah pernah diload atau belum
+	// cek apakah library sudah pernah diload atau belum
 	if (in_array($lib_name, $_B21['loaded_libraries'])) {
-		// model sudah diload, jadi tidak perlu dilanjutkan
+		// library sudah diload, jadi tidak perlu dilanjutkan
 		// save CPU and memory ;)
 		return;
 	}
 	
-	// load model dari base path
+	// load library dari base path
 	// hasilnya adalah /path/to/berita21/libraries/nama_lib.php
 	$path_file = BASE_PATH . '/libraries/' . $lib_name . '_lib.php';
 	
@@ -116,7 +116,7 @@ function load_library($lib_name) {
 		exit ("Library '{$lib_name}' tidak ada pada path system.");
 	}
 	
-	// masukkan $lib_name ke daftar model yang sudah diload
+	// masukkan $lib_name ke daftar library yang sudah diload
 	$_B21['loaded_libraries'][] = $lib_name;
 	
 	include_once ($path_file);
