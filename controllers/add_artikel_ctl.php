@@ -2,6 +2,10 @@
 
 set_page_title('Test Artikel View');
 
+// load query cache library
+load_library('query_cache');
+query_cache_enable();
+
 // load model artikel
 load_model('artikel');
 
@@ -33,6 +37,10 @@ if (isset($_POST['submit_artikel'])) {
 // masukan artikel dan daftar kategori ke dalam variabel $data_view, sehingga
 $data_view['daftar_artikel'] = get_latest_article(10);
 $data_view['daftar_kategori'] = get_all_kategori(FALSE);
+
+// beberapa informasi debug yang mungkin berguna
+site_debug(get_last_query(), 'QUERY TERAKHIR');
+site_debug(get_query_number(), 'JUMLAH QUERY');
 
 // Load view dengan urutan 1. header 2. content utama 3. sidebar 4. footer
 load_view('header');
