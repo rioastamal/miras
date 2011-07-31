@@ -26,17 +26,46 @@ function get_last_commented_article($last=5) {
 				LEFT JOIN (artikel art) ON (ak.artikel_id=art.artikel_id)
 				ORDER BY kmt.komentar_tgl DESC
 				limit '.$last;
-	$result = mysql_query($query);
+				
+	// cek apakah query cache diaktifkan?
+	if (query_cache_status() == TRUE) {
+		// OK, query cache diaktifkan 
+		// sekarang mari coba ambil cache dari file
+		$result = query_cache_data($query, 10);
+		site_debug(print_r($result, TRUE), "CACHE QUERY");
+		
+		// cek $result, jika tidak FALSE maka query cache ada, jadi
+		// berhenti sampai disini saja. Namun jika tidka ada maka jalankan
+		// query biasa (atau lanjut terus ke kode dibawah)
+		if ($result !== FALSE) {
+			return $result;
+		}
+	} 
 	
+	$result = mysql_query($query);
 	if (!$result) {
 		// query error
-		return false;
+		return FALSE;
 	}
+	
+	// query OK
+	
+	// increment status dari jumlah query yang telah dijalankan
+	increase_query_number();
+	
+	// masukkan data query terakhir
+	set_last_query($query);
 	
 	$komentar = array();
 	while ($data = mysql_fetch_object($result)) {
 		// masukkan setiap result object ke array $komentar
 		$komentar[] = $data;
+	}
+	
+	// masukkan hasil query ke cache
+	if (query_cache_status() == TRUE) {
+		site_debug(print_r($result, TRUE), "WRITE QUERY CACHE");
+		query_cache_write($query, $komentar);
 	}
 	
 	// kembalikan hasil
@@ -50,17 +79,46 @@ function get_most_commented_article() {
 				LEFT JOIN (artikel AS art) ON (ak.artikel_id=art.artikel_id)
 				GROUP BY ak.artikel_id
 				ORDER BY jml DESC';
+				
+	// cek apakah query cache diaktifkan?
+	if (query_cache_status() == TRUE) {
+		// OK, query cache diaktifkan 
+		// sekarang mari coba ambil cache dari file
+		$result = query_cache_data($query, 10);
+		site_debug(print_r($result, TRUE), "CACHE QUERY");
+		
+		// cek $result, jika tidak FALSE maka query cache ada, jadi
+		// berhenti sampai disini saja. Namun jika tidka ada maka jalankan
+		// query biasa (atau lanjut terus ke kode dibawah)
+		if ($result !== FALSE) {
+			return $result;
+		}
+	}
+				
 	$result = mysql_query($query);
-	
 	if (!$result) {
 		// query error
-		return false;
+		return FALSE;
 	}
+	
+	// query OK
+	
+	// increment status dari jumlah query yang telah dijalankan
+	increase_query_number();
+	
+	// masukkan data query terakhir
+	set_last_query($query);
 	
 	$komentar = array();
 	while ($data = mysql_fetch_object($result)) {
 		// masukkan setiap result object ke array $komentar
 		$komentar[] = $data;
+	}
+	
+	// masukkan hasil query ke cache
+	if (query_cache_status() == TRUE) {
+		site_debug(print_r($result, TRUE), "WRITE QUERY CACHE");
+		query_cache_write($query, $komentar);
 	}
 	
 	// kembalikan hasil
@@ -84,6 +142,10 @@ function insert_komentar($kmt) {
 	
 	$query = "INSERT INTO artikel_komentar (artikel_id, komentar_id) VALUES ('{$kmt->artikel_id}', '$kmt_id')";
 	$result = mysql_query($query);
+	
+	// masukkan query ke variabel global last_query
+	set_last_query($query);
+	increase_query_number();
 	
 	if (!$result) {
 		// query error
