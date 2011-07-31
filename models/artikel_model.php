@@ -85,12 +85,33 @@ function get_article_based_on($judul='', $isi='') {
 		return array();
 	}
 	
+	if (query_cache_status() == TRUE) {
+		// OK, query cache diaktifkan 
+		// sekarang mari coba ambil cache dari file
+		$result = query_cache_data($query, 10);
+		site_debug(print_r($result, TRUE), "CACHE QUERY");
+		
+		// cek $result, jika tidak FALSE maka query cache ada, jadi
+		// berhenti sampai disini saja. Namun jika tidka ada maka jalankan
+		// query biasa (atau lanjut terus ke kode dibawah)
+		if ($result !== FALSE) {
+			return $result;
+		}
+	} 
+	
 	$result = mysql_query($query);
 	
 	if (!$result) {
 		// query error
 		return FALSE;
 	}
+	
+	// increment status dari jumlah query yang telah dijalankan
+	increase_query_number();
+	
+	// masukkan data query terakhir
+	set_last_query($query);
+	
 	
 	$artikel = array();
 	while ($data = mysql_fetch_object($result)) {
@@ -116,20 +137,7 @@ function insert_artikel($art) {
 	 $query = "INSERT INTO artikel (artikel_judul, artikel_isi, artikel_tgl) VALUES 
 				('{$art->artikel_judul}','{$art->artikel_isi}','{$art->artikel_tgl}')";
 				
-	// cek apakah query cache diaktifkan?
-	if (query_cache_status() == TRUE) {
-		// OK, query cache diaktifkan 
-		// sekarang mari coba ambil cache dari file
-		$result = query_cache_data($query, 10);
-		site_debug(print_r($result, TRUE), "CACHE QUERY");
-		
-		// cek $result, jika tidak FALSE maka query cache ada, jadi
-		// berhenti sampai disini saja. Namun jika tidka ada maka jalankan
-		// query biasa (atau lanjut terus ke kode dibawah)
-		if ($result !== FALSE) {
-			return $result;
-		}
-	} 
+	
 				
 	 $result = mysql_query($query);
 	 
@@ -138,20 +146,25 @@ function insert_artikel($art) {
 		 return FALSE;
 	 }
 	 
+	  // masukkan query ke variabel global last_query
+		set_last_query($query);
+		increase_query_number();
+	 
 	 $id_artikel = mysql_insert_id();
 	 
 	 $query2 = "INSERT INTO artikel_kategori (artikel_id, kategori_id) VALUES
 				('{$id_artikel}','{$art->kategori_id}')";
 	 $result = mysql_query($query2);
 	 
-	 // masukkan query ke variabel global last_query
-	set_last_query($query);
-	increase_query_number();
 	 
 	 if (!$result) {
 		 //query error
 		 return FALSE;
 	 }
+	 
+	  // masukkan query ke variabel global last_query
+	set_last_query($query);
+	increase_query_number();
 	 
 	 return TRUE; //jika sampai di sini everythings gonna be OK 
 }
