@@ -35,7 +35,7 @@ function get_all_kategori($jumlah_artikel=TRUE) {
 	if (query_cache_status() == TRUE) {
 		// OK, query cache diaktifkan 
 		// sekarang mari coba ambil cache dari file
-		$result = query_cache_data($query);
+		$result = query_cache_data($query, 10);
 		site_debug(print_r($result, TRUE), "CACHE QUERY");
 		
 		// cek $result, jika tidak FALSE maka query cache ada, jadi

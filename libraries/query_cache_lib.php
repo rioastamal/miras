@@ -74,15 +74,32 @@ function query_cache_write($query, $data) {
  * @since Version 1.1
  *
  * @param string $query SQL query yang akan dicache
+ * @param int $expire Cache expire dalam detik
  * @return mixed|boolean hasil dari cache query
  */
-function query_cache_data($query) {
+function query_cache_data($query, $expire=60) {
 	// Ubah query menjadi MD5 hash
 	$file_hash = BASE_PATH . '/cache/query/' . md5($query) . '.php';
 	
 	// jika file sudah ada berarti telah ada cache sebelumnya, oleh
 	// karena itu ambil data dari cache lalu berhenti
 	if (file_exists($file_hash)) {
+		// cek apakah file cache sudah expire atau belum
+		$sekarang = time();
+		
+		// cek kapan terakhir kali file diubah/dibuat
+		$file_modif = filemtime($file_hash);
+		
+		// kalkulasi perbedaan waktu jika selisih lebih besar dari waktu expire
+		// yang telah ditentukan, berarti cache sudah tidak valid (EXPIRE)
+		$selisih = $sekarang - $file_modif;
+		if ($selisih > $expire) {
+			// hapus file yang expired
+			unlink($file_hash);
+			return FALSE;	// cache sudah expired, cukup berhenti disini
+		}
+		
+		
 		// cache disimpan dalam bentuk serialized string jadi harus 
 		// diconvert dulu ke dalam bentuk PHP agar dapat digunakan
 		$cached = file_get_contents($file_hash);
