@@ -27,6 +27,31 @@ function load_plugins() {
 		$json_info = BASE_PATH . '/plugins/' . $plugin . '/' . $plugin . '.info';
 		if (!file_exists($json_info)) {
 			// skip...
+			$_B21['error_plugins'][] = $plugin;
+			continue;
+		}
+		
+		$path_file = BASE_PATH . '/plugins/' . $plugin . '/' . $plugin . '.php';
+		if (!file_exists($path_file)) {
+			$_B21['error_plugins'][] = $plugin;
+			continue;
+		}
+		
+		$path_dir_ctl = BASE_PATH . '/plugins/' . $plugin . '/controllers';
+		if (!file_exists($path_dir_ctl)) {
+			$_B21['error_plugins'][] = $plugin;
+			continue;
+		}
+		
+		$path_dir_view = BASE_PATH . '/plugins/' . $plugin . '/views';
+		if (!file_exists($path_dir_view)) {
+			$_B21['error_plugins'][] = $plugin;
+			continue;
+		}
+		
+		$path_dir_model = BASE_PATH . '/plugins/' . $plugin . '/models';
+		if (!file_exists($path_dir_model)) {
+			$_B21['error_plugins'][] = $plugin;
 			continue;
 		}
 		
@@ -41,6 +66,7 @@ function load_plugins() {
 		include_once(BASE_PATH . '/plugins/' . $plugin . '/' . $plugin . '.php');
 	}
 	
+	site_debug(print_r($_B21['error_plugins'], TRUE), 'ERROR PLUGINS');
 	site_debug(print_r($_B21['loaded_plugins'], TRUE), 'LOADED PLUGINS');
 }
 
