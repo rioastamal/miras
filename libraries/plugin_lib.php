@@ -31,24 +31,28 @@ function load_plugins() {
 			continue;
 		}
 		
+		// cek apakah file nama_plugin.php ada atau tidak
 		$path_file = BASE_PATH . '/plugins/' . $plugin . '/' . $plugin . '.php';
 		if (!file_exists($path_file)) {
 			$_B21['error_plugins'][] = $plugin;
 			continue;
 		}
 		
+		// cek apakah direktori controllers ada atau tidak
 		$path_dir_ctl = BASE_PATH . '/plugins/' . $plugin . '/controllers';
 		if (!file_exists($path_dir_ctl)) {
 			$_B21['error_plugins'][] = $plugin;
 			continue;
 		}
-		
+
+		// cek apakah direktori views ada atau tidak		
 		$path_dir_view = BASE_PATH . '/plugins/' . $plugin . '/views';
 		if (!file_exists($path_dir_view)) {
 			$_B21['error_plugins'][] = $plugin;
 			continue;
 		}
 		
+		// cek apakah direktori models ada atau tidak
 		$path_dir_model = BASE_PATH . '/plugins/' . $plugin . '/models';
 		if (!file_exists($path_dir_model)) {
 			$_B21['error_plugins'][] = $plugin;
