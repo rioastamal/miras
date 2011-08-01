@@ -48,6 +48,9 @@ $_B21['loaded_helpers'] = array();
 // variabel yang menyimpan nama-nama plugin yang diload
 $_B21['loaded_plugins'] = array();
 
+// variabel yang menyimpan nama-nama plugin yang gagal diload
+$_B21['error_plugins'] = array();
+
 // variabel yang menyimpan nama-nama hooks
 $_B21['hooks'] = array();
 
