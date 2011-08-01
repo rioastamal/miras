@@ -27,35 +27,50 @@ function load_plugins() {
 		$json_info = BASE_PATH . '/plugins/' . $plugin . '/' . $plugin . '.info';
 		if (!file_exists($json_info)) {
 			// skip...
-			$_B21['error_plugins'][] = $plugin;
+			$_B21['error_plugins'][] = array(
+				'nama plugin' => $plugin,
+				'error message' => 'plugin tidak ditemukan'
+			);
 			continue;
 		}
 		
 		// cek apakah file nama_plugin.php ada atau tidak
 		$path_file = BASE_PATH . '/plugins/' . $plugin . '/' . $plugin . '.php';
 		if (!file_exists($path_file)) {
-			$_B21['error_plugins'][] = $plugin;
+			$_B21['error_plugins'][] = array(
+				'nama plugin' => $plugin,
+				'error message' => 'file php tidak ditemukan'
+			);
 			continue;
 		}
 		
 		// cek apakah direktori controllers ada atau tidak
 		$path_dir_ctl = BASE_PATH . '/plugins/' . $plugin . '/controllers';
 		if (!file_exists($path_dir_ctl)) {
-			$_B21['error_plugins'][] = $plugin;
+			$_B21['error_plugins'][] = array(
+				'nama plugin' => $plugin,
+				'error message' => 'controllers tidak ditemukan'
+			);
 			continue;
 		}
 
 		// cek apakah direktori views ada atau tidak		
 		$path_dir_view = BASE_PATH . '/plugins/' . $plugin . '/views';
 		if (!file_exists($path_dir_view)) {
-			$_B21['error_plugins'][] = $plugin;
+			$_B21['error_plugins'][] = array(
+				'nama plugin' => $plugin,
+				'error message' => 'views tidak ditemukan'
+			);
 			continue;
 		}
 		
 		// cek apakah direktori models ada atau tidak
 		$path_dir_model = BASE_PATH . '/plugins/' . $plugin . '/models';
 		if (!file_exists($path_dir_model)) {
-			$_B21['error_plugins'][] = $plugin;
+			$_B21['error_plugins'][] = array(
+				'nama plugin' => $plugin,
+				'error message' => 'models tidak ditemukan'
+			);
 			continue;
 		}
 		
