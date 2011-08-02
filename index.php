@@ -8,8 +8,11 @@ define('BASE_PATH', dirname(__FILE__));
 include_once (BASE_PATH . '/b21/boot_strap.php');
 
 try {
+	run_hooks('pre_routing');
 	$controller = map_controller();
+	run_hooks('post_routing', $controller);
 	include_once ($controller);
+	run_hooks('post_controller', $controller);
 } catch (Exception $e) {
 	echo ($e->getMessage());
 }
