@@ -328,6 +328,10 @@ function map_controller() {
 		if (preg_match('@/([a-zA-Z0-9\-_]+)/?([a-zA-Z0-9\-_]+)?(.*)@', $split[1], $matches)) {
 			site_debug( print_r($matches, TRUE), 'CONTROLLER MATCHING' );
 			$controller = $matches[1];
+			
+			// split $matches[3] dari /
+			$tes = preg_split('@/@', $matches[3], -1, PREG_SPLIT_NO_EMPTY);
+			site_debug( print_r($tes, TRUE), 'CONTROLLER ARGUMENT' );
 		}
 	}
 	
