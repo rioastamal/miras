@@ -330,8 +330,9 @@ function map_controller() {
 			$controller = $matches[1];
 			
 			// split $matches[3] dari /
-			$tes = preg_split('@/@', $matches[3], -1, PREG_SPLIT_NO_EMPTY);
-			site_debug( print_r($tes, TRUE), 'CONTROLLER ARGUMENT' );
+			$arguments = preg_split('@/@', $matches[3], -1, PREG_SPLIT_NO_EMPTY);
+			$_B21['controller_arguments'] = $arguments;
+			site_debug( print_r($arguments, TRUE), 'CONTROLLER ARGUMENT' );
 		}
 	}
 	
@@ -361,6 +362,29 @@ function map_controller() {
 	
 	// jika sampai disini maka controller tidak ditemukan jadi thrown exception
 	throw new Exception ("Controller {$controller} tidak ditemukan.");
+}
+
+/**
+ * Funcgis untuk mendapatkan argument yang dipassing ke halaman controller
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param integer $index => index array argument yang dicari
+ * @return mixed|boolean
+ */
+function get_argument($index=0) {
+	global $_B21;
+	
+	// cek apakah index tersebut ada pada array controller argument atau tidak
+	if (array_key_exists($index, $_B21['controller_arguments'])) {
+		// index ada berarti diasumsikan juga ada nilainya
+		// maka kembalikan array dengan index yang diminta
+		return $_B21['controller_arguments'][$index];
+	}
+	
+	// jika sampai disini berarti index array tidak ada
+	return FALSE;
 }
 
 /**

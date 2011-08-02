@@ -71,3 +71,6 @@ $_B21['active_menu'] = array();
 
 // menggunakan query cache atau tidak
 $_B21['enable_query_cache'] = FALSE;
+
+// variabel yang menyimpan controller arguments
+$_B21['controller_arguments'] = array();

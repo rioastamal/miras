@@ -7,6 +7,11 @@ set_page_title('Test Kategori View');
 load_library('query_cache');
 query_cache_enable();
 
+// ambil argument ke-0
+$key_arg = get_argument(0);
+$value_arg = get_argument(1);
+site_debug("ARG 1: $key_arg, ARG 2: $value_arg", 'TEST ARGUMENT');
+
 // load model kategori
 load_model('kategori');
 
