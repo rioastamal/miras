@@ -325,7 +325,7 @@ function map_controller() {
 	if (@$split[1]) {
 		// cek apakah potongan URI setelah index.php cocok dengan REGEX
 		// seperti dibawah ini
-		if (preg_match('@/([a-zA-Z0-9\-_]+)(.*)@', $split[1], $matches)) {
+		if (preg_match('@/([a-zA-Z0-9\-_]+)/?([a-zA-Z0-9\-_]+)?(.*)@', $split[1], $matches)) {
 			site_debug( print_r($matches, TRUE), 'CONTROLLER MATCHING' );
 			$controller = $matches[1];
 		}
@@ -343,7 +343,7 @@ function map_controller() {
 
 		// ubah hypen(-) ke underscore jika memang terdapat simbol tersebut
 		$real_controller = str_replace('-', '_', $matches[2]);
-		$controller = $controller . $real_controller;
+		$controller = $controller . '/' . $real_controller;
 	}
 	
 	// map controller ke file yang bersangkutan
