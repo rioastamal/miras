@@ -335,8 +335,20 @@ function map_controller() {
 	// controller diharuskan seperti itu (sesuai dengan coding guide awal)
 	$controller = str_replace('-', '_', $controller);
 	
+	// cek apakah controller merupakan direktori atau tidak
+	if (is_dir(BASE_PATH . '/controllers/' . $controller)) {
+		// controller merupakan direktori jadi tambahkan dengan variabel
+		// $matches yang ber-index 2
+		site_debug($controller, 'CONTROLLER DIRECTORY');
+
+		// ubah hypen(-) ke underscore jika memang terdapat simbol tersebut
+		$real_controller = str_replace('-', '_', $matches[2]);
+		$controller = $controller . $real_controller;
+	}
+	
 	// map controller ke file yang bersangkutan
 	$file = BASE_PATH . '/controllers/' . $controller . '_ctl.php';
+	site_debug($file, 'FULL CONTROLLER PATH');
 	
 	// file exists?
 	if (file_exists($file)) {
