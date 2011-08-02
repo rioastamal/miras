@@ -1,0 +1,9 @@
+{
+	"name": "Secure URL",
+	"version": "1.0",
+	"author": "Rio Astamal",
+	"email": "me@rioastamal.net",
+	"website": "http://rioastamal.net/",
+	"description": "Plugin untuk melakukan penfilteran terhadap karakter berbahaya di URL",
+	"priority": "5"
+}
