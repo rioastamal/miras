@@ -18,8 +18,16 @@ load_model('artikel');
 // load model kategori
 load_model('kategori');
 
+if($key_arg == "id") {
+	$data_view['daftar_artikel'] = get_article_by_id($value_arg);
+	$load = "view_artikel";
+}
+else {
+	$data_view['daftar_artikel'] = get_article_by_category($value_arg);
+	$load = "view_artikel_by_kategori";
+}
 // masukan artikel dan daftar kategori ke dalam variabel $data_view, sehingga
-$data_view['daftar_artikel'] = get_article_by_id($value_arg);
+
 //$data_view['daftar_kategori'] = get_all_kategori(FALSE);
 
 // beberapa informasi debug yang mungkin berguna
@@ -39,7 +47,7 @@ site_debug(get_query_number(), 'JUMLAH QUERY');
 
 // Load view dengan urutan 1. header 2. content utama 3. sidebar 4. footer
 load_view('header');
-load_view('view_artikel', $data_view);
+load_view($load, $data_view);
 load_view('sidebar');
 load_view('footer');
 
