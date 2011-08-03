@@ -16,8 +16,13 @@ site_debug("ARG 1: $key_arg, ARG 2: $value_arg", 'TEST ARGUMENT');
 load_model('komentar');
 load_model('artikel');	
 
-// masukan komentar ke dalam variabel $data_view, sehingga
-$data_view['daftar_komentar'] = get_last_commented_article($value_arg);
+if ($key_arg == 'artikel') {
+	// masukan komentar ke dalam variabel $data_view, sehingga
+	$data_view['daftar_komentar'] = get_comment_by_article_id($value_arg);
+} else {
+	// masukan komentar ke dalam variabel $data_view, sehingga
+	$data_view['daftar_komentar'] = get_last_commented_article($value_arg);
+}
 
 // beberapa informasi debug yang mungkin berguna
 site_debug(get_last_query(), 'QUERY TERAKHIR');

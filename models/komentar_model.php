@@ -18,6 +18,60 @@
  * @return array|boolean daftar komentar lima terakhir dalam array of object, FALSE ketika error
  */
  
+function get_comment_by_article_id($id=0) {
+	// query mengambil komentar berdasarkan id artikel
+	$query = 'SELECT kmt.*, art.artikel_id, art.artikel_judul
+				FROM komentar AS kmt 
+				LEFT JOIN (artikel_komentar AS ak) ON (kmt.komentar_id=ak.komentar_id)
+				LEFT JOIN (artikel art) ON (ak.artikel_id=art.artikel_id)
+				WHERE art.artikel_id = ' . $id .
+				' ORDER BY kmt.komentar_tgl DESC';
+				
+	// cek apakah query cache diaktifkan?
+	if (query_cache_status() == TRUE) {
+		// OK, query cache diaktifkan 
+		// sekarang mari coba ambil cache dari file
+		$result = query_cache_data($query, 10);
+		site_debug(print_r($result, TRUE), "CACHE QUERY");
+		
+		// cek $result, jika tidak FALSE maka query cache ada, jadi
+		// berhenti sampai disini saja. Namun jika tidka ada maka jalankan
+		// query biasa (atau lanjut terus ke kode dibawah)
+		if ($result !== FALSE) {
+			return $result;
+		}
+	} 
+	
+	$result = mysql_query($query);
+	if (!$result) {
+		// query error
+		return FALSE;
+	}
+	
+	// query OK
+	
+	// increment status dari jumlah query yang telah dijalankan
+	increase_query_number();
+	
+	// masukkan data query terakhir
+	set_last_query($query);
+	
+	$komentar = array();
+	while ($data = mysql_fetch_object($result)) {
+		// masukkan setiap result object ke array $komentar
+		$komentar[] = $data;
+	}
+	
+	// masukkan hasil query ke cache
+	if (query_cache_status() == TRUE) {
+		site_debug(print_r($result, TRUE), "WRITE QUERY CACHE");
+		query_cache_write($query, $komentar);
+	}
+	
+	// kembalikan hasil
+	return $komentar;
+}
+ 
 function get_last_commented_article($last=5) {
 	// query mengambil 5 komentar terakhir
 	$query = 'SELECT kmt.*, art.artikel_id, art.artikel_judul
