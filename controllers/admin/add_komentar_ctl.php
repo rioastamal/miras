@@ -1,7 +1,7 @@
 <?php
 
 set_active_menu('add_komentar');
-set_page_title('Test Komentar View');
+set_page_title('Tambah Komentar');
 
 // load query cache library
 load_library('query_cache');
