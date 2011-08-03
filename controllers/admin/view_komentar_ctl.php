@@ -1,5 +1,13 @@
 <?php
 
+tpl_add_menu(array(
+	'label' => 'View Komentar',
+	'id' => 'view_komentar',
+	'url' => get_site_url() . '/admin/view-komentar/komentar/1',
+	'title' => 'View Komentar',
+	'order' => 1
+));	
+
 set_active_menu('view_komentar');
 set_page_title('View Komentar');
 
