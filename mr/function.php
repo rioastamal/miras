@@ -162,8 +162,7 @@ function load_view($view_name, &$data=NULL, $plugin_name=NULL) {
 	//$path_file = BASE_PATH . '/views/' . $theme . '/' . $view_name . '_view.php';
 	if ($plugin_name == NULL){
 		$path_file = BASE_PATH . '/views/' . $theme . '/' . $view_name . '_view.php';
-	}
-	else{
+	} else {
 		$path_file = BASE_PATH . '/plugins/' . $plugin_name . '/views/' . $view_name . '_view.php';
 	}
 	

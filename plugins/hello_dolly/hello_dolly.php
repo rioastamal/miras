@@ -17,7 +17,7 @@ function heldo_head() {
 	echo ("<!-- I'm Hello Dolly ;) -->\n");
 }
 
-$da = null;
+$da = NULL;
 // TEST LOAD VIEW 
  load_view('dolly_test', $da, 'hello_dolly');
 
