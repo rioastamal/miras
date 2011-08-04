@@ -94,9 +94,10 @@ function load_model($model_name) {
  * @since Version 1.0
  *
  * @param string $lib_name nama dari library yang akan diload
+ * @param string $plugin_name nama dari library plugin yang akan diload
  * @return void
  */
-function load_library($lib_name) {
+function load_library($lib_name, $plugin_name=NULL) {
 	global $_MR;
 	
 	// cek apakah library sudah pernah diload atau belum
@@ -106,9 +107,16 @@ function load_library($lib_name) {
 		return;
 	}
 	
-	// load library dari base path
-	// hasilnya adalah /path/to/berita21/libraries/nama_lib.php
-	$path_file = BASE_PATH . '/libraries/' . $lib_name . '_lib.php';
+	// load library dari base path atau dari sebuah direktori plugin
+	
+	// jika nama plugin diisi maka dahulukan meload dari plugin
+	if ($plugin_name) {
+		// hasilnya adalah /path/to/berita21/plugin_name/libraries/nama_lib.php
+		$path_file = BASE_PATH . '/plugins/' . $plugin_name . '/libraries/' . $lib_name . '_lib.php';
+	} else {
+		// hasilnya adalah /path/to/berita21/libraries/nama_lib.php
+		$path_file = BASE_PATH . '/libraries/' . $lib_name . '_lib.php';
+	}
 	
 	// jika file tidak ada maka library tidak bisa diload
 	if (!file_exists($path_file)) {
