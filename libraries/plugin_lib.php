@@ -84,7 +84,17 @@ function load_plugins() {
 		// - nama_plugin_on_activate()
 		// - nama_plugin_on_deactivate()
 		// - nama_plugin_on_upgrade()
-		
+		$needed_function = array($plugin . '_on_install',
+								 $plugin . '_on_uninstall',
+								 $plugin . '_on_activate',
+								 $plugin . '_on_deactivate',
+								 $plugin . '_on_upgrade');
+		foreach ($needed_function as $nf) {
+			if (!function_exists($nf)) {
+				echo 'Nama function ' . $nf . ' tidak ditemukan pada plugin ' . $plugin; 
+				exit;
+			}
+		}
 		
 		// informasi plugin berupa format JSON, jadi untuk mengubahnya kedalam
 		// bentuk PHP Object digunakan json_encode
