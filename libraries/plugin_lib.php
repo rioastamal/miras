@@ -74,6 +74,18 @@ function load_plugins() {
 			continue;
 		}
 		
+		// ok, let's include the plugin
+		include_once(BASE_PATH . '/plugins/' . $plugin . '/' . $plugin . '.php');
+		
+		// logika untuk mengecek apakah plugin telah membuat beberapa fungsi
+		// yang diperlukan seperti:
+		// - nama_plugin_on_install()
+		// - nama_plugin_on_uninstall()
+		// - nama_plugin_on_activate()
+		// - nama_plugin_on_deactivate()
+		// - nama_plugin_on_upgrade()
+		
+		
 		// informasi plugin berupa format JSON, jadi untuk mengubahnya kedalam
 		// bentuk PHP Object digunakan json_encode
 		$json_info = json_decode(file_get_contents($json_info));
@@ -81,8 +93,6 @@ function load_plugins() {
 		// masukkan ke dalam daftar plugin yang telah diload
 		$_MR['loaded_plugins'][] = $plugin;
 		
-		// ok, let's include the plugin
-		include_once(BASE_PATH . '/plugins/' . $plugin . '/' . $plugin . '.php');
 	}
 	
 	site_debug(print_r($_MR['error_plugins'], TRUE), 'ERROR PLUGINS');
