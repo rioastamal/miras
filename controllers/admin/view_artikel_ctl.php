@@ -42,10 +42,10 @@ else {
 site_debug(get_last_query(), 'QUERY TERAKHIR');
 site_debug(get_query_number(), 'JUMLAH QUERY');
 // lihat PHP Manual untuk keterangan seputar fungsi print_r
-$loaded_models = print_r($_B21['loaded_models'], TRUE);
+$loaded_models = print_r($_MR['loaded_models'], TRUE);
 site_debug($loaded_models, 'MODEL YANG DILOAD');
 
-$loaded_libs = print_r($_B21['loaded_libraries'], TRUE);
+$loaded_libs = print_r($_MR['loaded_libraries'], TRUE);
 site_debug($loaded_libs, 'LIBRARY YANG DILOAD');
 
 

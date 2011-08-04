@@ -29,8 +29,8 @@ if (!mysql_select_db(DB_NAME)) {
  */
 
 // menyimpan query terakhir
-$_B21['db_query'] = '';
+$_MR['db_query'] = '';
 
 // menyimpan query error
-$_B21['db_error_msg'] = '';
-$_B21['db_error_no'] = '';
+$_MR['db_error_msg'] = '';
+$_MR['db_error_no'] = '';

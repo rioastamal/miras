@@ -5,7 +5,7 @@
 define('BASE_PATH', dirname(__FILE__));
 
 // loading boot-strap file
-include_once (BASE_PATH . '/b21/boot_strap.php');
+include_once (BASE_PATH . '/mr/boot_strap.php');
 
 try {
 	run_hooks('pre_routing');

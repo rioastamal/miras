@@ -12,14 +12,14 @@
  * @return void
  */
 function site_debug($message, $title='DEBUG: ', $separator='==>') {
-	global $_B21;
+	global $_MR;
 	
 	// jika debug mode diaktifkan maka jalankan proses debugging
-	if ($_B21['debug_mode']) {
+	if ($_MR['debug_mode']) {
 		$debug = '<strong>' . $title . '</strong> ' . $separator . ' ';
 		$debug .= $message . "\n";
 		
-		$_B21['debug_message'] .= $debug;
+		$_MR['debug_message'] .= $debug;
 	}
 }
 
@@ -32,12 +32,12 @@ function site_debug($message, $title='DEBUG: ', $separator='==>') {
  * @return void
  */
 function show_debug() {
-	global $_B21;
+	global $_MR;
 	
-	if ($_B21['debug_mode']) {
+	if ($_MR['debug_mode']) {
 		echo ("\n<hr/>\n");
 		echo ('<pre><h2>DEBUGGING MESSAGE</h2>' . "\n");
-		echo ($_B21['debug_message']);
+		echo ($_MR['debug_message']);
 		echo ('</pre>');
 	}
 }
@@ -57,10 +57,10 @@ function show_debug() {
  * @return void
  */
 function load_model($model_name) {
-	global $_B21;
+	global $_MR;
 	
 	// cek apakah model sudah pernah diload atau belum
-	if (in_array($model_name, $_B21['loaded_models'])) {
+	if (in_array($model_name, $_MR['loaded_models'])) {
 		// model sudah diload, jadi tidak perlu dilanjutkan
 		// save CPU and memory ;)
 		return;
@@ -77,7 +77,7 @@ function load_model($model_name) {
 	}
 	
 	// masukkan $model_name ke daftar model yang sudah diload
-	$_B21['loaded_models'][] = $model_name;
+	$_MR['loaded_models'][] = $model_name;
 	
 	include_once ($path_file);
 }
@@ -97,10 +97,10 @@ function load_model($model_name) {
  * @return void
  */
 function load_library($lib_name) {
-	global $_B21;
+	global $_MR;
 	
 	// cek apakah library sudah pernah diload atau belum
-	if (in_array($lib_name, $_B21['loaded_libraries'])) {
+	if (in_array($lib_name, $_MR['loaded_libraries'])) {
 		// library sudah diload, jadi tidak perlu dilanjutkan
 		// save CPU and memory ;)
 		return;
@@ -117,7 +117,7 @@ function load_library($lib_name) {
 	}
 	
 	// masukkan $lib_name ke daftar library yang sudah diload
-	$_B21['loaded_libraries'][] = $lib_name;
+	$_MR['loaded_libraries'][] = $lib_name;
 	
 	include_once ($path_file);
 }
@@ -138,9 +138,9 @@ function load_library($lib_name) {
  * @return void
  */
 function load_view($view_name, &$data=NULL) {
-	global $_B21;
+	global $_MR;
 	
-	$theme = $_B21['theme'];
+	$theme = $_MR['theme'];
 	
 	// load view dari base path
 	// hasilnya adalah /path/to/berita21/views/nama_theme/nama_model.php
@@ -165,9 +165,9 @@ function load_view($view_name, &$data=NULL) {
  * @return string base url dari aplikasi
  */
 function get_base_url() {
-	global $_B21;
+	global $_MR;
 	
-	return $_B21['base_url'];
+	return $_MR['base_url'];
 }
 
 /**
@@ -184,9 +184,9 @@ function get_base_url() {
  * @return string base url + index_page dari aplikasi
  */
 function get_site_url() {
-	global $_B21;
+	global $_MR;
 	
-	return $_B21['base_url'] . $_B21['index_page'];
+	return $_MR['base_url'] . $_MR['index_page'];
 }
 
 /**
@@ -200,9 +200,9 @@ function get_site_url() {
  * @return string base url dari aplikasi + nama theme + slash
  */
 function get_theme_url() {
-	global $_B21;
+	global $_MR;
 	
-	return $_B21['base_url'] . 'views/' . $_B21['theme'] . '/';
+	return $_MR['base_url'] . 'views/' . $_MR['theme'] . '/';
 }
 
 /**
@@ -215,9 +215,9 @@ function get_theme_url() {
  * @return string judul dari halaman
  */
 function get_page_title() {
-	global $_B21;
+	global $_MR;
 	
-	return $_B21['title'];
+	return $_MR['title'];
 }
 
 /**
@@ -231,9 +231,9 @@ function get_page_title() {
  * @return void
  */
 function set_page_title($title='') {
-	global $_B21;
+	global $_MR;
 	
-	$_B21['title'] = $title;
+	$_MR['title'] = $title;
 }
 
 /**
@@ -246,9 +246,9 @@ function set_page_title($title='') {
  * @return void
  */
 function set_flash_message($message='') {
-	global $_B21;
+	global $_MR;
 	
-	$_B21['flash_message'] = $message;
+	$_MR['flash_message'] = $message;
 }
 
 /**
@@ -260,14 +260,14 @@ function set_flash_message($message='') {
  * @return string flash message
  */
 function get_flash_message() {
-	global $_B21;
+	global $_MR;
 	
-	if (!$_B21['flash_message']) {
+	if (!$_MR['flash_message']) {
 		// jika tidak ada sesuatu di flash message, kembalikan saja kosongan
 		return '';
 	}
 	
-	$mesg = '<div class="flash ' . $_B21['flash_class'] . '">' . $_B21['flash_message'] . '</div>' . "\n";
+	$mesg = '<div class="flash ' . $_MR['flash_class'] . '">' . $_MR['flash_message'] . '</div>' . "\n";
 	return $mesg;
 }
 
@@ -281,9 +281,9 @@ function get_flash_message() {
  * @return void
  */
 function set_flash_class($class='') {
-	global $_B21;
+	global $_MR;
 	
-	$_B21['flash_class'] = $class;
+	$_MR['flash_class'] = $class;
 }
 
 /**
@@ -307,11 +307,11 @@ function set_flash_class($class='') {
  * @throws Exception
  */
 function map_controller() {
-	global $_B21;
+	global $_MR;
 	
 	$file = '';
-	$index = $_B21['index_page'];
-	$controller = $_B21['default_controller'];
+	$index = $_MR['index_page'];
+	$controller = $_MR['default_controller'];
 	$uri = $_SERVER['REQUEST_URI'];
 	
 	// fix slash ganda // dengan single / jika memang terjadi
@@ -331,7 +331,7 @@ function map_controller() {
 			
 			// split $matches[3] dari /
 			$arguments = preg_split('@/@', $matches[3], -1, PREG_SPLIT_NO_EMPTY);
-			$_B21['controller_arguments'] = $arguments;
+			$_MR['controller_arguments'] = $arguments;
 			site_debug( print_r($arguments, TRUE), 'CONTROLLER ARGUMENT' );
 		}
 	}
@@ -374,13 +374,13 @@ function map_controller() {
  * @return mixed|boolean
  */
 function get_argument($index=0) {
-	global $_B21;
+	global $_MR;
 	
 	// cek apakah index tersebut ada pada array controller argument atau tidak
-	if (array_key_exists($index, $_B21['controller_arguments'])) {
+	if (array_key_exists($index, $_MR['controller_arguments'])) {
 		// index ada berarti diasumsikan juga ada nilainya
 		// maka kembalikan array dengan index yang diminta
-		return $_B21['controller_arguments'][$index];
+		return $_MR['controller_arguments'][$index];
 	}
 	
 	// jika sampai disini berarti index array tidak ada
@@ -397,10 +397,10 @@ function get_argument($index=0) {
  * @return void
  */
 function increase_query_number() {
-	global $_B21;
+	global $_MR;
 	
 	// tambah dengan satu
-	$_B21['query_number'] += 1;
+	$_MR['query_number'] += 1;
 }
 
 /**
@@ -412,9 +412,9 @@ function increase_query_number() {
  * @return int jumlah query yang telah dilakukan
  */
 function get_query_number() {
-	global $_B21;
+	global $_MR;
 	
-	return $_B21['query_number'];
+	return $_MR['query_number'];
 }
 
 /**
@@ -429,9 +429,9 @@ function get_query_number() {
  * @return void
  */
 function set_last_query($query) {
-	global $_B21;
+	global $_MR;
 	
-	$_B21['last_query'] = $query;
+	$_MR['last_query'] = $query;
 }
 
 /**
@@ -443,7 +443,7 @@ function set_last_query($query) {
  * @return string query terakhir yang dijalankan
  */
 function get_last_query() {
-	global $_B21;
+	global $_MR;
 	
-	return $_B21['last_query'];
+	return $_MR['last_query'];
 }

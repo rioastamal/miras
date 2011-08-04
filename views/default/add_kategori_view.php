@@ -5,7 +5,7 @@
 		
 		<?php echo (get_flash_message());?>
 		
-		<form action="<?php echo (get_site_url());?>/add-kategori" method="post" class="b21">
+		<form action="<?php echo (get_site_url());?>/add-kategori" method="post" class="mr">
 			<label>Nama Kategori</label>
 			<input class="text" type="text" name="nama_kat" value="" id="" /><br/>
 			<input class="button" type="submit" name="submit-kat" value="SIMPAN" />
