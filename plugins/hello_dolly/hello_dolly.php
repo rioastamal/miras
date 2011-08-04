@@ -21,7 +21,8 @@ function heldo_head() {
 // load_view('dolly_test_view');
 
 // TEST LOAD MODEL
-// load_model('dolly');
+
+load_model('dolly', 'hello_dolly');
 
 // TEST LOAD LIBRARY
 load_library('dolly_test', 'hello_dolly');
