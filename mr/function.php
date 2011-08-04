@@ -145,20 +145,27 @@ function load_library($lib_name, $plugin_name=NULL) {
  * </code>
  *
  * @author Rio Astamal <me@rioastamal.net>
+ * @author Alfa Radito
  * @since Version 1.0
  *
  * @param string $view_name nama dari view yang akan diload
  * @param array $data data yang akan di passing ke views
  * @return void
  */
-function load_view($view_name, &$data=NULL) {
+function load_view($view_name, &$data=NULL, $plugin_name=NULL) {
 	global $_MR;
 	
 	$theme = $_MR['theme'];
 	
 	// load view dari base path
 	// hasilnya adalah /path/to/berita21/views/nama_theme/nama_model.php
-	$path_file = BASE_PATH . '/views/' . $theme . '/' . $view_name . '_view.php';
+	//$path_file = BASE_PATH . '/views/' . $theme . '/' . $view_name . '_view.php';
+	if ($plugin_name == NULL){
+		$path_file = BASE_PATH . '/views/' . $theme . '/' . $view_name . '_view.php';
+	}
+	else{
+		$path_file = BASE_PATH . '/plugins/' . $plugin_name . '/views/' . $view_name . '_view.php';
+	}
 	
 	// jika file tidak ada maka view tidak bisa diload
 	if (!file_exists($path_file)) {
