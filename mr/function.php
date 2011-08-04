@@ -51,12 +51,13 @@ function show_debug() {
  * </code>
  *
  * @author Rio Astamal <me@rioastamal.net>
+ * @author Irianto Bunga Pratama <me@iriantobunga.com>
  * @since Version 1.0
  *
  * @param string $model_name nama dari model yang akan diload
  * @return void
  */
-function load_model($model_name) {
+function load_model($model_name, $plugin_name=NULL) {
 	global $_MR;
 	
 	// cek apakah model sudah pernah diload atau belum
@@ -66,9 +67,14 @@ function load_model($model_name) {
 		return;
 	}
 	
-	// load model dari base path
-	// hasilnya adalah /path/to/berita21/models/nama_model.php
-	$path_file = BASE_PATH . '/models/' . $model_name . '_model.php';
+	if (!$plugin_name) {
+		// load model dari base path
+		// hasilnya adalah /path/to/berita21/models/nama_model.php
+		$path_file = BASE_PATH . '/models/' . $model_name . '_model.php';
+	} else {
+		// load model dari plugin
+		$path_file = BASE_PATH . '/plugins/' . $plugin_name . '/models/' . $model_name . '_model.php';
+	}
 	
 	// jika file tidak ada maka model tidak bisa diload
 	if (!file_exists($path_file)) {
