@@ -17,8 +17,9 @@ function heldo_head() {
 	echo ("<!-- I'm Hello Dolly ;) -->\n");
 }
 
+$da = null;
 // TEST LOAD VIEW 
-// load_view('dolly_test_view');
+ load_view('dolly_test', $da, 'hello_dolly');
 
 // TEST LOAD MODEL
 // load_model('dolly_model');
