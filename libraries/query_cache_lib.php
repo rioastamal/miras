@@ -16,9 +16,9 @@
  * @return void
  */
 function query_cache_enable() {
-	global $_B21;
+	global $_MR;
 	
-	$_B21['enable_query_cache'] = TRUE;
+	$_MR['enable_query_cache'] = TRUE;
 }
 
 /**
@@ -30,9 +30,9 @@ function query_cache_enable() {
  * @return void
  */
 function query_cache_disable() {
-	global $_B21;
+	global $_MR;
 	
-	$_B21['enable_query_cache'] = FALSE;
+	$_MR['enable_query_cache'] = FALSE;
 }
 
 /**
@@ -44,9 +44,9 @@ function query_cache_disable() {
  * @return boolean aktif atau tidaknya query cache
  */
 function query_cache_status() {
-	global $_B21;
+	global $_MR;
 	
-	return $_B21['enable_query_cache'];
+	return $_MR['enable_query_cache'];
 }
 
 /**

@@ -78,9 +78,9 @@ function tpl_get_kategori($user_config=array()) {
  * @return void
  */
 function tpl_add_menu($menu) {
-	global $_B21;
+	global $_MR;
 	
-	$_B21['menus'][] = $menu;
+	$_MR['menus'][] = $menu;
 }
 
 /**
@@ -92,7 +92,7 @@ function tpl_add_menu($menu) {
  * @return string menu yang akan ditampilkan dalam format HTML
  */
 function tpl_build_menu() {
-	global $_B21;
+	global $_MR;
 	
 	$menu_html = '';
 	$open = '<li>';
@@ -106,7 +106,7 @@ function tpl_build_menu() {
 	);
 	
 	// loop semua menu untuk disusun
-	foreach ($_B21['menus'] as $menu) {
+	foreach ($_MR['menus'] as $menu) {
 		// Hanya susun menu yang mempunyai format lengkap minimal id dan label
 		// selain itu maka tidak akan disusun
 		if (isset($menu['id']) && isset($menu['label'])) {
@@ -117,7 +117,7 @@ function tpl_build_menu() {
 			// jika iya maka tambahkan CSS class active
 			// halaman / controller tentu harus memanggil set_active_menu dulu
 			// untuk menentukan mana menu yang perlu ditandai aktif (sedang terpilih)
-			if (in_array($_menu['id'], $_B21['active_menu'])) {
+			if (in_array($_menu['id'], $_MR['active_menu'])) {
 				$link = '<a href="'. $_menu['url'] . '" class="active" title="' . $_menu['title'] . '">' . $_menu['label'] . '</a>';
 			} else {
 				$link = '<a href="'. $_menu['url'] . '" title="' . $_menu['title'] . '">' . $_menu['label'] . '</a>';
@@ -142,7 +142,7 @@ function tpl_build_menu() {
  * @return void
  */
 function set_active_menu($menu) {
-	global $_B21;
+	global $_MR;
 	
-	$_B21['active_menu'][] = $menu;
+	$_MR['active_menu'][] = $menu;
 }

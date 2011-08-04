@@ -1,15 +1,15 @@
 <?php
 
 // Alamat Base URL dari aplikasi, harus diakhiri dengan '/' SLASH
-$_B21['base_url'] = 'http://localhost/berita21/';
+$_MR['base_url'] = 'http://localhost/berita21/';
 
 // tema yang digunakan
-$_B21['theme'] = 'default';
+$_MR['theme'] = 'default';
 
 // status debugging diaktifkan atau tidak
 // TRUE => Aktif
 // FALSE => Tidak Diaktifkan
-$_B21['debug_mode'] = TRUE;
+$_MR['debug_mode'] = TRUE;
 
 // ------------------ AKHIR KONFIGURASI ----------------------------- //
 
@@ -18,59 +18,59 @@ $_B21['debug_mode'] = TRUE;
 
 // default nama title dari halaman, seharusnya nanti akan di-overwrite 
 // oleh controller
-$_B21['title'] = '';
+$_MR['title'] = '';
 
 // flash message merupakan variabel yang menyimpan pesan sementara untuk 
 // ditampilkan kepada user, misal pesan proses telah selesai dan sebagainya
-$_B21['flash_message'] = '';
+$_MR['flash_message'] = '';
 
 // CSS class dari div pesan flash
-$_B21['flash_class'] = 'flash-warning';
+$_MR['flash_class'] = 'flash-warning';
 
 // Nama file yang menghandle mapping ke file controller
-$_B21['index_page'] = 'index.php';
+$_MR['index_page'] = 'index.php';
 
 // nama default controller jika user datang tanpa menyebutkan nama controller
-$_B21['default_controller'] = 'main';
+$_MR['default_controller'] = 'main';
 
 // pesan debugging akan disimpan pada variabel ini
-$_B21['debug_message'] = '';
+$_MR['debug_message'] = '';
 
 // variabel yang menyimpan nama-nama model yang telah diload ke memory
-$_B21['loaded_models'] = array();
+$_MR['loaded_models'] = array();
 
 // variabel yang menyimpan nama-nama library yang telah diload ke memory
-$_B21['loaded_libraries'] = array();
+$_MR['loaded_libraries'] = array();
 
 // variabel yang menyimpan nama-nama helper yang telah diload ke memory
-$_B21['loaded_helpers'] = array();
+$_MR['loaded_helpers'] = array();
 
 // variabel yang menyimpan nama-nama plugin yang diload
-$_B21['loaded_plugins'] = array();
+$_MR['loaded_plugins'] = array();
 
 // variabel yang menyimpan nama-nama plugin yang gagal diload
-$_B21['error_plugins'] = array();
+$_MR['error_plugins'] = array();
 
 // variabel yang menyimpan nama-nama hooks
-$_B21['hooks'] = array();
+$_MR['hooks'] = array();
 
 // variabel yang menyimpan banyaknya query yang telah dieksekusi
-$_B21['query_number'] = 0;
+$_MR['query_number'] = 0;
 
 // variabel yang menyimpan SQL query terakhir yang dijalankan
-$_B21['last_query'] = '';
+$_MR['last_query'] = '';
 
 // librari yang diload secara otomatis saat bootstrap
-$_B21['autoload_libraries'] = array('plugin', 'template');
+$_MR['autoload_libraries'] = array('plugin', 'template');
 
 // variabel yang menyimpan daftar menu
-$_B21['menus'] = array();
+$_MR['menus'] = array();
 
 // variabel yang menyimpan daftar menu yang aktif
-$_B21['active_menu'] = array();
+$_MR['active_menu'] = array();
 
 // menggunakan query cache atau tidak
-$_B21['enable_query_cache'] = FALSE;
+$_MR['enable_query_cache'] = FALSE;
 
 // variabel yang menyimpan controller arguments
-$_B21['controller_arguments'] = array();
+$_MR['controller_arguments'] = array();
