@@ -1,5 +1,13 @@
 <?php
 
+tpl_add_menu(array(
+	'label' => 'Add Artikel',
+	'id' => 'add_artikel',
+	'url' => get_site_url() . '/admin/add-artikel',
+	'title' => 'Tambah Artikel Baru',
+	'order' => 1
+));	
+
 set_page_title('Test Artikel View');
 
 // load query cache library

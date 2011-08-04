@@ -1,5 +1,13 @@
 <?php
 
+tpl_add_menu(array(
+	'label' => 'View Artikel',
+	'id' => 'view_artikel',
+	'url' => get_site_url() . '/admin/view-artikel',
+	'title' => 'Lihat Artikel',
+	'order' => 1
+));	
+
 set_active_menu('view_artikel');
 set_page_title('View Artikel');
 
