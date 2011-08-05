@@ -22,3 +22,9 @@ function secure_url() {
 		throw new Exception ("Hayo.. ngapain");
 	}
 }
+
+function secure_url_on_install() {}
+function secure_url_on_uninstall() {}
+function secure_url_on_activate() {}
+function secure_url_on_deactivate() {}
+function secure_url_on_upgrade() {}
