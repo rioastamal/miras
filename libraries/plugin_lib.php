@@ -22,56 +22,30 @@ function load_plugins() {
 	$dirs = array_slice($dirs, 2);
 	
 	foreach ($dirs as $plugin) {
-		// cek terlebih dahulu file informasi dari plugin ada atau tidak
-		// nama file ini harus sesuai format nama_plugin.info
-		$json_info = BASE_PATH . '/plugins/' . $plugin . '/' . $plugin . '.info';
-		if (!file_exists($json_info)) {
-			// skip...
-			$_MR['error_plugins'][] = array(
-				'nama plugin' => $plugin,
-				'error message' => 'plugin tidak ditemukan'
-			);
-			continue;
-		}
+		// list semua direktori atau files yang harus ada pada direktori 
+		// plugin yang akan diload
+		$needed_files = array();
+		$needed_files[$plugin . '.info'] = 'Nama file ' . $plugin . '.info tidak ditemukan';
+		$needed_files[$plugin . '.php'] = 'Nama file ' . $plugin . '.php tidak ditemukan';
+		$needed_files['controllers'] = 'Direktori controllers tidak ditemukan';
+		$needed_files['views'] = 'Direktori views tidak ditemukan';
+		$needed_files['models'] = 'Direktori models tidak ditemukan';
 		
-		// cek apakah file nama_plugin.php ada atau tidak
-		$path_file = BASE_PATH . '/plugins/' . $plugin . '/' . $plugin . '.php';
-		if (!file_exists($path_file)) {
-			$_MR['error_plugins'][] = array(
-				'nama plugin' => $plugin,
-				'error message' => 'file php tidak ditemukan'
-			);
-			continue;
-		}
-		
-		// cek apakah direktori controllers ada atau tidak
-		$path_dir_ctl = BASE_PATH . '/plugins/' . $plugin . '/controllers';
-		if (!file_exists($path_dir_ctl)) {
-			$_MR['error_plugins'][] = array(
-				'nama plugin' => $plugin,
-				'error message' => 'controllers tidak ditemukan'
-			);
-			continue;
-		}
-
-		// cek apakah direktori views ada atau tidak		
-		$path_dir_view = BASE_PATH . '/plugins/' . $plugin . '/views';
-		if (!file_exists($path_dir_view)) {
-			$_MR['error_plugins'][] = array(
-				'nama plugin' => $plugin,
-				'error message' => 'views tidak ditemukan'
-			);
-			continue;
-		}
-		
-		// cek apakah direktori models ada atau tidak
-		$path_dir_model = BASE_PATH . '/plugins/' . $plugin . '/models';
-		if (!file_exists($path_dir_model)) {
-			$_MR['error_plugins'][] = array(
-				'nama plugin' => $plugin,
-				'error message' => 'models tidak ditemukan'
-			);
-			continue;
+		// cek setiap kebutuhan files atau direktori
+		foreach ($needed_files as $file_or_dir => $message) {
+			// file atau direktori yang diminta harus ada
+			$path = BASE_PATH . '/plugins/' . $plugin . '/' . $file_or_dir;
+			if (!file_exists($path)) {
+				// file atau direktori tidak ada maka masukkan ke daftar plugin error
+				// lalu langsung lanjutkan pengecekan ke plugin berikutnya
+				$_MR['error_plugins'][] = array(
+												'plugins_name' => $plugin,
+												'error_message' => $message
+										);
+				// 2, karena level foreach yang ingin kita skip adalah 2 level 
+				// (foreach atas)
+				continue 2;
+			}
 		}
 		
 		// ok, let's include the plugin
