@@ -4,10 +4,10 @@
 // BASE_PATH adalah lokasi absolute path sampai ke berita21
 define('BASE_PATH', dirname(__FILE__));
 
-// loading boot-strap file
-include_once (BASE_PATH . '/mr/boot_strap.php');
-
 try {
+	// loading boot-strap file
+	include_once (BASE_PATH . '/mr/boot_strap.php');
+	
 	run_hooks('pre_routing');
 	$controller = map_controller();
 	run_hooks('post_routing', $controller);

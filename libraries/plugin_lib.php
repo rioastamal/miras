@@ -91,8 +91,8 @@ function load_plugins() {
 								 $plugin . '_on_upgrade');
 		foreach ($needed_function as $nf) {
 			if (!function_exists($nf)) {
-				echo 'Nama function ' . $nf . ' tidak ditemukan pada plugin ' . $plugin; 
-				exit;
+				site_debug('Fungsi ' . $nf . ' : Plugin ' . $plugin, 'FUNCTION NOT EXISTS');
+				throw new Exception('Nama function ' . $nf . ' tidak ditemukan pada plugin ' . $plugin); 
 			}
 		}
 		
