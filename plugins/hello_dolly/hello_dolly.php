@@ -13,9 +13,11 @@ tpl_add_menu(array(
 
 add_hook('page_head', 'heldo_head');
 
-function hello_dolly_on_install() {
-
-}
+function hello_dolly_on_install() {}
+function hello_dolly_on_uninstall() {}
+function hello_dolly_on_activate() {}
+function hello_dolly_on_deactivate() {}
+function hello_dolly_on_upgrade() {}
 
 function heldo_head() {
 	echo ("<!-- I'm Hello Dolly ;) -->\n");

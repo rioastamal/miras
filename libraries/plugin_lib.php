@@ -72,7 +72,7 @@ function load_plugins() {
 		
 		// informasi plugin berupa format JSON, jadi untuk mengubahnya kedalam
 		// bentuk PHP Object digunakan json_encode
-		$json_info = json_decode(file_get_contents($json_info));
+		// $json_info = json_decode(file_get_contents());
 		
 		// masukkan ke dalam daftar plugin yang telah diload
 		$_MR['loaded_plugins'][] = $plugin;
