@@ -61,7 +61,12 @@ $_MR['query_number'] = 0;
 $_MR['last_query'] = '';
 
 // librari yang diload secara otomatis saat bootstrap
-$_MR['autoload_libraries'] = array('plugin', 'template', 'query_cache');
+$_MR['autoload_libraries'] = array(
+								'controller', 
+								'plugin', 
+								'template', 
+								'query_cache'
+							);
 
 // variabel yang menyimpan daftar menu
 $_MR['menus'] = array();
