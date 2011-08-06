@@ -5,6 +5,12 @@
  * konfigurasi yang diperlukan
  */
 
+// global variabel
+$_MR = array();
+
+// time start
+$_MR['time_start'] = microtime(TRUE);
+
 // site config
 include_once(BASE_PATH . '/mr/' . 'site_config.php');
 include_once(BASE_PATH . '/mr/' . 'db_config.php');

@@ -17,7 +17,9 @@ try {
 	run_hooks('post_routing', $controller);
 	include_once ($controller);
 	run_hooks('post_controller', $controller);
+	mr_script_time();
 } catch (Exception $e) {
+	mr_script_time();
 	echo ($e->getMessage());
 }
 

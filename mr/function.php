@@ -467,3 +467,22 @@ function get_last_query() {
 	
 	return $_MR['last_query'];
 }
+
+/**
+ * Fungsi untuk menghitung waktu ekeskusi script
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @return double
+ */
+function mr_script_time() {
+	global $_MR;
+	
+	$start = $_MR['time_start'];
+	$end = microtime(TRUE);
+	
+	$exe_time = round($end - $start, 8);
+	site_debug($exe_time . ' seconds', 'EXECUTION TIME');
+	return $exe_time;
+}
