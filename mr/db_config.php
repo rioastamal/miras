@@ -13,20 +13,12 @@ define('DB_PASS', 'berita123');
 // database host
 define('DB_HOST', 'localhost');
 
-// koneksi ke mysql
-$_db_conn = mysql_connect(DB_HOST, DB_USER, DB_PASS);
-if (!$_db_conn) {
-	exit('Koneksi dabatase error check kembali konfigurasi');
-}
-
-// pilih database
-if (!mysql_select_db(DB_NAME)) {
-	exit('Error saat milih database');
-}
-
 /**
- * Global variabel untuk menampung error database
+ * Global variabel untuk menampung resource database
  */
+
+// menyimpan koneksi database
+$_MR['db'] = NULL;
 
 // menyimpan query terakhir
 $_MR['db_query'] = '';
