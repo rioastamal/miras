@@ -104,10 +104,10 @@ function insert_kategori($kat) {
 	$stmt = $_MR['db']->prepare($query);
 	
 	// bind parameter dengan tipe string 's'
-	$stmt->bind_param('s', $id_kat);
+	$stmt->bind_param('s', $nama_kat);
 	
 	// variabel parameter selalu dipassing by reference oleh fungsi bind_param
-	$id_kat = $kat;
+	$nama_kat = $kat->kategori_nama;
 	
 	// waktnya eksekusi
 	$result = $stmt->execute();
