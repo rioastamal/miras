@@ -17,7 +17,7 @@
 $current_path = dirname(__FILE__);
 // karena BASE_PATH dipindah ke index maka create konstanta BASE_PATH secara manual
 define('BASE_PATH', dirname( $current_path . '/../..'));
-include_once (BASE_PATH . '/libs/boot_strap.php');
+include_once (BASE_PATH . '/mr/boot_strap.php');
 
 // load model kategori, tidak perlu menyebutkan nama file lengkap
 load_model('kategori');

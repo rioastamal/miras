@@ -18,6 +18,8 @@
  * @return array|boolean Daftar kategori dalam array of object, FALSE ketika error
  */
 function get_all_kategori($jumlah_artikel=TRUE) {
+	global $_MR;
+	
 	// apakah jumlah artikel juga diikutkan dalam hasil query?
 	if ($jumlah_artikel) {
 		// oh yeah, ikutkan...
@@ -46,8 +48,8 @@ function get_all_kategori($jumlah_artikel=TRUE) {
 		}
 	} 
 	
-	$result = mysql_query($query);
-	if (!$result) {
+	$result = $_MR['db']->query($query);
+	if ($result === FALSE) {
 		// query error
 		return FALSE;
 	}
@@ -60,8 +62,9 @@ function get_all_kategori($jumlah_artikel=TRUE) {
 	// masukkan data query terakhir
 	set_last_query($query);
 	
+	
 	$artikel = array();
-	while ($row = mysql_fetch_object($result)) {
+	while ($row = $result->fetch_object()) {
 		// masukkan setiap result object ke array $artikel
 		$artikel[] = $row;
 	}
@@ -71,6 +74,9 @@ function get_all_kategori($jumlah_artikel=TRUE) {
 		site_debug(print_r($result, TRUE), "WRITE QUERY CACHE");
 		query_cache_write($query, $artikel);
 	}
+	
+	// tutup result
+	$result->close();
 	
 	// kembalikan hasil
 	return $artikel;
@@ -87,16 +93,31 @@ function get_all_kategori($jumlah_artikel=TRUE) {
  * @return boolean SUKSES atau gagalnya query dilakukan
  */
 function insert_kategori($kat) {
+	global $_MR;
+	
 	/**
 	 * Attribut dari parameter pertama $kat diharapkan seperti berikut:
 	 * $kat->kategori_nama
 	 */
-	$query = "INSERT INTO kategori (kategori_nama) VALUES ('{$kat->kategori_nama}')";
-	$result = mysql_query($query);
+	$query = "INSERT INTO kategori (kategori_nama) VALUES (?)";
+	// selalu gunakan prepared statement untuk insert
+	$stmt = $_MR['db']->prepare($query);
+	
+	// bind parameter dengan tipe string 's'
+	$stmt->bind_param('s', $id_kat);
+	
+	// variabel parameter selalu dipassing by reference oleh fungsi bind_param
+	$id_kat = $kat;
+	
+	// waktnya eksekusi
+	$result = $stmt->execute();
 	
 	// masukkan query ke variabel global last_query
 	set_last_query($query);
 	increase_query_number();
+	
+	// tutup prepared statement
+	$stmt->close();
 	
 	if (!$result) {
 		// query error
