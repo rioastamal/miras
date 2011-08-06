@@ -41,6 +41,31 @@ function show_debug() {
 		echo ('</pre>');
 	}
 }
+
+/**
+ * Fungsi untuk menampilkan pesan error
+ *
+ * <code>
+ * // jika akan menampilkan pesan error maka cara penulisannya adalah
+ * show_error($e->getMessage())
+ * </code>
+ *
+ * @author Irianto Bunga Pratama <me@iriantobunga.com>
+ * @since Version 1.0
+ *
+ * @param string $pesan_error pesan yang akan ditampilkan
+ * @return void
+ */
+function show_error($pesan_error='Error') {
+	$path_file = BASE_PATH . '/views/default/error_view.php';
+	
+	if (!file_exists($path_file)) {
+		// keluar dari sistem
+		exit ();
+	}
+	
+	include_once ($path_file);
+}
  
 /**
  * Fungsi untuk meload model database.

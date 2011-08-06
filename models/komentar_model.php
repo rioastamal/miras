@@ -10,7 +10,7 @@
  * Fungsi untuk mendapatkan seluruh komentar 5 terakhir
  * pada artikel tersebut
  *
- * @author irianto bunga <me@iriantobunga.com>
+ * @author Irianto Bunga Pratama<me@iriantobunga.com>
  * @since Version 1.0
  * @example BASE_PATH/test/test_komentar.php
  *
@@ -19,6 +19,8 @@
  */
  
 function get_comment_by_article_id($id=0) {
+	global $_MR;
+	
 	// query mengambil komentar berdasarkan id artikel
 	$query = 'SELECT kmt.*, art.artikel_id, art.artikel_judul
 				FROM komentar AS kmt 
@@ -42,8 +44,8 @@ function get_comment_by_article_id($id=0) {
 		}
 	} 
 	
-	$result = mysql_query($query);
-	if (!$result) {
+	$result = $_MR['db']->query($query);
+	if ($result === FALSE) {
 		// query error
 		return FALSE;
 	}
@@ -57,9 +59,9 @@ function get_comment_by_article_id($id=0) {
 	set_last_query($query);
 	
 	$komentar = array();
-	while ($data = mysql_fetch_object($result)) {
+	while ($row = $result->fetch_object()) {
 		// masukkan setiap result object ke array $komentar
-		$komentar[] = $data;
+		$komentar[] = $row;
 	}
 	
 	// masukkan hasil query ke cache
@@ -68,11 +70,16 @@ function get_comment_by_article_id($id=0) {
 		query_cache_write($query, $komentar);
 	}
 	
+	// tutup result
+	$result->close();
+	
 	// kembalikan hasil
 	return $komentar;
 }
  
 function get_last_commented_article($last=5) {
+	global $_MR;
+	
 	// query mengambil 5 komentar terakhir
 	$query = 'SELECT kmt.*, art.artikel_id, art.artikel_judul
 				FROM komentar AS kmt 
@@ -96,8 +103,8 @@ function get_last_commented_article($last=5) {
 		}
 	} 
 	
-	$result = mysql_query($query);
-	if (!$result) {
+	$result = $_MR['db']->query($query);
+	if ($result === FALSE) {
 		// query error
 		return FALSE;
 	}
@@ -111,9 +118,9 @@ function get_last_commented_article($last=5) {
 	set_last_query($query);
 	
 	$komentar = array();
-	while ($data = mysql_fetch_object($result)) {
-		// masukkan setiap result object ke array $komentar
-		$komentar[] = $data;
+	while ($row = $result->fetch_object()) {
+		// masukkan setiap result object ke array $artikel
+		$komentar[] = $row;
 	}
 	
 	// masukkan hasil query ke cache
@@ -122,11 +129,16 @@ function get_last_commented_article($last=5) {
 		query_cache_write($query, $komentar);
 	}
 	
+	// tutup result
+	$result->close();
+	
 	// kembalikan hasil
 	return $komentar;
 }
 
 function get_most_commented_article() {
+	global $_MR;
+	
 	// query mengambil jumlah kometar terbanyak pada artikel tersebut
 	$query = 'SELECT art.artikel_judul ,count(ak.artikel_id) as jml
 				FROM artikel_komentar AS ak
@@ -149,8 +161,8 @@ function get_most_commented_article() {
 		}
 	}
 				
-	$result = mysql_query($query);
-	if (!$result) {
+	$result = $_MR['db']->query($query);
+	if ($result === FALSE) {
 		// query error
 		return FALSE;
 	}
@@ -164,9 +176,9 @@ function get_most_commented_article() {
 	set_last_query($query);
 	
 	$komentar = array();
-	while ($data = mysql_fetch_object($result)) {
+	while ($row = $result->fetch_object()) {
 		// masukkan setiap result object ke array $komentar
-		$komentar[] = $data;
+		$komentar[] = $row;
 	}
 	
 	// masukkan hasil query ke cache
@@ -174,6 +186,9 @@ function get_most_commented_article() {
 		site_debug(print_r($result, TRUE), "WRITE QUERY CACHE");
 		query_cache_write($query, $komentar);
 	}
+	
+	// tutup result
+	$result->close();
 	
 	// kembalikan hasil
 	return $komentar;
@@ -185,27 +200,64 @@ function get_most_commented_article() {
  * @return boolean SUKSES atau gagalnya query dilakukan
  */
 function insert_komentar($kmt) {
+	global $_MR; 
+	
 	/**
 	 * Attribut dari parameter pertama $kmt diharapkan seperti berikut:
 	 * $kmt->komentar_nama
 	 * 
 	 */
-	$query = "INSERT INTO komentar (komentar_nama, komentar_email, komentar_isi, komentar_tgl) VALUES ('{$kmt->komentar_nama}', '{$kmt->komentar_email}', '{$kmt->komentar_isi}', '{$kmt->komentar_tgl}')";
-	$result = mysql_query($query);
-	$kmt_id = mysql_insert_id();
+	//$query = "INSERT INTO komentar (komentar_nama, komentar_email, komentar_isi, komentar_tgl) VALUES ('{$kmt->komentar_nama}', '{$kmt->komentar_email}', '{$kmt->komentar_isi}', '{$kmt->komentar_tgl}')";
+	$query = "INSERT INTO komentar (komentar_nama, komentar_email, komentar_isi, komentar_tgl) VALUES (?, ?, ?, ?)";
+	// selalu gunakan prepared statement untuk insert
+	$stmt = $_MR['db']->prepare($query);
+	// bind parameter dengan tipe string 's'
+	$stmt->bind_param('ssss', $nama_kmt, $email_kmt, $isi_kmt, $tgl_kmt);
 	
-	$query = "INSERT INTO artikel_komentar (artikel_id, komentar_id) VALUES ('{$kmt->artikel_id}', '$kmt_id')";
-	$result = mysql_query($query);
+	// variabel parameter selalu dipassing by reference oleh fungsi bind_param
+	$nama_kmt = $kmt->komentar_nama;
+	$email_kmt = $kmt->komentar_email;
+	$isi_kmt = $kmt->komentar_isi;
+	$tgl_kmt = $kmt->komentar_tgl;
 	
-	// masukkan query ke variabel global last_query
-	set_last_query($query);
+	// waktnya eksekusi
+	$result= $stmt->execute();
 	
+	$kmt_id = $_MR['db']->insert_id;
+	
+	// tutup prepared statement
+	$stmt->close();
+	
+	//jika execute ke 1 gagal maka kembalikan FALSE
 	if (!$result) {
 		// query error
 		return FALSE;
 	}
 	
+	$query = "INSERT INTO artikel_komentar (artikel_id, komentar_id) VALUES (?, ?)";
+	$stmt = $_MR['db']->prepare($query);
+	// bind parameter dengan tipe string 's'
+	$stmt->bind_param('ss', $id_art, $id_kmt);
+
+	// variabel parameter selalu dipassing by reference oleh fungsi bind_param
+	$id_art = $kmt->artikel_id;
+	$id_kmt = $kmt_id;
+	
+	// waktnya eksekusi
+	$result = $stmt->execute();
+	
+	// masukkan query ke variabel global last_query
+	set_last_query($query);
 	increase_query_number();
+	
+	// tutup prepared statement
+	$stmt->close();
+	
+	//jika execute ke 2 gagal maka kembalikan FALSE
+	if (!$result) {
+		// query error
+		return FALSE;
+	}
 	
 	return TRUE;	// jika sampai disini maka everything is ok
 }

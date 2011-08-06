@@ -8,10 +8,13 @@
  /**
  * Fungsi untuk menampilkan artikel terbaru dari masing-masing kategori
  * @author Alfa Radito Sii Anak Ganteng <qwertqwe16@yahoo.co.id>, Miftah Faridl
+ * @author Irianto Bunga Pratama<me@iriantobunga.com>
  * @since version 1.0
  * @example BASE_PATH/models/artikel_model.php
  */
 function get_latest_article($last=10) {
+	global $_MR;
+	
 	// query untuk menampilkan 10 artikel terbaru
 	$query = 'SELECT a.artikel_id, a.artikel_judul, a.artikel_isi, a.artikel_tgl, k.kategori_id, k.kategori_nama
 			FROM artikel_kategori ak 
@@ -35,9 +38,8 @@ function get_latest_article($last=10) {
 		}
 	} 
 			
-	$result = mysql_query($query);
-	
-	if (!$result) {
+	$result = $_MR['db']->query($query);
+	if ($result === FALSE) {
 		// query error
 		return FALSE;
 	}
@@ -52,9 +54,9 @@ function get_latest_article($last=10) {
 	
 	
 	$artikel = array();
-	while ($data = mysql_fetch_object($result)) {
-		// masukkan data setiap result object ke array $artikel
-		$artikel[] = $data;
+	while ($row = $result->fetch_object()) {
+		// masukkan setiap result object ke array $artikel
+		$artikel[] = $row;
 	}
 	
 	// masukkan hasil query ke cache

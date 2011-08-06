@@ -20,7 +20,7 @@ try {
 	mr_script_time();
 } catch (Exception $e) {
 	mr_script_time();
-	echo ($e->getMessage());
+	show_error($e->getMessage());
 }
 
 // tutup koneksi database

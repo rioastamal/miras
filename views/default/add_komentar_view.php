@@ -4,7 +4,7 @@
 		
 		<?php echo (get_flash_message());?>
 		
-		<form action="<?php echo (get_site_url());?>/add-komentar" method="post" class="mr">
+		<form action="<?php echo (get_site_url());?>/admin/add-komentar" method="post" class="mr">
 			<select name="id_art">
 		<?php foreach ($data['daftar_artikel'] as $art) : ?>
 			<option value="<?php echo ($art->artikel_id);?>"><?php echo ($art->artikel_judul);?></option>
