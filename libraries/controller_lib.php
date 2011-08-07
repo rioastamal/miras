@@ -52,7 +52,6 @@ function map_controller() {
 			// split $matches[3] dari /
 			$arguments = preg_split('@/@', $matches[3], -1, PREG_SPLIT_NO_EMPTY);
 			$_MR['controller_arguments'] = $arguments;
-			site_debug( print_r($arguments, TRUE), 'CONTROLLER ARGUMENT' );
 		}
 	}
 	
@@ -109,6 +108,7 @@ function map_controller() {
 		$file = BASE_PATH . '/controllers/' . $controller . '_ctl.php';
 	}
 	site_debug($file, 'FULL CONTROLLER PATH');
+	site_debug( print_r($_MR['controller_arguments'], TRUE), 'CONTROLLER ARGUMENT' );
 	
 	// file exists?
 	if (file_exists($file)) {
