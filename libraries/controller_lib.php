@@ -71,7 +71,7 @@ function map_controller() {
 		
 		// cek apakah controller masih berupa direktori?
 		// WTF! you make me tired 
-		if (is_dir(BASE_PATH . '/plugins/' . $plugin_name . '/controllers/' . $controller)) {
+		if (is_dir(BASE_PATH . '/plugins/' . $plugin_name . '/controllers/' . $controller) && $controller != '/') {
 			// controller merupakan direktori jadi tambahkan dengan variabel
 			// $matches yang ber-index 2
 			site_debug($controller, 'CONTROLLER PLUGIN DIRECTORY');
