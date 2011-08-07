@@ -64,6 +64,10 @@ function get_latest_article($last=10) {
 		site_debug(print_r($result, TRUE), "WRITE QUERY CACHE");
 		query_cache_write($query, $artikel);
 	}
+	
+	// tutup result
+	$result->close();
+	
 	// kembalikan hasil
 	return $artikel;
 }

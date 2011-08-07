@@ -56,7 +56,7 @@ function show_debug() {
  * @param string $pesan_error pesan yang akan ditampilkan
  * @return void
  */
-function show_error($pesan_error='Error') {
+function show_error($error_msg='Error') {
 	$path_file = BASE_PATH . '/views/default/error_view.php';
 	
 	if (!file_exists($path_file)) {
