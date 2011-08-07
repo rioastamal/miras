@@ -86,11 +86,22 @@ function map_controller() {
 			
 			// ubah hypen(-) ke underscore jika memang terdapat simbol tersebut
 			$real_controller = str_replace('-', '_', $real_controller);
+			
+			if ($real_controller == '') {
+				$real_controller = $_MR['default_controller'];
+			}
+			
 			$controller = $controller . '/' . $real_controller;
 		}
 		
 		// map controller ke file
+		// jika controller tidak disebutkan asumsikan default_controller
+		if ($controller == '/') {
+			$controller = $_MR['default_controller'];
+		}
+		
 		$file = BASE_PATH . '/plugins/' . $plugin_name . '/controllers/' . $controller . '_ctl.php';
+		
 	} else {
 		// nama direktori atau controller tidak ditemukan dalam direktori plugins/
 		// cek apakah controller merupakan direktori atau tidak
