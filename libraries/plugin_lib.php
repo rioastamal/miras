@@ -22,6 +22,12 @@ function load_plugins() {
 	$dirs = array_slice($dirs, 2);
 	
 	foreach ($dirs as $plugin) {
+		// sebuah plugin harus berada dalam direktori
+		if (!is_dir(BASE_PATH . '/plugins/' . $plugin)) {
+			// jika ini file skip...
+			continue;
+		}
+		
 		// list semua direktori atau files yang harus ada pada direktori 
 		// plugin yang akan diload
 		$needed_files = array();
@@ -76,7 +82,6 @@ function load_plugins() {
 		
 		// masukkan ke dalam daftar plugin yang telah diload
 		$_MR['loaded_plugins'][] = $plugin;
-		
 	}
 	
 	site_debug(print_r($_MR['error_plugins'], TRUE), 'ERROR PLUGINS');

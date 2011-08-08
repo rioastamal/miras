@@ -201,6 +201,54 @@ function load_view($view_name, &$data=NULL, $plugin_name=NULL) {
 }
 
 /**
+ * Fungsi untuk meload file helper.
+ *
+ * <code>
+ * // jika akan meload helper dengan nama 'html_helper.php' maka cara penulisannya adalah
+ * load_helper('html');
+ * </code>
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param string $helper_name nama dari helper yang akan diload
+ * @param string $plugin_name nama dari library plugin yang akan diload
+ * @return void
+ */
+function load_view($view_name, $plugin_name=NULL) {
+	global $_MR;
+	
+	// cek apakah helper sudah pernah diload atau belum
+	if (in_array($helper_name, $_MR['loaded_helper'])) {
+		// helper sudah diload, jadi tidak perlu dilanjutkan
+		// save CPU and memory ;)
+		return;
+	}
+	
+	// load helper dari base path atau dari sebuah direktori plugin
+	
+	// jika nama plugin diisi maka dahulukan meload dari plugin
+	if ($plugin_name) {
+		// hasilnya adalah /path/to/berita21/plugin_name/libraries/nama_lib.php
+		$path_file = BASE_PATH . '/plugins/' . $plugin_name . '/helpers/' . $helper_name . '_helper.php';
+	} else {
+		// hasilnya adalah /path/to/berita21/libraries/nama_lib.php
+		$path_file = BASE_PATH . '/helpers/' . $helper_name . '_helper.php';
+	}
+	
+	// jika file tidak ada maka helper tidak bisa diload
+	if (!file_exists($path_file)) {
+		// keluar dari sistem
+		exit ("Helper '{$helper_name}' tidak ada pada path system.");
+	}
+	
+	// masukkan $helper_name ke daftar helper yang sudah diload
+	$_MR['loaded_helpers'][] = $helper_name;
+	
+	include_once ($path_file);
+}
+
+/**
  * Fungsi untuk mengembalikan nilai dari konfigurasi base_url, views dapat
  * menggunaman fungsi ini untuk meload URL lengkap css dan javascript
  *
