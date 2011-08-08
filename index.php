@@ -17,15 +17,17 @@ try {
 	run_hooks('post_routing', $controller);
 	include_once ($controller);
 	run_hooks('post_controller', $controller);
+	
+	mr_close_db();
 	mr_script_time();
+	mr_get_memory_usage();
 } catch (Exception $e) {
-	mr_script_time();
+	run_hooks('page_exception', $e);
 	show_error($e->getMessage());
-}
-
-// tutup koneksi database
-if ($_MR['db']) {
-	$_MR['db']->close();
+	
+	mr_close_db();
+	mr_script_time();
+	mr_get_memory_usage();
 }
 
 // print debugging info

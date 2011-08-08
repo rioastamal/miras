@@ -78,7 +78,7 @@ function load_plugins() {
 			
 			if (!file_exists($path)) {
 				// file tidak ada maka masukkan ke daftar plugin error
-				// lalu langsung lanjutkan pengecekan ke plugin berikutnya
+				// lalu langsung lempar ke exception
 				$_MR['error_plugins'][] = array(
 												'plugins_name' => $plugin,
 												'error_message' => $message

@@ -458,3 +458,33 @@ function mr_script_time() {
 	site_debug($exe_time . ' seconds', 'EXECUTION TIME');
 	return $exe_time;
 }
+
+/**
+ * Fungsi untuk menutup koneksi database
+ *
+ * @return void
+ */
+function mr_close_db() {
+	global $_MR;
+	
+	// tutup koneksi database hanya jika variabel tersebut bernilai
+	if ($_MR['db']) {
+		$_MR['db']->close();
+	}
+}
+
+/**
+ * Fungsi untuk menghitung jumlah penggunaan memori (plus memory manager dari
+ * PHP process)
+ *
+ * @return double
+ */
+function mr_get_memory_usage() {
+	// nilai TRUE menandakan penggunaan memory sebenarnya pada fungsi memory_get_usage
+	// nilai yang dikembalikan adalah dalam bytes
+	$usage_kb = memory_get_usage() / 1024;	// jadikan dalam kilobytes
+	$usage_kb = round($usage_kb, 2);
+	site_debug($usage_kb . 'kb', 'MEMORY USAGE');
+	
+	return $usage_kb;
+}
