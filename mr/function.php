@@ -488,3 +488,20 @@ function mr_get_memory_usage() {
 	
 	return $usage_kb;
 }
+
+/**
+ * Fungsi untuk melakukan 'cleaning-up' akhir pada script, fungsi ini memanggil
+ * fungsi-fungsi lain yang diperlukan untuk mengakhiri script.
+ *
+ * @return void
+ */
+function mr_clean_up() {
+	run_hooks('page_clean_up');
+	
+	mr_close_db();
+	mr_script_time();
+	mr_get_memory_usage();
+	
+	// show debugging info
+	show_debug();
+}
