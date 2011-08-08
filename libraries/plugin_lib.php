@@ -65,7 +65,10 @@ function load_plugins() {
 		
 		// memasukkan peringatan kepada semua direktori yang berada didalam direktori plugin
 		foreach ($dirs_plugins as $dirp) {
-			$needed_index[$dirp . 'index.html'] = 'index.html tidak ditemukan pada direktori ' . $plugin . '/' . $dirp;
+			// cek hanya direktori
+			if (is_dir($dirp)) {
+				$needed_index[$dirp . '/index.html'] = 'index.html tidak ditemukan pada direktori ' . $plugin . '/' . $dirp;
+			}
 		}
 		
 		// cek setiap kebutuhan files index.html pada direktori yang ditentukan
@@ -74,8 +77,13 @@ function load_plugins() {
 			$path = BASE_PATH . '/plugins/' . $plugin . '/' . $dir;
 			
 			if (!file_exists($path)) {
-				// langsung throw exception agar user 'aware' dengan kelemahan
-				// plugin ini
+				// file tidak ada maka masukkan ke daftar plugin error
+				// lalu langsung lanjutkan pengecekan ke plugin berikutnya
+				$_MR['error_plugins'][] = array(
+												'plugins_name' => $plugin,
+												'error_message' => $message
+										);
+				site_debug(print_r($_MR['error_plugins'], TRUE), 'ERROR PLUGINS');
 				throw new Exception ($message);
 			}
 		}
