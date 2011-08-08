@@ -10,6 +10,7 @@
  * Fungsi untuk meload plugin yang ada didirektori plugins
  *
  * @author Rio Astamal <me@rioastamal.net>
+ * @author Irianto Bunga Pratama <me@iriantobunga.com>
  * @since Version 1.1
  *
  * @return void
@@ -51,6 +52,31 @@ function load_plugins() {
 				// 2, karena level foreach yang ingin kita skip adalah 2 level 
 				// (foreach atas)
 				continue 2;
+			}
+		}
+		
+		// mengecek index.html pada tiap-tiap direktori termasuk direktori yang berada didalam direktori plugin
+		$needed_index = array();
+		$needed_index['index.html'] = 'index.html tidak ditemukan pada direktori ' . $plugin;
+		
+		$dirs_plugins = scandir(BASE_PATH . '/plugins/' . $plugin . '/');
+		// slice (hilangkan) dua element awal yaitu direktori . dan ..
+		$dirs_plugins = array_slice($dirs_plugins, 2);
+		
+		// memasukkan peringatan kepada semua direktori yang berada didalam direktori plugin
+		foreach ($dirs_plugins as $dirp) {
+			$needed_index[$dirp . 'index.html'] = 'index.html tidak ditemukan pada direktori ' . $plugin . '/' . $dirp;
+		}
+		
+		// cek setiap kebutuhan files index.html pada direktori yang ditentukan
+		foreach ($needed_index as $dir => $message) {
+			// direktori yang diminta harus memiliki index.html
+			$path = BASE_PATH . '/plugins/' . $plugin . '/' . $dir;
+			
+			if (!file_exists($path)) {
+				// langsung throw exception agar user 'aware' dengan kelemahan
+				// plugin ini
+				throw new Exception ($message);
 			}
 		}
 		

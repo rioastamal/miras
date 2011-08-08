@@ -215,7 +215,7 @@ function load_view($view_name, &$data=NULL, $plugin_name=NULL) {
  * @param string $plugin_name nama dari library plugin yang akan diload
  * @return void
  */
-function load_view($view_name, $plugin_name=NULL) {
+function load_helper($helper_name, $plugin_name=NULL) {
 	global $_MR;
 	
 	// cek apakah helper sudah pernah diload atau belum
