@@ -2,4 +2,4 @@
 
 echo ('FUCK YEAH!');
 
-get_argument_by("murah");
+get_argument_by("kualitas");

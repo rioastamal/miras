@@ -219,7 +219,7 @@ function load_helper($helper_name, $plugin_name=NULL) {
 	global $_MR;
 	
 	// cek apakah helper sudah pernah diload atau belum
-	if (in_array($helper_name, $_MR['loaded_helper'])) {
+	if (in_array($helper_name, $_MR['loaded_helpers'])) {
 		// helper sudah diload, jadi tidak perlu dilanjutkan
 		// save CPU and memory ;)
 		return;
