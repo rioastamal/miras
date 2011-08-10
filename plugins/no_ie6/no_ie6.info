@@ -1,0 +1,9 @@
+{
+	"name": "no ie6",
+	"version": "1.0",
+	"author": "Irianto Bunga Pratama",
+	"email": "me@iriantobunga.com",
+	"website": "http://iriantobunga.com/",
+	"description": "Plugin untuk menghentikan eksekusi script jika user menggunakan browser Internet Explorer versi 6",
+	"priority": "5"
+}
