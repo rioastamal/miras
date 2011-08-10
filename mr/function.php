@@ -440,6 +440,8 @@ function get_last_query() {
 	return $_MR['last_query'];
 }
 
+
+
 /**
  * Fungsi untuk menghitung waktu ekeskusi script
  *
