@@ -33,3 +33,5 @@ load_model('dolly', 'hello_dolly');
 
 // TEST LOAD LIBRARY
 load_library('dolly_test', 'hello_dolly');
+
+site_debug(get_current_url(), "CURRENT URL");
