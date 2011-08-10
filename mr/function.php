@@ -275,9 +275,6 @@ function get_current_url() {
 
 }
 
-function get_argument_by($arg = FALSE) {
-	
-}
 
 /**
  * Fungsi untuk mengembalikan nilai dari konfigurasi base_url, views dapat
