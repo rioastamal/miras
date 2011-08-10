@@ -21,13 +21,13 @@ foreach ($_MR['autoload_libraries'] as $lib) {
 	load_library($lib);
 }
 
-run_hooks('mr_init');
-
 // load menu
 include_once(BASE_PATH . '/mr/' . 'menu.php');
 
 // load plugins
 load_plugins();
+
+run_hooks('mr_init');
 
 // konek ke database
 $_MR['db'] = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
