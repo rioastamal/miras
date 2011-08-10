@@ -249,34 +249,6 @@ function load_helper($helper_name, $plugin_name=NULL) {
 }
 
 /**
- * Fungsi untuk meload url yang sedang diakses.
- *
- *
- * @author Alfa Radito 
- * @since Version 1.0
- *
- * @param string $helper_name nama dari helper yang akan diload
- * @param string $plugin_name nama dari library plugin yang akan diload
- * @return void
- */
-function get_current_url() {
-	
-	 if(!isset($_SERVER["HTTPS"])) {
-		 $_SERVER["HTTPS"] = "";
-	 }
-	
-	 $cur_url = 'http';
-	 if ($_SERVER["HTTPS"] == "on") {
-		 $cur_url .= "s";
-	 }
-	 $cur_url .= "://";
-	 $cur_url .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-	 return $cur_url;
-
-}
-
-
-/**
  * Fungsi untuk mengembalikan nilai dari konfigurasi base_url, views dapat
  * menggunaman fungsi ini untuk meload URL lengkap css dan javascript
  *

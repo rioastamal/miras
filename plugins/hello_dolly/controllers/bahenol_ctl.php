@@ -7,3 +7,5 @@ if (!$kualitas) {
 	$kualitas = 'murahan';
 }
 echo "SELECT * FROM barang WHERE harga='$kualitas'";
+
+site_debug(get_current_url(), "CURRENT URL");
