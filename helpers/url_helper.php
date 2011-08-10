@@ -11,21 +11,24 @@
  */
 function get_argument_by($key) {
 	global $_MR;
+	// cek apakah variabel key ada pada array $_MR['controller_arguments']
 	if (in_array($key, $_MR['controller_arguments'])) {
+		// cek berapa nilai index key
 		$index_arg = array_search($key, $_MR['controller_arguments']);
 		if ($index_arg == 0) {
 			$index_arg += 1;
-			//print_r($_MR['controller_arguments'][$index_arg]);
-			return $_MR['controller_arguments'][$index_arg];
-		} elseif ($index_arg % 2 == 0) {
+			// cek apakah index ada
+			if (array_key_exists($index_arg, $_MR['controller_arguments'])) {
+				return $_MR['controller_arguments'][$index_arg];
+			} 
+		} 
+		// cek apakah index merupakan bilangan genap atau ganjil
+		if ($index_arg % 2 == 0) {
 			$index_arg += 1;
-			//print_r($_MR['controller_arguments'][$index_arg]);
 			return $_MR['controller_arguments'][$index_arg];
-		} elseif (array_key_exists($index_arg, $_MR['controller_arguments'])) {
-			return $_MR['controller_arguments'][$index_arg];
-		} else {
-			return FALSE;
-		}
+		} 
+		
+		return FALSE;
 		
 	}
 	
