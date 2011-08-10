@@ -12,6 +12,7 @@ $email = array(
 			'fadfa.com'
 	     );
 	     
+	echo '<BR>';
 foreach($email as $eml) {
-	var_dump(valid_email($eml));
+	echo ($eml . var_dump(valid_email($eml)) . '<BR>');
 }
