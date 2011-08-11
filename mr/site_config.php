@@ -71,6 +71,15 @@ $_MR['autoload_libraries'] = array(
 // variabel yang menyimpan option dari aplikasi
 $_MR['options'] = array();
 
+// variabel yang menyimoan option yang akan diinsert, update, atau delete 
+// ke tabel options
+// proses-proses tersebut akan dieksekusi diakhir script untuk mengurangi
+// query overhead
+$_MR['options_insert_cache'] = array();
+$_MR['options_update_cache'] = array();
+$_MR['options_delete_cache'] = array();
+
+
 // variabel yang menyimpan daftar menu
 $_MR['menus'] = array();
 
