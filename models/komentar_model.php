@@ -207,7 +207,7 @@ function insert_komentar($kmt) {
 	 * $kmt->komentar_nama
 	 * 
 	 */
-	//$query = "INSERT INTO komentar (komentar_nama, komentar_email, komentar_isi, komentar_tgl) VALUES ('{$kmt->komentar_nama}', '{$kmt->komentar_email}', '{$kmt->komentar_isi}', '{$kmt->komentar_tgl}')";
+	
 	$query = "INSERT INTO komentar (komentar_nama, komentar_email, komentar_isi, komentar_tgl) VALUES (?, ?, ?, ?)";
 	// selalu gunakan prepared statement untuk insert
 	$stmt = $_MR['db']->prepare($query);
@@ -253,7 +253,7 @@ function insert_komentar($kmt) {
 	// tutup prepared statement
 	$stmt->close();
 	
-	//jika execute ke 2 gagal maka kembalikan FALSE
+	// jika execute ke 2 gagal maka kembalikan FALSE
 	if (!$result) {
 		// query error
 		return FALSE;
