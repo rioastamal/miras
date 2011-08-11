@@ -67,6 +67,9 @@ $_MR['autoload_libraries'] = array(
 								'template', 
 								'query_cache'
 							);
+							
+// variabel yang menyimpan option dari aplikasi
+$_MR['options'] = array();
 
 // variabel yang menyimpan daftar menu
 $_MR['menus'] = array();
