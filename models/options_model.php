@@ -29,46 +29,63 @@ function update_option($option_name, $option_value) {
 }
 
 /**
- * Method untuk memasukkan options
- * @param object $opt object options yang akan passing ke query
+ * Method untuk memasukkan options kedalam database
  * @return boolean SUKSES atau gagalnya query dilakukan
  * @author Irianto Bunga Pratama<me@iriantobunga.com>
  * @since Version 1.0
  */
-function insert_options($opt_name, $opt_value, $opt_autoload=1) {
+function option_insert_save() {
+	global $_MR; 	
+	
+	$insert_cache = $_MR['options_insert_cache'];
+	/* query dimasukkan kedalam array agar dapat melakukan multi_query
+	 * val dari query diberi ' untuk type text, varchar
+	 */
+	foreach ($insert_cache as $opt_key => $opt_val) {
+		$value = $opt_val['value'];
+		$autoload = $opt_val['autoload'];
+		$query[] = 'INSERT INTO options (option_name, option_value, option_autoload) VALUES (\'' . $opt_key . '\', \'' . $value . '\', ' . $autoload . ')';
+	}
+
+	// query digabungkan kedalam sebuat variable dengan pemisah ';'
+	$query = implode(';', $query);
+
+	// execute multi query
+	$multi_query = $_MR['db']->multi_query($query);
+	if ($multi_query === FALSE) {
+		// query error atau sudah dipernah dimasukkan
+		return FALSE;
+	}
+	
+	// close connection
+	$_MR['db']->close();
+	
+	return TRUE;
+}
+
+/**
+ * Method untuk memasukkan options kedalam array $_MR['options'] dan $_MR['options_insert_cache']
+ * @param String $opt_name 
+ * @param String $opt_value
+ * @param Integer optional $opt_autoload default 1
+ * @return void
+ * @author Irianto Bunga Pratama<me@iriantobunga.com>
+ * @since Version 1.0
+ */
+function insert_option($opt_name, $opt_value, $opt_autoload=1) {
 	global $_MR; 
 	
 	// mengecek $opt_value apakah array atau jika iya maka diserialize terlebih dahulu
 	if (is_array($opt_value) || is_object($opt_value)) {
 		$opt_value = serialize($opt_value);
 	}
-	
-	$query = "INSERT INTO options (option_name, option_value, option_autoload) VALUES (?, ?, ?)";
-	// selalu gunakan prepared statement untuk insert
-	$stmt = $_MR['db']->prepare($query);
-	// bind parameter dengan tipe string 's'
-	$stmt->bind_param('ssi', $name_opt, $value_opt, $autoload_opt);
-	
-	// variabel parameter selalu dipassing by reference oleh fungsi bind_param
-	$name_opt = $opt_name;
-	$value_opt = $opt_value;
-	$autoload_opt = $opt_autoload;
-	
-	// waktnya eksekusi
-	$result= $stmt->execute();
-
-	// masukkan query ke variabel global last_query
-	set_last_query($query);
-	increase_query_number();
-
-	// tutup prepared statement
-	$stmt->close();
-	
-	//jika execute gagal maka kembalikan FALSE
-	if (!$result) {
-		// query error
-		return FALSE;
-	}
-	
-	return TRUE;	// jika sampai disini maka everything is ok
+	/* memasukkan opt_name sebagai key dan opt_value sebagai val pada _MR[options]
+	*  memasukkan opt_name sebagai key dan array sebagai val pada _MR[options_insert_cache]
+	*/
+	$_MR['options'][$opt_name] = $opt_value;
+	$_MR['options_insert_cache'][$opt_name] = array(
+												'value' => $opt_value,
+												'autoload' => $opt_autoload
+											  );
 }
+
