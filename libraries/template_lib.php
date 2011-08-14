@@ -12,7 +12,7 @@
  * Fungsi ini untuk meload daftar kategori
  *
  * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.1
+ * @since Version 1.0
  *
  * @param array $user_config parameter untuk menentukan output dari daftar kategori
  * @return string
@@ -61,7 +61,7 @@ function tpl_get_kategori($user_config=array()) {
  * Fungsi untuk menambahkan menu baru ke dalam daftar menu yang akan ditampilkan.
  *
  * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.1
+ * @since Version 1.0
  *
  * Format dari parameter yang diterima adalah array dalam bentuk berikut ini
  * <code>
@@ -87,7 +87,7 @@ function tpl_add_menu($menu) {
  * Fungsi untuk membangun menu dari array menjadi format lain misal HTML List
  *
  * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.1
+ * @since Version 1.0
  *
  * @return string menu yang akan ditampilkan dalam format HTML
  */
@@ -137,7 +137,7 @@ function tpl_build_menu() {
  * Fungsi untuk menambah daftar menu yang termasuk menu aktif (sedang terpilih)
  *
  * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.1
+ * @since Version 1.0
  *
  * @return void
  */

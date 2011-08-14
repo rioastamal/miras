@@ -3,59 +3,64 @@
 /**
  * Fungsi untuk mendapatkan argumen berdasarkan $key.
  *
- *
  * @author Alfa Radito 
  * @since Version 1.0
  *
- *
+ * @return mixed|FALSE
  */
 function get_argument_by($key) {
 	global $_MR;
-	// cek apakah variabel key ada pada array $_MR['controller_arguments']
-	if (in_array($key, $_MR['controller_arguments'])) {
-		// cek berapa nilai index key
-		$index_arg = array_search($key, $_MR['controller_arguments']);
-		if ($index_arg == 0) {
-			$index_arg += 1;
-			// cek apakah index ada
-			if (array_key_exists($index_arg, $_MR['controller_arguments'])) {
-				return $_MR['controller_arguments'][$index_arg];
-			} 
-		} 
-		// cek apakah index merupakan bilangan genap atau ganjil
-		if ($index_arg % 2 == 0) {
-			$index_arg += 1;
-			return $_MR['controller_arguments'][$index_arg];
-		} 
-		
+	
+	// cek apakah $key ada dalam array
+	// hasilnya akan boolean FALSE jika tidak ada
+	$index_key = array_search($key, $_MR['controller_arguments']);
+	if ($index_key === FALSE) {
+		// key tidak ada 
 		return FALSE;
-		
 	}
 	
+	// jika index_key ganjil berarti parameter yang diberikan
+	// tidak tepat, kembalikan saja FALSE
+	if ($index_key % 2 != 0) {
+		return FALSE;
+	}
+	
+	// jika sampai disini berarti nilai $key ada
+	// namun apakah valuenya (index + 1) ada?
+	$index_value = $index_key + 1;
+	if (array_key_exists($index_value, $_MR['controller_arguments'])) {
+		// ok, ada maka kembalikan hasilnya
+		return $_MR['controller_arguments'][$index_value];
+	}
+	
+	return FALSE; // array dengan index_key + 1 tidak ada
 }
 
 /**
  * Fungsi untuk meload url yang sedang diakses.
  *
- *
  * @author Alfa Radito 
  * @since Version 1.0
  *
- *
+ * @return void
  */
-
 function get_current_url() {
+	$request_uri = $_SERVER['REQUEST_URI'];
+	$host = $_SERVER['HTTP_HOST'];
 	
-	 if(!isset($_SERVER["HTTPS"])) {
-		 $_SERVER["HTTPS"] = "";
-	 }
+	// jika port 80 maka http selain itu 
+	$protocol = 'http://';
 	
-	 $cur_url = 'http';
-	 if ($_SERVER["HTTPS"] == "on") {
-		 $cur_url .= "s";
-	 }
-	 $cur_url .= "://";
-	 $cur_url .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-	 return $cur_url;
-
+	// ika nilai $_SERVER['HTTPS'] ada dan tidak berisi 'off' (untuk IIS server)
+	// maka protokol yang digunakan adalah https://
+	if (isset($_SERVER['HTTPS'])) {
+		if ($_SERVER['HTTPS'] !== 'off') {
+			$protocol = 'https://';
+		}
+	}
+	
+	$current_url = $protocol . $host . $request_uri;
+	return $current_url;
 }
+
+

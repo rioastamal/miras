@@ -11,7 +11,7 @@
  *
  * @author Rio Astamal <me@rioastamal.net>
  * @author Irianto Bunga Pratama <me@iriantobunga.com>
- * @since Version 1.1
+ * @since Version 1.0
  *
  * @return void
  */
@@ -126,7 +126,7 @@ function load_plugins() {
  * Fungsi untuk menambahkan daftar hook
  *
  * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.1
+ * @since Version 1.0
  *
  * @return void
  */
@@ -140,7 +140,7 @@ function add_hook($hookname, $function_name) {
  * Fungsi untuk menjalankan hooks yang sudah terdaftar 
  *
  * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.1
+ * @since Version 1.0
  *
  * @param string $hookname nama hook yang kan dijalankan
  * @param mixed $args parameter yang akan dipassing ke hooks

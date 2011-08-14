@@ -11,7 +11,7 @@
  * Fungsi untuk mengaktifkan query cache
  *
  * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.1
+ * @since Version 1.0
  *
  * @return void
  */
@@ -25,7 +25,7 @@ function query_cache_enable() {
  * Fungsi untuk menon-aktifkan query cache
  *
  * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.1
+ * @since Version 1.0
  *
  * @return void
  */
@@ -39,7 +39,7 @@ function query_cache_disable() {
  * Fungsi untuk mendapatkan status aktif atau tidaknya query cache
  *
  * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.1
+ * @since Version 1.0
  *
  * @return boolean aktif atau tidaknya query cache
  */
@@ -71,7 +71,7 @@ function query_cache_write($query, $data) {
  * Fungsi untuk mendapatkan cache query
  *
  * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.1
+ * @since Version 1.0
  *
  * @param string $query SQL query yang akan dicache
  * @param int $expire Cache expire dalam detik
