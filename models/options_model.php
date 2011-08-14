@@ -15,16 +15,52 @@
  *
  * @param string $option_name 
  * @param string $option_value
+ * @return void
  */
 function update_option($option_name, $option_value) {
 	global $_MR;
+	$insert = FALSE;
 	
+	if (!array_key_exists($option_name, $_MR['options'])) {
+		// option belum ada maka prosesnya adalah insert bukan update
+		$insert = TRUE;
+	}
+	
+	// option value yang masuk _MR['option'] tidak perlu diserialize
+	// karena akan langsung dipake
 	$_MR['options'][$option_name] = $option_value;
 	
-	// cek nilai dari option value jika berupa string atau object maka serialize
-	// nilai tersebut agar bisa dimasukkan ke database
-	if (is_array($option_value) || is_object($option_value)) {
-		$option_value = serialize($option_value);
+	// masukkan ke cache untuk dilakukan penghapusan dari database
+	// saat proses script end
+	$_MR['options']['options_delete_cache'][$option_name] = $option_value;
+}
+
+/**
+ * Fungsi untuk melakukan penghapusan pada option
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param string $option_name 
+ * @return void|boolean
+ */
+function delete_option($option_name) {
+	global $_MR;
+	
+	if (!array_key_exists($option_name, $_MR['options'])) {
+		// option tidak ada, jadi tidak perlu diteruskan karena kemungkinan
+		// sudah ada rutin kode lain yang memanggil ini sebelumnya
+		return FALSE;
+	}
+	
+	// unset nilai nama option dari _MR['option']
+	unset($_MR['options'][$option_name]);
+	
+	// masukkan ke cache untuk dimasukkan ke datatabase 
+	if ($insert === TRUE) {
+		$_MR['options']['options_insert_cache'][$option_name] = $option_value;
+	} else {
+		$_MR['options']['options_update_cache'][$option_name] = $option_value;
 	}
 }
 
