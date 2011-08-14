@@ -30,9 +30,12 @@ function update_option($option_name, $option_value) {
 	// karena akan langsung dipake
 	$_MR['options'][$option_name] = $option_value;
 	
-	// masukkan ke cache untuk dilakukan penghapusan dari database
-	// saat proses script end
-	$_MR['options']['options_delete_cache'][$option_name] = $option_value;
+	// masukkan ke cache untuk dimasukkan ke datatabase 
+	if ($insert === TRUE) {
+		$_MR['options_insert_cache'][$option_name] = $option_value;
+	} else {
+		$_MR['options_update_cache'][$option_name] = $option_value;
+	}
 }
 
 /**
@@ -56,12 +59,9 @@ function delete_option($option_name) {
 	// unset nilai nama option dari _MR['option']
 	unset($_MR['options'][$option_name]);
 	
-	// masukkan ke cache untuk dimasukkan ke datatabase 
-	if ($insert === TRUE) {
-		$_MR['options']['options_insert_cache'][$option_name] = $option_value;
-	} else {
-		$_MR['options']['options_update_cache'][$option_name] = $option_value;
-	}
+	// masukkan ke cache untuk dilakukan penghapusan dari database
+	// saat proses script end
+	$_MR['options_delete_cache'][$option_name] = $option_value;
 }
 
 /**
