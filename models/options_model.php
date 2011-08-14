@@ -65,60 +65,6 @@ function delete_option($option_name) {
 }
 
 /**
- * Method untuk memasukkan options kedalam database
- * 
- * @author Irianto Bunga Pratama<me@iriantobunga.com>
- * @since Version 1.0
- * 
- * @return void
- */
-function option_cache_save() {
-	global $_MR; 	
-	$query = array();
-	
-	// insert option
-	$insert_cache = $_MR['options_insert_cache'];
-	/* query dimasukkan kedalam array agar dapat melakukan multi_query
-	 * val dari query diberi ' untuk type text, varchar
-	 */
-	foreach ($insert_cache as $opt_key => $opt_val) {
-		$value = $_MR['db']->real_escape_string($opt_val['value']);
-		$autoload = $_MR['db']->real_escape_string($opt_val['autoload']);
-		$query[] = "INSERT INTO options (option_name, option_value, option_autoload) VALUES ('$opt_key', '$value', $autoload)";
-	}
-		
-	// update option
-	$update_cache = $_MR['options_update_cache'];
-	/* query dimasukkan kedalam array agar dapat melakukan multi_query
-	 * val dari query diberi ' untuk type text, varchar
-	 */
-	foreach ($update_cache as $opt_key => $opt_val) {
-		$value = $_MR['db']->real_escape_string($opt_val['value']);
-		$autoload = $_MR['db']->real_escape_string($opt_val['autoload']);
-		$query[] = "UPDATE options SET option_value='$value', option_autoload='$autoload' WHERE option_name='$opt_key'";
-	}
-	
-	// delete option
-	$delete_cache = $_MR['options_delete_cache'];
-	/* query dimasukkan kedalam array agar dapat melakukan multi_query
-	 * val dari query diberi ' untuk type text, varchar
-	 */
-	foreach ($delete_cache as $opt_key => $opt_val) {
-		$value = $_MR['db']->real_escape_string($opt_val['value']);
-		$autoload = $_MR['db']->real_escape_string($opt_val['autoload']);
-		$query[] = "DELETE FROM options WHERE option_name='$opt_key'";
-	}
-	
-	if ($query) {
-		// query digabungkan kedalam sebuat variable dengan pemisah ';'
-		$query = implode(';', $query);
-
-		// execute multi query
-		$multi_query = $_MR['db']->multi_query($query);
-	}	
-}
-
-/**
  * Method untuk memasukkan options kedalam array $_MR['options'] dan $_MR['options_insert_cache']
  * 
  * @author Irianto Bunga Pratama<me@iriantobunga.com>
@@ -191,4 +137,62 @@ function set_all_options() {
 	
 	// tutup result
 	$result->close();
+}
+
+/**
+ * Fungsi untuk memasukkan options kedalam database
+ * 
+ * @author Irianto Bunga Pratama<me@iriantobunga.com>
+ * @since Version 1.0
+ * 
+ * @return void
+ */
+function option_cache_save() {
+	global $_MR; 	
+	$query = array();
+	
+	// insert option
+	$insert_cache = $_MR['options_insert_cache'];
+	/* query dimasukkan kedalam array agar dapat melakukan multi_query
+	 * val dari query diberi ' untuk type text, varchar
+	 */
+	foreach ($insert_cache as $opt_key => $opt_val) {
+		$value = $_MR['db']->real_escape_string($opt_val['value']);
+		$autoload = $_MR['db']->real_escape_string($opt_val['autoload']);
+		$query[] = "INSERT INTO options (option_name, option_value, option_autoload) VALUES ('$opt_key', '$value', $autoload)";
+	}
+		
+	// update option
+	$update_cache = $_MR['options_update_cache'];
+	/* query dimasukkan kedalam array agar dapat melakukan multi_query
+	 * val dari query diberi ' untuk type text, varchar
+	 */
+	foreach ($update_cache as $opt_key => $opt_val) {
+		$value = $_MR['db']->real_escape_string($opt_val['value']);
+		$autoload = $_MR['db']->real_escape_string($opt_val['autoload']);
+		$query[] = "UPDATE options SET option_value='$value', option_autoload='$autoload' WHERE option_name='$opt_key'";
+	}
+	
+	// delete option
+	$delete_cache = $_MR['options_delete_cache'];
+	/* query dimasukkan kedalam array agar dapat melakukan multi_query
+	 * val dari query diberi ' untuk type text, varchar
+	 */
+	foreach ($delete_cache as $opt_key => $opt_val) {
+		$value = $_MR['db']->real_escape_string($opt_val['value']);
+		$autoload = $_MR['db']->real_escape_string($opt_val['autoload']);
+		$query[] = "DELETE FROM options WHERE option_name='$opt_key'";
+	}
+	
+	if ($query) {
+		// query digabungkan kedalam sebuat variable dengan pemisah ';'
+		$query = implode(';', $query);
+
+		// execute multi query
+		$multi_query = $_MR['db']->multi_query($query);
+		
+		set_last_query($query);
+		increase_query_number();
+		site_debug($query, 'OPTION CACHE QUERY');
+	}
 }
