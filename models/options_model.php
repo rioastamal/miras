@@ -30,11 +30,13 @@ function update_option($option_name, $option_value) {
 
 /**
  * Method untuk memasukkan options kedalam database
- * @return boolean SUKSES atau gagalnya query dilakukan
+ * 
  * @author Irianto Bunga Pratama<me@iriantobunga.com>
  * @since Version 1.0
+ * 
+ * @return boolean SUKSES atau gagalnya query dilakukan
  */
-function option_insert_save() {
+function option_cache_save() {
 	global $_MR; 	
 	
 	$insert_cache = $_MR['options_insert_cache'];
@@ -42,9 +44,9 @@ function option_insert_save() {
 	 * val dari query diberi ' untuk type text, varchar
 	 */
 	foreach ($insert_cache as $opt_key => $opt_val) {
-		$value = $opt_val['value'];
-		$autoload = $opt_val['autoload'];
-		$query[] = 'INSERT INTO options (option_name, option_value, option_autoload) VALUES (\'' . $opt_key . '\', \'' . $value . '\', ' . $autoload . ')';
+		$value = $_MR['db']->real_escape_string($opt_val['value']);
+		$autoload = $_MR['db']->real_escape_string($opt_val['autoload']);
+		$query[] = "INSERT INTO options (option_name, option_value, option_autoload) VALUES ('$opt_key', '$value', $autoload)";
 	}
 
 	// query digabungkan kedalam sebuat variable dengan pemisah ';'
@@ -56,33 +58,36 @@ function option_insert_save() {
 		// query error atau sudah dipernah dimasukkan
 		return FALSE;
 	}
-	
-	// close connection
-	$_MR['db']->close();
-	
+
 	return TRUE;
 }
 
 /**
  * Method untuk memasukkan options kedalam array $_MR['options'] dan $_MR['options_insert_cache']
+ * 
+ * @author Irianto Bunga Pratama<me@iriantobunga.com>
+ * @since Version 1.0
+ * 
  * @param String $opt_name 
  * @param String $opt_value
  * @param Integer optional $opt_autoload default 1
+ * 
  * @return void
- * @author Irianto Bunga Pratama<me@iriantobunga.com>
- * @since Version 1.0
  */
 function insert_option($opt_name, $opt_value, $opt_autoload=1) {
 	global $_MR; 
+	
+	/* memasukkan opt_name sebagai key dan opt_value sebagai val pada _MR[options]
+	 */
+	$_MR['options'][$opt_name] = $opt_value;
 	
 	// mengecek $opt_value apakah array atau jika iya maka diserialize terlebih dahulu
 	if (is_array($opt_value) || is_object($opt_value)) {
 		$opt_value = serialize($opt_value);
 	}
-	/* memasukkan opt_name sebagai key dan opt_value sebagai val pada _MR[options]
-	*  memasukkan opt_name sebagai key dan array sebagai val pada _MR[options_insert_cache]
-	*/
-	$_MR['options'][$opt_name] = $opt_value;
+	
+	/*  memasukkan opt_name sebagai key dan array sebagai val pada _MR[options_insert_cache]
+	 */
 	$_MR['options_insert_cache'][$opt_name] = array(
 												'value' => $opt_value,
 												'autoload' => $opt_autoload

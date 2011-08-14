@@ -47,7 +47,7 @@ $option_insert_cache = print_r($_MR['options_insert_cache'], TRUE);
 site_debug($option_insert_cache, 'Cetak isi MR option_insert_cache');
 
 // tes option save
-if (option_insert_save()===FALSE) {
+if (option_cache_save()===FALSE) {
 	echo ('Tidak Tersimpan karena terdapat kesalahan atau kesamaan nama plugin');
 } else {
 	echo ('Tersimpan');
