@@ -113,7 +113,8 @@ function insert_option($option_name, $option_value, $opt_autoload=1) {
 	}
 }
 
-/* File ini berisi query yg berhubungan dengan option
+/**
+ * File ini berisi query yg berhubungan dengan option
  *
  * @author Alfa Radito 
  * @since Version 1.0
@@ -128,6 +129,9 @@ function set_all_options() {
 	          WHERE option_autoload = 1';
 	
 	$result = $_MR['db']->query($query);
+	// masukkan data query terakhir
+	set_last_query($query);
+	
 	if ($result === FALSE) {
 		// query error
 		return FALSE;
@@ -136,17 +140,17 @@ function set_all_options() {
 	// increment status dari jumlah query yang telah dijalankan
 	increase_query_number();
 	
-	// masukkan data query terakhir
-	set_last_query($query);
-	
 	while ($row = $result->fetch_object()) {
-		// masukkan setiap result object ke array 
+		// unserialize string dari kolom option_value jika diperlukan
 		$opt_value = NULL;
-		echo ('row value ' . $row->option_value);
 		$temp = unserialize($row->option_value);
+		// jika TIDAK FALSE berarti $temp adalah serializable string
 		if ($temp !== FALSE) {
 			$opt_value = $temp;
 		} else {
+			// isi kolom option_value bukan serializeable string
+			// jadi kembalikan apa adanya
+			// WYIIWYG (What You Insert Is What Get) :p
 			$opt_value = $row->option_value;
 		}
 		
@@ -169,6 +173,16 @@ function option_cache_save() {
 	global $_MR; 	
 	$query = array();
 	
+	// delete option
+	$delete_cache = $_MR['options_delete_cache'];
+	/* query dimasukkan kedalam array agar dapat melakukan multi_query
+	 * val dari query diberi ' untuk type text, varchar
+	 */
+	foreach ($delete_cache as $opt_key => $opt_val) {
+		$key = $_MR['db']->real_escape_string($opt_key);
+		$query[] = "DELETE FROM options WHERE option_name='$key'";
+	}
+	
 	// insert option
 	$insert_cache = $_MR['options_insert_cache'];
 	/* query dimasukkan kedalam array agar dapat melakukan multi_query
@@ -188,16 +202,6 @@ function option_cache_save() {
 	foreach ($update_cache as $opt_key => $opt_val) {
 		$value = $_MR['db']->real_escape_string($opt_val);
 		$query[] = "UPDATE options SET option_value='$value' WHERE option_name='$opt_key'";
-	}
-	
-	// delete option
-	$delete_cache = $_MR['options_delete_cache'];
-	/* query dimasukkan kedalam array agar dapat melakukan multi_query
-	 * val dari query diberi ' untuk type text, varchar
-	 */
-	foreach ($delete_cache as $opt_key => $opt_val) {
-		$key = $_MR['db']->real_escape_string($opt_key);
-		$query[] = "DELETE FROM options WHERE option_name='$key'";
 	}
 	
 	if ($query) {
