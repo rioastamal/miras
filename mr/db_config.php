@@ -1,7 +1,10 @@
-<?php
-
+<?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
  * File konfigurasi untuk koneksi ke database
+ *
+ * @package mr
+ * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
+ */
  */
 
 // database name
@@ -12,6 +15,8 @@ define('DB_USER', 'berita_user');
 define('DB_PASS', 'berita123');
 // database host
 define('DB_HOST', 'localhost');
+// database prefix
+define('DB_PREFIX', '');
 
 /**
  * Global variabel untuk menampung resource database

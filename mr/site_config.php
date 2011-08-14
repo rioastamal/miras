@@ -1,5 +1,11 @@
-<?php
-
+<?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
+/**
+ * File ini berisi konfigurasi utama untuk framework
+ *
+ * @package mr
+ * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
+ */
+ 
 // Alamat Base URL dari aplikasi, harus diakhiri dengan '/' SLASH
 $_MR['base_url'] = 'http://localhost/berita21/';
 

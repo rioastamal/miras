@@ -51,7 +51,7 @@ function get_current_url() {
 	// jika port 80 maka http selain itu 
 	$protocol = 'http://';
 	
-	// ika nilai $_SERVER['HTTPS'] ada dan tidak berisi 'off' (untuk IIS server)
+	// jika nilai $_SERVER['HTTPS'] ada dan tidak berisi 'off' (untuk IIS server)
 	// maka protokol yang digunakan adalah https://
 	if (isset($_SERVER['HTTPS'])) {
 		if ($_SERVER['HTTPS'] !== 'off') {

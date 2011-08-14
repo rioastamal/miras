@@ -1,8 +1,10 @@
-<?php
-
+<?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
  * File ini berfungsi untuk meloading semua file library atau
  * konfigurasi yang diperlukan
+ *
+ * @package mr
+ * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
  */
 
 // global variabel
