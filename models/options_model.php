@@ -17,7 +17,7 @@
  * @param string $option_value
  * @return void
  */
-function update_option($option_name, $option_value) {
+function update_option($option_name, $option_value, $option_autoload=1) {
 	global $_MR;
 	$insert = FALSE;
 	
@@ -29,10 +29,17 @@ function update_option($option_name, $option_value) {
 	// option value yang masuk _MR['option'] tidak perlu diserialize
 	// karena akan langsung dipake
 	$_MR['options'][$option_name] = $option_value;
+	// mengecek $opt_value apakah array atau jika iya maka diserialize terlebih dahulu
+	if (is_array($option_value) || is_object($option_value)) {
+		$option_value = serialize($option_value);
+	}
 	
 	// masukkan ke cache untuk dimasukkan ke datatabase 
 	if ($insert === TRUE) {
-		$_MR['options_insert_cache'][$option_name] = $option_value;
+		$_MR['options_insert_cache'][$opt_name] = array(
+													'value' => $option_value,
+													'autoload' => $option_autoload
+												  );
 	} else {
 		$_MR['options_update_cache'][$option_name] = $option_value;
 	}
@@ -70,30 +77,40 @@ function delete_option($option_name) {
  * @author Irianto Bunga Pratama<me@iriantobunga.com>
  * @since Version 1.0
  * 
- * @param String $opt_name 
- * @param String $opt_value
+ * @param String $option_name 
+ * @param String $option_value
  * @param Integer optional $opt_autoload default 1
  * 
  * @return void
  */
-function insert_option($opt_name, $opt_value, $opt_autoload=1) {
+function insert_option($option_name, $option_value, $opt_autoload=1) {
 	global $_MR; 
+	$update = FALSE;
+	
+	if (array_key_exists($option_name, $_MR['options'])) {
+		// option belum ada maka prosesnya adalah insert bukan update
+		$update = TRUE;
+	}
 	
 	/* memasukkan opt_name sebagai key dan opt_value sebagai val pada _MR[options]
 	 */
-	$_MR['options'][$opt_name] = $opt_value;
+	$_MR['options'][$option_name] = $option_value;
 	
-	// mengecek $opt_value apakah array atau jika iya maka diserialize terlebih dahulu
-	if (is_array($opt_value) || is_object($opt_value)) {
-		$opt_value = serialize($opt_value);
+	// mengecek $option_value apakah array atau jika iya maka diserialize terlebih dahulu
+	if (is_array($option_value) || is_object($option_value)) {
+		$option_value = serialize($option_value);
 	}
 	
 	/*  memasukkan opt_name sebagai key dan array sebagai val pada _MR[options_insert_cache]
 	 */
-	$_MR['options_insert_cache'][$opt_name] = array(
-												'value' => $opt_value,
-												'autoload' => $opt_autoload
-											  );
+	if ($update === TRUE) {
+		$_MR['options_update_cache'][$option_name] = $option_value;
+	} else { 
+		$_MR['options_insert_cache'][$option_name] = array(
+													'value' => $option_value,
+													'autoload' => $opt_autoload
+												  );
+	}
 }
 
 /* File ini berisi query yg berhubungan dengan option
@@ -125,6 +142,7 @@ function set_all_options() {
 	while ($row = $result->fetch_object()) {
 		// masukkan setiap result object ke array 
 		$opt_value = NULL;
+		echo ('row value ' . $row->option_value);
 		$temp = unserialize($row->option_value);
 		if ($temp !== FALSE) {
 			$opt_value = $temp;
@@ -168,9 +186,8 @@ function option_cache_save() {
 	 * val dari query diberi ' untuk type text, varchar
 	 */
 	foreach ($update_cache as $opt_key => $opt_val) {
-		$value = $_MR['db']->real_escape_string($opt_val['value']);
-		$autoload = $_MR['db']->real_escape_string($opt_val['autoload']);
-		$query[] = "UPDATE options SET option_value='$value', option_autoload='$autoload' WHERE option_name='$opt_key'";
+		$value = $_MR['db']->real_escape_string($opt_val);
+		$query[] = "UPDATE options SET option_value='$value' WHERE option_name='$opt_key'";
 	}
 	
 	// delete option
@@ -179,9 +196,8 @@ function option_cache_save() {
 	 * val dari query diberi ' untuk type text, varchar
 	 */
 	foreach ($delete_cache as $opt_key => $opt_val) {
-		$value = $_MR['db']->real_escape_string($opt_val['value']);
-		$autoload = $_MR['db']->real_escape_string($opt_val['autoload']);
-		$query[] = "DELETE FROM options WHERE option_name='$opt_key'";
+		$key = $_MR['db']->real_escape_string($opt_key);
+		$query[] = "DELETE FROM options WHERE option_name='$key'";
 	}
 	
 	if ($query) {

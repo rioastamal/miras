@@ -22,29 +22,27 @@ include_once (BASE_PATH . '/mr/boot_strap.php');
 load_model('options');
 
 echo ("<pre>\n");
+set_all_options();
 
 // tes satu plugin aktif
-insert_option('aktif0 plugin', 'hello_dolly');
+insert_option('aktif plugin', array('hello_dolly'));
 
 // tes banyak plugin aktif
 $plugin_array = array(
 					'hello_dolly',
-					'no_ie6',
-					'secure_url'
+					'no_ie6'
 				);
 
-insert_option('aktif1 plugin', $plugin_array);
-insert_option('aktif2 plugin', $plugin_array);
-insert_option('aktif3 plugin', $plugin_array);
-insert_option('aktif4 plugin', $plugin_array);
-insert_option('aktif5 plugin', $plugin_array);
-insert_option('aktif6 plugin', $plugin_array);
-insert_option('aktif7 plugin', $plugin_array);
+insert_option('aktif plugin', $plugin_array);
 
+option_cache_save();
 $option = print_r($_MR['options'], TRUE);
 site_debug($option, 'Cetak isi MR option');
 $option_insert_cache = print_r($_MR['options_insert_cache'], TRUE);
 site_debug($option_insert_cache, 'Cetak isi MR option_insert_cache');
+$option_update_cache = print_r($_MR['options_update_cache'], TRUE);
+site_debug($option_update_cache, 'Cetak isi MR option_update_cache');
+
 
 show_debug();
 echo ("</pre>\n");
