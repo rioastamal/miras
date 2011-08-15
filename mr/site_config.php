@@ -17,6 +17,15 @@ $_MR['theme'] = 'default';
 // FALSE => Tidak Diaktifkan
 $_MR['debug_mode'] = TRUE;
 
+// berapa lama default session expired (dalam detik)
+$_MR['session_expired'] = 900;	// default 15 menit
+
+// nama cookie untuk session
+$_MR['session_name'] = 'miras_session';
+
+// path untuk cookie 
+$_MR['cookie_path'] = '/';
+
 // ------------------ AKHIR KONFIGURASI ----------------------------- //
 
 /* TIDAK PERLU MENGGANTI KONFIGURASI DIBAWAH INI KECUALI ANDA TAHU APA YANG
@@ -97,3 +106,6 @@ $_MR['enable_query_cache'] = FALSE;
 
 // variabel yang menyimpan controller arguments
 $_MR['controller_arguments'] = array();
+
+// variabel yang menyimpan isi session
+$_MR['sessions'] = array();

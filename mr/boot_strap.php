@@ -18,6 +18,8 @@ include_once(BASE_PATH . '/mr/' . 'site_config.php');
 include_once(BASE_PATH . '/mr/' . 'db_config.php');
 include_once(BASE_PATH . '/mr/' . 'function.php');
 
+load_helper('string');
+
 // load library yang sifatnya auto-load
 foreach ($_MR['autoload_libraries'] as $lib) {
 	load_library($lib);
