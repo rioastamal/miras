@@ -18,7 +18,7 @@ $_MR['theme'] = 'default';
 $_MR['debug_mode'] = TRUE;
 
 // berapa lama default session expired (dalam detik)
-$_MR['session_expired'] = 900;	// default 15 menit
+$_MR['session_expires'] = 900;	// default 15 menit
 
 // nama cookie untuk session
 $_MR['session_name'] = 'miras_session';
@@ -108,4 +108,9 @@ $_MR['enable_query_cache'] = FALSE;
 $_MR['controller_arguments'] = array();
 
 // variabel yang menyimpan isi session
-$_MR['sessions'] = array();
+$_MR['sessions'] = array(
+	'data' => array(),
+	// insert, delete atau update (digunakan pada saat script berakhir)
+	'action' => NULL,
+	'id' => NULL
+);
