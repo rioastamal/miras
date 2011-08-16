@@ -4,7 +4,7 @@
  *
  * @package mr
  * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
- */
+ *
  */
 
 // database name
