@@ -1,6 +1,8 @@
 <?php
 
 echo ('What position you want?');
+load_library('session');
+session_construct();
 
 load_helper('email');
 $email = array(
@@ -16,3 +18,6 @@ $email = array(
 foreach($email as $eml) {
 	echo ($eml . var_dump(valid_email($eml)) . '<BR>');
 }
+
+print_r($_MR['sessions']);
+mr_session_destroy();

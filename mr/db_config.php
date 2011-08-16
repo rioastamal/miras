@@ -8,11 +8,11 @@
  */
 
 // database name
-define('DB_NAME', 'berita21');
+define('DB_NAME', 'miras');
 // database user
-define('DB_USER', 'berita_user');
+define('DB_USER', 'miras_admin');
 // database pass
-define('DB_PASS', 'berita123');
+define('DB_PASS', 'lima-persen');
 // database host
 define('DB_HOST', 'localhost');
 // database prefix

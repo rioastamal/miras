@@ -54,3 +54,61 @@ function mr_only_numeric($source, $integer=FALSE) {
 	}
 	return $numeric;
 }
+
+/**
+ * Fungsi untuk mendapatkan karakter yang hanya alpha-numeric saja
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param string $source String sumber
+ * @param string $other_char Karakter lain yang diijinkan
+ * @return string
+ */
+function mr_alpha_numeric($source, $other_char='') {
+	return preg_replace('/[^0-9A-Za-z'. $other_char . ']/', '', $source);
+}
+
+/**
+ * Fungsi untuk melakukan serialize jika diperlukan pada data yang 
+ * bertipe object atau array
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ * 
+ * @param $source
+ * @return mixed
+ */
+function mr_serialize($source) {
+	// lakukan serialize jika tipe data adalah array atau object
+	if (is_object($source) || is_array($source)) {
+		return serialize($source);
+	}
+	
+	// selain itu maka, langsung saja kembalikan sesuai aslinya
+	return $source;
+}
+
+/**
+ * Fungsi untuk melakukan de-serialize jika diperlukan
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ * 
+ * @param $source
+ * @return mixed
+ */
+function mr_unserialize($source) {
+	// coba lakukan serialize, akan FALSE jika bukan merupakan 
+	// serializable string
+	$temp = unserialize($source);
+	if ($temp === FALSE) {
+		// tidak false, maka $source bukan serializable string
+		// kembalikan apa adanya
+		return $soruce;
+	}
+	
+	// source merupakan serializable, jadi kembalikan yang telah di
+	// unserialize
+	return $temp;
+}
