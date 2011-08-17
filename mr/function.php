@@ -1,4 +1,10 @@
-<?php
+<?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
+/**
+ * File ini menyimpan kumpulan fungsi-fungsi dasar yang digunakan framework
+ *
+ * @package mr
+ * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
+ */
 
 /**
  * Fungsi untuk menampilkan debugging info jika diaktifkan dalam konfigurasi
@@ -246,56 +252,6 @@ function load_helper($helper_name, $plugin_name=NULL) {
 	$_MR['loaded_helpers'][] = $helper_name;
 	
 	include_once ($path_file);
-}
-
-/**
- * Fungsi untuk mengembalikan nilai dari konfigurasi base_url, views dapat
- * menggunaman fungsi ini untuk meload URL lengkap css dan javascript
- *
- * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.0
- *
- * @return string base url dari aplikasi
- */
-function get_base_url() {
-	global $_MR;
-	
-	return $_MR['base_url'];
-}
-
-/**
- * Fungsi untuk mengembalikan nilai dari konfigurasi base_url + index_page, views dapat
- * menggunaman fungsi ini untuk meload URL lengkap css dan javascript
- *
- * Contoh jika konfigurasi index_page adalah index.php maka output dari fungsi
- * ini adalah:
- * http://example.com/index.php
- *
- * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.0
- *
- * @return string base url + index_page dari aplikasi
- */
-function get_site_url() {
-	global $_MR;
-	
-	return $_MR['base_url'] . $_MR['index_page'];
-}
-
-/**
- * Fungsi untuk mengembalikan nilai dari konfigurasi base_url + nama theme + '/' 
- * yang saat ini digunakan. Views dapat menggunaman fungsi ini untuk meload URL 
- * lengkap css dan javascript.
- *
- * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.0
- *
- * @return string base url dari aplikasi + nama theme + slash
- */
-function get_theme_url() {
-	global $_MR;
-	
-	return $_MR['base_url'] . 'views/' . $_MR['theme'] . '/';
 }
 
 /**

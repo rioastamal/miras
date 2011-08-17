@@ -7,6 +7,13 @@
  * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
  */
 
+// informasi seputar framework
+define('FRAMEWORK_NAME', 'miras');
+define('FRAMEWORK_VERSION', '1.0');
+define('FRAMEWORK_STATUS_VERSION', 'alpha');
+define('FRAMEWORK_FULL_VERSION', FRAMEWORK_VERSION . '-' . FRAMEWORK_STATUS_VERSION);
+define('FRAMEWORK_FULL_NAME', FRAMEWORK_NAME . ' ' . 'v' . FRAMEWORK_FULL_VERSION);
+
 // global variabel
 $_MR = array();
 
@@ -18,6 +25,7 @@ include_once(BASE_PATH . '/mr/' . 'site_config.php');
 include_once(BASE_PATH . '/mr/' . 'db_config.php');
 include_once(BASE_PATH . '/mr/' . 'function.php');
 
+load_helper('url');
 load_helper('string');
 
 // load library yang sifatnya auto-load
