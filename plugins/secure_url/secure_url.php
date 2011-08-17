@@ -16,10 +16,10 @@ function secure_url() {
 	
 	// logika.......
 	$url = $_SERVER['REQUEST_URI'];
-	$ret = preg_match('@^[a-zA-Z0-9:\-\._\/#]+$@', $url);
+	$ret = preg_match('@^[a-zA-Z0-9:\-\._\/#~]+$@', $url);
 	
 	if (!$ret) {
-		throw new Exception ("Hayo.. ngapain");
+		throw new Exception ("Terdapat karakter yang tidak diperboblehkan pada URL");
 	}
 }
 

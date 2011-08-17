@@ -7,10 +7,13 @@
  */
  
 // Alamat Base URL dari aplikasi, harus diakhiri dengan '/' SLASH
-$_MR['base_url'] = 'http://localhost/berita21/';
+$_MR['base_url'] = 'http://localhost/miras/';
 
 // tema yang digunakan
 $_MR['theme'] = 'default';
+
+// Nama file yang menghandle mapping ke file controller
+$_MR['index_page'] = 'index.php';
 
 // status debugging diaktifkan atau tidak
 // TRUE => Aktif
@@ -22,6 +25,9 @@ $_MR['session_expires'] = 900;	// default 15 menit
 
 // nama cookie untuk session
 $_MR['session_name'] = 'miras_session';
+
+// apakah user agent dan IP address dicocokkan
+$_MR['session_strict_check'] = TRUE;
 
 // path untuk cookie 
 $_MR['cookie_path'] = '/';
@@ -41,9 +47,6 @@ $_MR['flash_message'] = '';
 
 // CSS class dari div pesan flash
 $_MR['flash_class'] = 'flash-warning';
-
-// Nama file yang menghandle mapping ke file controller
-$_MR['index_page'] = 'index.php';
 
 // nama default controller jika user datang tanpa menyebutkan nama controller
 $_MR['default_controller'] = 'main';
