@@ -71,7 +71,7 @@ function map_controller() {
 		
 		// cek apakah controller masih berupa direktori?
 		// WTF! you make me tired 
-		if (is_dir(BASE_PATH . '/plugins/' . $plugin_name . '/controllers/' . $controller) && $controller != '/') {
+		if (is_dir(BASE_PATH . '/plugins/' . $plugin_name . '/controllers/' . $controller) && $controller != '') {
 			// controller merupakan direktori jadi tambahkan dengan variabel
 			// $matches yang ber-index 2
 			site_debug($controller, 'CONTROLLER PLUGIN DIRECTORY');
@@ -96,7 +96,7 @@ function map_controller() {
 		
 		// map controller ke file
 		// jika controller tidak disebutkan asumsikan default_controller
-		if ($controller == '/') {
+		if ($controller == '') {
 			$controller = $_MR['default_controller'];
 		}
 		
@@ -113,8 +113,13 @@ function map_controller() {
 
 			// ubah hypen(-) ke underscore jika memang terdapat simbol tersebut
 			$real_controller = str_replace('-', '_', $matches[2]);
+			if ($real_controller == '') {
+				$real_controller = $_MR['default_controller'];
+			}
+			
 			$controller = $controller . '/' . $real_controller;
 		}
+		
 		// map controller ke file yang bersangkutan
 		$file = BASE_PATH . '/controllers/' . $controller . '_ctl.php';
 	}
