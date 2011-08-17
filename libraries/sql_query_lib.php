@@ -84,7 +84,7 @@ function mr_query($query, $cache_time=60) {
  * @param string $query SQL Query yang akan dijalankan
  * @return mixed
  */
-function mr_multi_query($query, $cache_time=60) {
+function mr_query_multi($query, $cache_time=60) {
 	global $_MR;
 	
 	$query = trim($query);
@@ -114,6 +114,63 @@ function mr_multi_query($query, $cache_time=60) {
 	} while ($_MR['db']->next_result());
 	
 	return $record;
+}
+
+/**
+ * Fungsi untuk melakukan SQL INSERT
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ * 
+ * @param string $query SQL Query INSERT yang akan dieksekusi
+ * @return int 
+ */
+function mr_query_insert($query, $return_id=FALSE) {
+	global $_MR;
+	
+	$result = $_MR['db']->query($query);
+	set_last_query($query);
+	
+	if ($result === FALSE) {
+		// query error
+		throw new Exception ('Query Error (' . $_MR['db']->errno .')<br/>' . $_MR['db']->error);
+	}
+	
+	increase_query_number();
+	
+	if ($return_id === TRUE) {
+		// ZERO atau nilai dari AUTO_INCREMENT jika ada
+		return $_MR['db']->insert_id;
+	}
+	
+	// kembalikan affected rows
+	return $_MR['db']->affected_rows;
+}
+
+/**
+ * Fungsi untuk melakukan SQL UPDATE
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ * 
+ * @param string $query SQL Query UPDATE yang akan dieksekusi
+ * @return int 
+ */
+function mr_query_update($query, $return_id=FALSE) {
+	return mr_query_insert($query);
+}
+
+/**
+ * Fungsi untuk melakukan SQL DELETE
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ * 
+ * @param string $query SQL Query DELETE yang akan dieksekusi
+ * @return int 
+ */
+function mr_query_delete($query, $return_id=FALSE) {
+	return mr_query_insert($query);
 }
 
 /**

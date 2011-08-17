@@ -7,6 +7,9 @@
  * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
  */
 
+// load model yang dibutuhkan
+load_model('sessions');
+
 /**
  * Fungsi untuk mengawali penggunaan session. Setiap halaman yang akan menggunakan
  * session harus memanggil fungsi ini dulu.
@@ -208,7 +211,6 @@ function mr_session_save() {
 	
 	_mr_session_clean();
 	
-	print_r($_MR['sessions']);
 	if ($_MR['sessions']['action'] == 'delete') {
 		mr_session_destroy();
 	}
@@ -234,13 +236,6 @@ function mr_session_save() {
 function _mr_session_insert() {
 	global $_MR;
 	
-	$db_name = DB_PREFIX . 'sessions';
-	$query = "INSERT INTO {$db_name} (session_id, session_value, session_last_activity, session_user_agent, session_ip_addr) 
-			  VALUES (?, ?, ?, ?, ?)";
-	$stmt = $_MR['db']->prepare($query);
-	
-	$stmt->bind_param('ssiss', $session_id, $session_value, $timestamp, $user_agent, $ip_addr);
-	
 	$session_id = mr_session_id();
 	// serialize session agar dapat disimpan pada database
 	$session_value = mr_serialize($_MR['sessions']['data']);
@@ -248,13 +243,13 @@ function _mr_session_insert() {
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
 	$ip_addr = $_SERVER['REMOTE_ADDR'];
 	
-	if ($stmt->execute() === FALSE) {
-		site_debug('Error saving session to DB, error mesg: ' . $stmt->error, 'SESSION INSERT');
-	} else {
+	// panggil fungsi dari model
+	try {
+		$result = mr_session_insert($session_id, $session_value, $timestamp, $user_agent, $ip_addr);
 		site_debug('Saving session to DB OK', 'SESSION INSERT');
+	} catch (Exception $e) {
+		site_debug('Error saving session to DB, error mesg: ' . $e->getMessage(), 'SESSION INSERT');
 	}
-	
-	$stmt->close();
 }
 
 /**
@@ -269,24 +264,18 @@ function _mr_session_insert() {
 function _mr_session_update() {
 	global $_MR;
 	
-	$db_name = DB_PREFIX . 'sessions';
-	$query = "UPDATE {$db_name} SET session_value=?, session_last_activity=? WHERE session_id=?";
-	$stmt = $_MR['db']->prepare($query);
-	
-	$stmt->bind_param('sis', $session_value, $timestamp, $session_id);
-	
 	$session_id = mr_session_id();
 	// serialize session agar dapat disimpan pada database
 	$session_value = mr_serialize($_MR['sessions']['data']);
 	$timestamp = time();
 	
-	if ($stmt->execute() === FALSE) {
-		site_debug('Error updating session to DB, error mesg: ' . $stmt->error, 'SESSION UPDATE');
-	} else {
+	// panggil fungsi dari model
+	try {
+		$result = mr_session_update($session_id, $session_value, $timestamp);
 		site_debug('Updating session to DB OK', 'SESSION UPDATE');
+	} catch (Exception $e) {
+		site_debug('Error updating session to DB, error mesg: ' . $e->getMessage(), 'SESSION UPDATE');
 	}
-	
-	$stmt->close();
 }
 
 /**
@@ -302,27 +291,21 @@ function _mr_session_update() {
 function _mr_session_clean() {
 	global $_MR;
 	
-	$lucky_numbers = array(7, 9, 10, 21, 27, 33);
-	$jackpot = mt_rand(0, 50);	// random number max 50
+	$lucky_numbers = array(7, 9, 10, 21, 27, 99);
+	$jackpot = mt_rand(0, 100);	// random number max 100
 	
 	site_debug($jackpot, 'JACKPOT');
 	// jika $jakcpot salah satu diantara $lucky_number lakkan pembersihan
 	// session yang expired
 	if (in_array($jackpot, $lucky_numbers)) {
-		$db_name = DB_PREFIX . 'sessions';
-		$query = "DELETE FROM {$db_name} WHERE (session_last_activity + ?) < UNIX_TIMESTAMP()";
-		$stmt = $_MR['db']->prepare($query);
-		
-		$stmt->bind_param('i', $expire);
 		$expire = $_MR['session_expires'];
 		
-		if ($stmt->execute() === FALSE) {
-			site_debug('Session clean up error, mesg: ' . $stmt->error, 'SESSION CLEAN UP');
-		} else {
+		try {
+			mr_session_delete($expire);
 			site_debug('Session clean up OK', 'SESSION CLEAN UP');
+		}  catch (Exception $e) {
+			site_debug('Session clean up error, mesg: ' . $e->getMessage(), 'SESSION CLEAN UP');
 		}
-		
-		$stmt->close();
 	}
 }
 
