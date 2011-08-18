@@ -20,7 +20,7 @@ load_model('sessions');
  * @return void
  * @throw Exception
  */
-function session_construct() {
+function mr_session_construct() {
 	global $_MR;
 	
 	// jika $_MR['sessions'] sudah terisi sebelumnya maka diasumsikan
@@ -291,7 +291,7 @@ function _mr_session_clean() {
  *
  * @return void;
  */ 
-function session_destruct() {
+function mr_session_destruct() {
 	global $_MR;
 	
 	_mr_session_clean();
@@ -310,5 +310,5 @@ function session_destruct() {
 }
 
 // Tempatkan hook pada akhir eksekusi script
-add_hook('page_clean_up', 'session_destruct');
+add_hook('page_clean_up', 'mr_session_destruct');
 

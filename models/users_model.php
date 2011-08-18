@@ -107,3 +107,9 @@ function init_user_role() {
 	
 	$_MR['user'] = get_user_by_id($uid);
 }
+
+function get_user() {
+	global $_MR;
+	
+	return $_MR['user'];
+}

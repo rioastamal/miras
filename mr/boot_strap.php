@@ -44,28 +44,30 @@ foreach ($_MR['autoload_libraries'] as $lib) {
 
 // load models
 load_model('users');
+load_model('options');
+
+// konek ke database
+$_MR['db'] = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+// Untuk menjaga kompatibilitas dengan PHP versi < 5.2.9 maka pengecekan error
+// dilakukan secara prosedural
+if (mysqli_connect_error()) {
+	throw new Exception('DB_ERROR(' . mysqli_connect_errno() . '): ' . mysqli_connect_error());
+}
 
 // load menu
 include_once(BASE_PATH . '/mr/' . 'menu.php');
 
-// load plugins
-load_plugins();
-
 run_hooks('mr_init');
 
-// konek ke database
-$_MR['db'] = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
 // init session
-session_construct();
+mr_session_construct();
+
+// set all options from database to global variabel
+set_all_options();
+
+// load plugins
+load_plugins();
 
 // init user role
 init_user_role();
 site_debug(print_r($_MR['user'], TRUE), 'CURRENT USER');
-
-// Untuk menjaga kompatibilitas dengan PHP versi < 5.2.9 maka pengecekan error
-// dilakukan secara prosedural
-if (mysqli_connect_error()) {
-	site_debug('DB_ERROR(' . mysqli_connect_errno() . '): ' . mysqli_connect_error(), 'DATABASE_ERROR');
-	throw new Exception("Error: Gagal melakukan koneksi ke database.");
-}

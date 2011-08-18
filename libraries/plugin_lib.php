@@ -20,9 +20,16 @@ function load_plugins() {
 	
 	$dirs = scandir(BASE_PATH . '/plugins/');
 	// slice (hilangkan) dua element awal yaitu direktori . dan ..
-	$dirs = array_slice($dirs, 2);
+	$plugin_list = array_slice($dirs, 2);
 	
-	foreach ($dirs as $plugin) {
+	// hanya ambil nama plugin yang active (yang sama dengan nama direktori)
+	$active_plugins = get_option('active_plugins');
+	if (is_array($active_plugins)) {
+		$plugin_list = array_intersect($plugin_list, $active_plugins);
+	}
+	
+	$plugins = array();
+	foreach ($plugin_list as $plugin) {
 		// sebuah plugin harus berada dalam direktori
 		if (!is_dir(BASE_PATH . '/plugins/' . $plugin)) {
 			// jika ini file skip...
@@ -88,6 +95,18 @@ function load_plugins() {
 			}
 		}
 		
+		// informasi plugin berupa format JSON, jadi untuk mengubahnya kedalam
+		// bentuk PHP Object digunakan json_encode
+		$json_file = BASE_PATH . '/plugins/' . $plugin . '/' . $plugin . '.info';
+		$plugin_object = json_decode(file_get_contents($json_file));
+		$plugins[$plugin] = $plugin_object;
+	}
+	
+	// sorting plugin
+	uasort($plugins, 'plugin_sort');
+	
+	foreach ($plugins as $plugin=>$object) {
+	
 		// ok, let's include the plugin
 		include_once(BASE_PATH . '/plugins/' . $plugin . '/' . $plugin . '.php');
 		
@@ -116,7 +135,8 @@ function load_plugins() {
 		// $json_info = json_decode(file_get_contents());
 		
 		// masukkan ke dalam daftar plugin yang telah diload
-		$_MR['loaded_plugins'][] = $plugin;
+		$object->real_name = $plugin;
+		$_MR['loaded_plugins'][] = $object;
 	}
 	
 	site_debug(print_r($_MR['error_plugins'], TRUE), 'ERROR PLUGINS');
@@ -183,7 +203,7 @@ function assign_plugin_role(&$role) {
 		// setiap plugin yang diload seharusnya memiliki fungsi bernama
 		// nama_plugin_role() yang mengembalikan array dari role-role
 		// plugin tersebut
-		$function_name = $plugin . '_role';
+		$function_name = $plugin->real_name . '_role';
 		if (function_exists($function_name)) {
 			// hanya gabungkan ke dalam daftar array role_list jika
 			// tipenya array
@@ -210,4 +230,20 @@ function assign_plugin_role(&$role) {
 			}
 		}
 	}
+}
+
+/**
+ * Fungsi untuk melakukan sorting plugin berdasarkan prioritas (kecil ke besar)
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param array $node1 Data plugin pertama
+ * @param array $node2 Data plugin kedua
+ * @return int
+ */
+function plugin_sort($p1, $p2) {
+	if ((int)$p1->priority > (int)$p2->priority) return 1;
+	if ((int)$p1->priority == (int)$p2->priority) return 0;
+	if ((int)$p1->priority < (int)$p2->priority) return -1;
 }

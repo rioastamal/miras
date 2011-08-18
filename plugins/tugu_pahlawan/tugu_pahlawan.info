@@ -1,0 +1,9 @@
+{
+	"name": "Tugu Pahlawan",
+	"version": "1.0",
+	"author": "Rio Astamal",
+	"email": "me@rioastamal.net",
+	"website": "http://rioastamal.net/",
+	"description": "Plugin untuk demonstrasi fitur dari sistem plugin pada Miras",
+	"priority": "2"
+}

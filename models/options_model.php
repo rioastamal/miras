@@ -8,6 +8,25 @@
  */
 
 /**
+ * Fungsi untuk mengambil nilai dari option
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param string $option_name 
+ * @return mixed|FALSE
+ */
+function get_option($option_name) {
+	global $_MR;
+	
+	if (array_key_exists($option_name, $_MR['options']) === TRUE) {
+		return $_MR['options'][$option_name];
+	}
+	
+	return FALSE;
+}
+ 
+/**
  * Fungsi untuk melakukan update pada option
  *
  * @author Rio Astamal <me@rioastamal.net>
@@ -143,7 +162,7 @@ function set_all_options() {
 	while ($row = $result->fetch_object()) {
 		// unserialize string dari kolom option_value jika diperlukan
 		$opt_value = NULL;
-		$temp = unserialize($row->option_value);
+		$temp = @unserialize($row->option_value);
 		// jika TIDAK FALSE berarti $temp adalah serializable string
 		if ($temp !== FALSE) {
 			$opt_value = $temp;
@@ -173,6 +192,8 @@ function option_cache_save() {
 	global $_MR; 	
 	$query = array();
 	
+	site_debug(print_r($_MR['options'], TRUE), 'CURRENT OPTIONS');
+	
 	// delete option
 	$delete_cache = $_MR['options_delete_cache'];
 	/* query dimasukkan kedalam array agar dapat melakukan multi_query
@@ -182,6 +203,8 @@ function option_cache_save() {
 		$key = $_MR['db']->real_escape_string($opt_key);
 		$query[] = "DELETE FROM options WHERE option_name='$key'";
 	}
+	
+	site_debug(print_r($delete_cache, TRUE), 'OPTIONS TO DELETE');
 	
 	// insert option
 	$insert_cache = $_MR['options_insert_cache'];
@@ -193,6 +216,8 @@ function option_cache_save() {
 		$autoload = $_MR['db']->real_escape_string($opt_val['autoload']);
 		$query[] = "INSERT INTO options (option_name, option_value, option_autoload) VALUES ('$opt_key', '$value', $autoload)";
 	}
+	
+	site_debug(print_r($insert_cache, TRUE), 'OPTIONS TO INSERT');
 		
 	// update option
 	$update_cache = $_MR['options_update_cache'];
@@ -203,6 +228,8 @@ function option_cache_save() {
 		$value = $_MR['db']->real_escape_string($opt_val);
 		$query[] = "UPDATE options SET option_value='$value' WHERE option_name='$opt_key'";
 	}
+	
+	site_debug(print_r($update_cache, TRUE), 'OPTIONS TO UPDATE');
 	
 	if ($query) {
 		// query digabungkan kedalam sebuat variable dengan pemisah ';'
@@ -216,3 +243,5 @@ function option_cache_save() {
 		site_debug($query, 'OPTION CACHE QUERY');
 	}
 }
+
+add_hook('page_clean_up', 'option_cache_save');

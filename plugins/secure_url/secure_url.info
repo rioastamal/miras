@@ -5,5 +5,5 @@
 	"email": "me@rioastamal.net",
 	"website": "http://rioastamal.net/",
 	"description": "Plugin untuk melakukan penfilteran terhadap karakter berbahaya di URL",
-	"priority": "5"
+	"priority": "0"
 }
