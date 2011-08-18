@@ -5,6 +5,29 @@
  * @package models
  * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
  */
+ 
+/**
+ * Fungsi untuk mendapatkan session data
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param string $sid Hash string dari ID session
+ * @return object|FALSE
+ */
+function mr_session_get($sid) {
+	$db_name = DB_PREFIX . 'sessions';
+	$query = "SELECT * FROM $db_name WHERE session_id='%s' LIMIT 1";
+	$sid = mr_escape_string($sid);
+	$query = sprintf($query, $sid);
+	
+	$result = mr_query($query);
+	if (count($result) === 0) {
+		return FALSE;
+	}
+	
+	return $result[0];
+}
 
 /**
  * Fungsi untuk melakukan insert pada tabel sessions

@@ -3,7 +3,7 @@
  * File ini menyimpan kumpulan fungsi-fungsi untuk membantu mempermudah
  * mengkonstruksi suatu query
  *
- * @package helpers
+ * @package libraries
  * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
  */
 

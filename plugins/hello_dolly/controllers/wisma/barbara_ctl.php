@@ -20,4 +20,4 @@ foreach($email as $eml) {
 }
 
 print_r($_MR['sessions']);
-mr_session_destroy();
+// mr_session_destroy();

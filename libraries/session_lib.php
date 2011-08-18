@@ -36,13 +36,8 @@ function session_construct() {
 		$session_id = mr_alpha_numeric($_COOKIE[$session_name]);
 		
 		// karena session ada maka query session_id dari database
-		$db_name = DB_PREFIX . 'sessions';
-		$query = "SELECT * FROM $db_name WHERE session_id='$session_id' LIMIT 1";
-		$result = $_MR['db']->query($query);
-		
-		if ($result->num_rows > 0) {
-			// masukkan data ke dalam array session saat ini
-			$row = $result->fetch_object();
+		$row = mr_session_get($session_id);
+		if ($row) {
 			$session_data = mr_unserialize($row->session_value);
 			
 			// cek apakah session telah expired atau belum
@@ -71,10 +66,7 @@ function session_construct() {
 				// session belum expired jadi set action ke UPDATE
 				$_MR['sessions']['action'] = 'update';
 			}
-			mr_session_set($session_data);
-			
-			// free result
-			$result->close();
+			mr_session_setdata($session_data);
 		} else {
 			// generate session id baru karena yang lama telah dihapus dari 
 			// database (akibat dari cleaning up session yang expire)
@@ -122,7 +114,7 @@ function mr_session_unset($data_name) {
  * @param mixed $data_value Session data yang akan dimasukkan
  * @return void 
  */
-function mr_session_set($data_name, $data_value=NULL) {
+function mr_session_setdata($data_name, $data_value=NULL) {
 	global $_MR;
 	
 	// jika $data_name merupakan array maka langsung masukkan 
@@ -145,7 +137,7 @@ function mr_session_set($data_name, $data_value=NULL) {
  * @param string $data_name Nama session key
  * @return mixed|boolean FALSE
  */
-function mr_session_get($data_name) {
+function mr_session_getdata($data_name) {
 	global $_MR;
 	
 	if (array_key_exists($data_name, $_MR['sessions']['data'])) {
@@ -204,24 +196,6 @@ function mr_session_destroy() {
 	
 	$_MR['sessions']['data'] = array();
 	_mr_session_update();
-}
-
-function mr_session_save() {
-	global $_MR;
-	
-	_mr_session_clean();
-	
-	if ($_MR['sessions']['action'] == 'delete') {
-		mr_session_destroy();
-	}
-	
-	if ($_MR['sessions']['action'] == 'insert') {
-		_mr_session_insert();
-	}
-	
-	if ($_MR['sessions']['action'] == 'update') {
-		_mr_session_update();
-	}
 }
 
 /**
@@ -309,5 +283,32 @@ function _mr_session_clean() {
 	}
 }
 
+/**
+ * Fungsi yang dipanggil untuk proses manipulasi session pada akhir script
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @return void;
+ */ 
+function session_destruct() {
+	global $_MR;
+	
+	_mr_session_clean();
+	
+	if ($_MR['sessions']['action'] == 'delete') {
+		mr_session_destroy();
+	}
+	
+	if ($_MR['sessions']['action'] == 'insert') {
+		_mr_session_insert();
+	}
+	
+	if ($_MR['sessions']['action'] == 'update') {
+		_mr_session_update();
+	}
+}
+
 // Tempatkan hook pada akhir eksekusi script
-add_hook('page_clean_up', 'mr_session_save');
+add_hook('page_clean_up', 'session_destruct');
+

@@ -28,3 +28,4 @@ function secure_url_on_uninstall() {}
 function secure_url_on_activate() {}
 function secure_url_on_deactivate() {}
 function secure_url_on_upgrade() {}
+function secure_url_role() {}

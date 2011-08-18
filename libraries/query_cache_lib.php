@@ -1,10 +1,9 @@
 <?php
-
 /**
  * File ini berisi fungsi-fungsi yang berhubungan dengan caching SQL query
  *
  * @package libraries
- * @copyright 2011 Bajol Startup Team
+ * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
  */
 
 /**

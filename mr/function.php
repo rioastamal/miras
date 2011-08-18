@@ -396,7 +396,11 @@ function get_last_query() {
 	return $_MR['last_query'];
 }
 
-
+function &mr_get_user() {
+	global $_MR;
+	
+	return $_MR['user'];
+}
 
 /**
  * Fungsi untuk menghitung waktu ekeskusi script

@@ -3,13 +3,11 @@
 load_library('session');
 session_construct();
 
-mr_session_set('uh', 'yeah');
+mr_session_setdata('user_id', 1);
 
 // echo ('FUCK YEAH!');
 load_helper('url');
-$kualitas = get_argument_by("kualitas");
-if (!$kualitas) {
-	$kualitas = 'murahan';
-}
+$user = get_argument_by("userid");
 
 site_debug(get_current_url(), "CURRENT URL");
+site_debug(get_last_query(), "LAST_QUERY");

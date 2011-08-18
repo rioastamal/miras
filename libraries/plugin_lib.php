@@ -102,7 +102,8 @@ function load_plugins() {
 								 $plugin . '_on_uninstall',
 								 $plugin . '_on_activate',
 								 $plugin . '_on_deactivate',
-								 $plugin . '_on_upgrade');
+								 $plugin . '_on_upgrade',
+								 $plugin . '_role');
 		foreach ($needed_function as $nf) {
 			if (!function_exists($nf)) {
 				site_debug('Fungsi ' . $nf . ' : Plugin ' . $plugin, 'FUNCTION NOT EXISTS');
@@ -159,6 +160,53 @@ function run_hooks($hookname, &$args='') {
 			// check apakah fungsi sudah didefinisikan atau belum
 			if (function_exists($function_name)) {
 				call_user_func_array($function_name, array(&$args));
+			}
+		}
+	}
+}
+
+/**
+ * Fungsi menambahkan role tambahan yang mungkin disertakan oleh plugin
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param object $role Object role yang didapat dari fungsi get_user_by_id pada model 
+ * @return void
+ */
+function assign_plugin_role(&$role) {
+	global $_MR;
+	
+	// dapatkan semua plugin yang telah diload (diaktifkan)
+	$role_list = array();
+	foreach ($_MR['loaded_plugins'] as $plugin) {
+		// setiap plugin yang diload seharusnya memiliki fungsi bernama
+		// nama_plugin_role() yang mengembalikan array dari role-role
+		// plugin tersebut
+		$function_name = $plugin . '_role';
+		if (function_exists($function_name)) {
+			// hanya gabungkan ke dalam daftar array role_list jika
+			// tipenya array
+			$plugin_role = call_user_func_array($function_name, array());
+			if (is_array($plugin_role)) {
+				$role_list += $plugin_role;
+			}
+		}
+	}
+	
+	// saatnya memasukkan semua rolelist kedalam role utama
+	foreach ($role_list as $role_key=>$role_val) {
+		// jika user merupakan super admin, dia bisa segalanya.... jadi set ke 1
+		if ($role->is_super_admin) {
+			$role->{$role_key} = 1;
+		} else {
+			// jika bukan super admin, pastikan apakah role sudah ada atau belum
+			// hal ini untuk menghindari overwrite dari custom role yang telah
+			// diset oleh user pada halaman control-panel
+			if (!isset($role->$role_key)) {
+				// jika sampai disini maka rolekey belum ada pada user, jadi
+				// gunakan nilai role default dari plugin
+				$role->$role_key = $role_val;
 			}
 		}
 	}

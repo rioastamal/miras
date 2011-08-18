@@ -32,6 +32,12 @@ $_MR['session_strict_check'] = TRUE;
 // path untuk cookie 
 $_MR['cookie_path'] = '/';
 
+// Super-admin User ID
+$_MR['super_admin_id'] = 1;
+
+// Guest User ID
+$_MR['guest_user_id'] = 2;
+
 // ------------------ AKHIR KONFIGURASI ----------------------------- //
 
 /* TIDAK PERLU MENGGANTI KONFIGURASI DIBAWAH INI KECUALI ANDA TAHU APA YANG
@@ -79,12 +85,7 @@ $_MR['query_number'] = 0;
 $_MR['last_query'] = '';
 
 // librari yang diload secara otomatis saat bootstrap
-$_MR['autoload_libraries'] = array(
-								'controller', 
-								'plugin', 
-								'template', 
-								'query_cache'
-							);
+$_MR['autoload_libraries'] = array();
 							
 // variabel yang menyimpan option dari aplikasi
 $_MR['options'] = array();

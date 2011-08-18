@@ -29,3 +29,8 @@ function no_ie6_on_uninstall() {}
 function no_ie6_on_activate() {}
 function no_ie6_on_deactivate() {}
 function no_ie6_on_upgrade() {}
+function no_ie6_role() {
+	return array(
+			'can_edit_ie6_settings' => 0
+	);
+}
