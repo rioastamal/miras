@@ -100,7 +100,7 @@ function load_model($model_name, $plugin_name=NULL) {
 	
 	if (!$plugin_name) {
 		// load model dari base path
-		// hasilnya adalah /path/to/berita21/models/nama_model.php
+		// hasilnya adalah /path/to/miras/models/nama_model.php
 		$path_file = BASE_PATH . '/models/' . $model_name . '_model.php';
 	} else {
 		// load model dari plugin
@@ -148,10 +148,10 @@ function load_library($lib_name, $plugin_name=NULL) {
 	
 	// jika nama plugin diisi maka dahulukan meload dari plugin
 	if ($plugin_name) {
-		// hasilnya adalah /path/to/berita21/plugin_name/libraries/nama_lib.php
+		// hasilnya adalah /path/to/miras/plugin_name/libraries/nama_lib.php
 		$path_file = BASE_PATH . '/plugins/' . $plugin_name . '/libraries/' . $lib_name . '_lib.php';
 	} else {
-		// hasilnya adalah /path/to/berita21/libraries/nama_lib.php
+		// hasilnya adalah /path/to/miras/libraries/nama_lib.php
 		$path_file = BASE_PATH . '/libraries/' . $lib_name . '_lib.php';
 	}
 	
@@ -189,8 +189,7 @@ function load_view($view_name, &$data=NULL, $plugin_name=NULL) {
 	$theme = $_MR['theme'];
 	
 	// load view dari base path
-	// hasilnya adalah /path/to/berita21/views/nama_theme/nama_model.php
-	//$path_file = BASE_PATH . '/views/' . $theme . '/' . $view_name . '_view.php';
+	// hasilnya adalah /path/to/miras/views/nama_theme/nama_model.php
 	if ($plugin_name == NULL){
 		$path_file = BASE_PATH . '/views/' . $theme . '/' . $view_name . '_view.php';
 	} else {
@@ -200,7 +199,7 @@ function load_view($view_name, &$data=NULL, $plugin_name=NULL) {
 	// jika file tidak ada maka view tidak bisa diload
 	if (!file_exists($path_file)) {
 		// keluar dari sistem
-		exit ("View '{$view_name}' tidak ada pada path system.");
+		throw new Exception ("View '{$view_name}' tidak ada pada path system.");
 	}
 	
 	include_once ($path_file);
@@ -235,17 +234,17 @@ function load_helper($helper_name, $plugin_name=NULL) {
 	
 	// jika nama plugin diisi maka dahulukan meload dari plugin
 	if ($plugin_name) {
-		// hasilnya adalah /path/to/berita21/plugin_name/libraries/nama_lib.php
+		// hasilnya adalah /path/to/miras/plugin_name/helper/nama_lib.php
 		$path_file = BASE_PATH . '/plugins/' . $plugin_name . '/helpers/' . $helper_name . '_helper.php';
 	} else {
-		// hasilnya adalah /path/to/berita21/libraries/nama_lib.php
+		// hasilnya adalah /path/to/miras/helper/nama_helper.php
 		$path_file = BASE_PATH . '/helpers/' . $helper_name . '_helper.php';
 	}
 	
 	// jika file tidak ada maka helper tidak bisa diload
 	if (!file_exists($path_file)) {
 		// keluar dari sistem
-		exit ("Helper '{$helper_name}' tidak ada pada path system.");
+		throw new Exception ("Helper '{$helper_name}' tidak ada pada path system.");
 	}
 	
 	// masukkan $helper_name ke daftar helper yang sudah diload
