@@ -15,11 +15,20 @@ function tugu_pahlawan_on_uninstall() {}
 function tugu_pahlawan_on_activate() {}
 function tugu_pahlawan_on_deactivate() {}
 function tugu_pahlawan_on_upgrade() {}
-function tugu_pahlawan_role() {}
 
 function tugu_pahlawan_sidebar() {
 	$data = NULL;
 	$data->nama_user = get_user()->user_first_name;
 	$data->nama_role = get_user()->role->rolename;
 	load_view('sidebar', $data, 'tugu_pahlawan');
+}
+
+function tugu_pahlawan_role() {
+	// default privilege untuk plugin tugu pahlawan
+	// (ROLE INI TIDAK DIGUNAKAN NAMUN HANYA SEBAGAI CONTOH)
+	return array(
+		'can_declare_independence'	=> 1,
+		'can_make_war'				=> 0,
+		'can_make_peace'			=> 1
+	);
 }

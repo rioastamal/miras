@@ -16,6 +16,8 @@
 			<ul>
 				<?php echo (tpl_build_menu()); ?>
 			</ul>
+			<h1 id="site-title"><a href="<?php echo (get_site_url());?>"><?php echo (FRAMEWORK_NAME);?></a></h1>
+			<h3 id="site-desc"><?php echo (get_option('site_description'));?></h3>
 		</div>
 	</div>
 	<!-- END HEADER -->

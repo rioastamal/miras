@@ -51,7 +51,7 @@ $_MR['db'] = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 // Untuk menjaga kompatibilitas dengan PHP versi < 5.2.9 maka pengecekan error
 // dilakukan secara prosedural
 if (mysqli_connect_error()) {
-	throw new Exception('DB_ERROR(' . mysqli_connect_errno() . '): ' . mysqli_connect_error());
+	exit('DB_ERROR(' . mysqli_connect_errno() . '): ' . mysqli_connect_error());
 }
 
 // load menu

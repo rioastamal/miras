@@ -38,12 +38,19 @@ function get_user_by_id($uid) {
 	// untuk melakukan modifkasi
 	run_hooks('user_set_profile', $profile);
 	
+	$role->is_super_admin = 0;
+	$role->is_guest = 1;
+	
 	// set user sebagai super admin jika ID user tersebut sesuai dengan
 	// yang ada pada konfigurasi
-	$role->is_super_admin = 0;
 	if ($_MR['super_admin_id'] == $profile->user_id) {
 		$role->is_super_admin = 1;
 		$role->rolename = 'Super Admin';
+	}
+	
+	// tambahkan role baru bernama is_guest jika user merupakan guest
+	if ($_MR['guest_user_id'] != $profile->user_id) {
+		$role->is_guest = 0;
 	}
 	
 	// dapatkan role dari setiap plugin untuk dimasukkan ke role utama user ini
@@ -86,6 +93,40 @@ function get_acl_role($uid, $user_type_id) {
 	return $role;
 }
 
+
+function get_user_login($username, $password) {
+	$db_user = DB_PREFIX . 'users u';
+	$username = mr_escape_string($username);
+	$password = mr_escape_string($password);
+	
+	$query = "SELECT u.* FROM {$db_user} WHERE u.user_name='%s' LIMIT 1";
+	$query = sprintf($query, $username);
+	$result = mr_query($query);
+	
+	if (!$result) {
+		$message = 'Username "%s" tidak ditemukan, mohon cek kembali';
+		throw new Exception(sprintf($message, $username));
+	}
+	
+	// ambil result dan tempatkan pada variabel pembantu
+	$user = $result[0];
+	
+	// jika user status tidak sama dengan aktif pada 
+	$active_status_id = get_user_status_number('active');
+	if ($user->user_status != $active_status_id) {
+		$message = 'Status user "%s" tidak aktif';
+		throw new Exception(sprintf($message, $username));
+	}
+	
+	// cocokkan password
+	$given_password = md5($user->user_salt . $password);
+	if ($given_password !== $user->user_pass) {
+		throw new Exception('Username atau password salah!');
+	}
+	
+	return $user;
+}
+
 /**
  * Fungsi untuk melakukan inisialisasi awal role dari user, jika tidak ada proses
  * login maka default user role yang diberikan adalah Guest
@@ -108,8 +149,39 @@ function init_user_role() {
 	$_MR['user'] = get_user_by_id($uid);
 }
 
+/**
+ * Fungsi untuk mendapatkan object user yang disimpan pada global variabel
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @return object
+ */
 function get_user() {
 	global $_MR;
 	
 	return $_MR['user'];
+}
+
+/**
+ * Fungsi untuk melakukan mapping dari user status berupa string ke
+ * user status angka
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param string $status - String status yang ingin didapatkan angkanya
+ * @return int
+ */
+function get_user_status_number($status) {
+	$status = strtolower($status);
+	switch ($status) {
+		case 'deleted': return 0; break;
+		case 'pending': return 1; break;
+		case 'blocked': return 2; break;
+		case 'active':	return 3; break;
+		default:
+			return -1;
+		break;
+	}
 }
