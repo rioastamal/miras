@@ -55,7 +55,7 @@ function update_option($option_name, $option_value, $option_autoload=1) {
 	
 	// masukkan ke cache untuk dimasukkan ke datatabase 
 	if ($insert === TRUE) {
-		$_MR['options_insert_cache'][$opt_name] = array(
+		$_MR['options_insert_cache'][$option_name] = array(
 													'value' => $option_value,
 													'autoload' => $option_autoload
 												  );
@@ -142,42 +142,33 @@ function insert_option($option_name, $option_value, $opt_autoload=1) {
  */
 function set_all_options() {
 	global $_MR;
+	
 	// select option name dan value dimana option_autoload bernilai '1'
-	$query = 'SELECT option_name, option_value 
-	          FROM options
-	          WHERE option_autoload = 1';
+	$db_name = DB_PREFIX . 'options';
+	$query = "SELECT option_name, option_value 
+	          FROM {$db_name}
+	          WHERE option_autoload = 1";
 	
-	$result = $_MR['db']->query($query);
-	// masukkan data query terakhir
-	set_last_query($query);
+	$result = mr_query($query);
 	
-	if ($result === FALSE) {
-		// query error
-		return FALSE;
-	}
-	
-	// increment status dari jumlah query yang telah dijalankan
-	increase_query_number();
-	
-	while ($row = $result->fetch_object()) {
-		// unserialize string dari kolom option_value jika diperlukan
-		$opt_value = NULL;
-		$temp = @unserialize($row->option_value);
-		// jika TIDAK FALSE berarti $temp adalah serializable string
-		if ($temp !== FALSE) {
-			$opt_value = $temp;
-		} else {
-			// isi kolom option_value bukan serializeable string
-			// jadi kembalikan apa adanya
-			// WYIIWYG (What You Insert Is What Get) :p
-			$opt_value = $row->option_value;
+	if ($result) {
+		foreach ($result as $row) {
+			// unserialize string dari kolom option_value jika diperlukan
+			$opt_value = NULL;
+			$temp = @unserialize($row->option_value);
+			// jika TIDAK FALSE berarti $temp adalah serializable string
+			if ($temp !== FALSE) {
+				$opt_value = $temp;
+			} else {
+				// isi kolom option_value bukan serializeable string
+				// jadi kembalikan apa adanya
+				// WYIIWYG (What You Insert Is What Get) :p
+				$opt_value = $row->option_value;
+			}
+			
+			$_MR['options'][$row->option_name] = $opt_value;
 		}
-		
-		$_MR['options'][$row->option_name] = $opt_value;
 	}
-	
-	// tutup result
-	$result->close();
 }
 
 /**
@@ -191,6 +182,7 @@ function set_all_options() {
 function option_cache_save() {
 	global $_MR; 	
 	$query = array();
+	$db_name = DB_PREFIX . 'options';
 	
 	site_debug(print_r($_MR['options'], TRUE), 'CURRENT OPTIONS');
 	
@@ -200,8 +192,8 @@ function option_cache_save() {
 	 * val dari query diberi ' untuk type text, varchar
 	 */
 	foreach ($delete_cache as $opt_key => $opt_val) {
-		$key = $_MR['db']->real_escape_string($opt_key);
-		$query[] = "DELETE FROM options WHERE option_name='$key'";
+		$key = mr_escape_string($opt_key);
+		$query[] = "DELETE FROM {$db_name} WHERE option_name='$key'";
 	}
 	
 	site_debug(print_r($delete_cache, TRUE), 'OPTIONS TO DELETE');
@@ -212,9 +204,10 @@ function option_cache_save() {
 	 * val dari query diberi ' untuk type text, varchar
 	 */
 	foreach ($insert_cache as $opt_key => $opt_val) {
-		$value = $_MR['db']->real_escape_string($opt_val['value']);
-		$autoload = $_MR['db']->real_escape_string($opt_val['autoload']);
-		$query[] = "INSERT INTO options (option_name, option_value, option_autoload) VALUES ('$opt_key', '$value', $autoload)";
+		$opt_key = mr_escape_string($opt_key);
+		$value = mr_escape_string($opt_val['value']);
+		$autoload = mr_escape_string($opt_val['autoload']);
+		$query[] = "INSERT INTO {$db_name} (option_name, option_value, option_autoload) VALUES ('$opt_key', '$value', $autoload)";
 	}
 	
 	site_debug(print_r($insert_cache, TRUE), 'OPTIONS TO INSERT');
@@ -225,8 +218,9 @@ function option_cache_save() {
 	 * val dari query diberi ' untuk type text, varchar
 	 */
 	foreach ($update_cache as $opt_key => $opt_val) {
-		$value = $_MR['db']->real_escape_string($opt_val);
-		$query[] = "UPDATE options SET option_value='$value' WHERE option_name='$opt_key'";
+		$opt_key = mr_escape_string($opt_key);
+		$value = mr_escape_string($opt_val);
+		$query[] = "UPDATE {$db_name} SET option_value='$value' WHERE option_name='$opt_key'";
 	}
 	
 	site_debug(print_r($update_cache, TRUE), 'OPTIONS TO UPDATE');
@@ -236,11 +230,7 @@ function option_cache_save() {
 		$query = implode(';', $query);
 
 		// execute multi query
-		$multi_query = $_MR['db']->multi_query($query);
-		
-		set_last_query($query);
-		increase_query_number();
-		site_debug($query, 'OPTION CACHE QUERY');
+		mr_query_multi($query);
 	}
 }
 

@@ -132,6 +132,7 @@ function map_controller() {
 	}
 	
 	// jika sampai disini maka controller tidak ditemukan jadi thrown exception
+	header("HTTP/1.1 404 Not Found");
 	throw new Exception ("Controller {$controller} tidak ditemukan.");
 }
 

@@ -113,7 +113,7 @@ function mr_query_multi($query, $cache_time=60) {
 		}
 	} while ($_MR['db']->next_result());
 	
-	return $record;
+	return $records;
 }
 
 /**

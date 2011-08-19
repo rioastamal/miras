@@ -8,15 +8,15 @@
  */
 
 // database name
-define('DB_NAME', 'test');
+define('DB_NAME', '%s');
 // database user
-define('DB_USER', 'root');
+define('DB_USER', '%s');
 // database pass
-define('DB_PASS', 'b3nsql');
+define('DB_PASS', '%s');
 // database host
-define('DB_HOST', 'localhost');
+define('DB_HOST', '%s');
 // database prefix
-define('DB_PREFIX', 'mr_');
+define('DB_PREFIX', '%s');
 
 /**
  * Global variabel untuk menampung resource database

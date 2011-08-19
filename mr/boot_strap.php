@@ -23,6 +23,20 @@ include_once(BASE_PATH . '/mr/' . 'site_config.php');
 include_once(BASE_PATH . '/mr/' . 'db_config.php');
 include_once(BASE_PATH . '/mr/' . 'function.php');
 
+// manual load library plugin karena fungsi run_hooks diperlukan oleh banyak
+// proses awal
+include_once(BASE_PATH . '/libraries/' . 'plugin_lib.php');
+$_MR['loaded_libraries'][] = 'plugin';
+
+// check keberadaan direktori install, jika masih ada langsung lempar 
+// ke exception
+if (file_exists(BASE_PATH . '/install')) {
+	// jika debugging mode maka tidak perlu di throw
+	if ($_MR['debug_mode'] === FALSE) {
+		throw new Exception ('Mohon untuk menghapus direktori <strong>install</strong> terlebih dahulu.');
+	}
+}
+
 site_debug(FRAMEWORK_FULL_NAME, 'FRAMEWORK NAME');
 
 load_helper('url');
@@ -31,7 +45,6 @@ $_mr_auto_libs = array(
 					'query_cache',
 					'sql_query',
 					'controller', 
-					'plugin', 
 					'session',
 					'template'
 				);

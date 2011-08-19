@@ -35,28 +35,12 @@ body {
 #content {
 	position: relative;
 	float: left;
-	width: 650px;
+	width: 99%;
 	margin-right: 20px;
 	padding-left: 5px;
-	border-right: 1px solid #ccc;
 	padding-top: 10px;
-}
-
-#sidebar {
-	padding-top: 10px;
-	position: relative;
-	float: left;
-	width: 292px;
-	padding-left: 2px;
-}
-
-#sidebar h3 {
-	padding-bottom: 4px;
-	border-bottom: 1px solid #ccc;
-}
-
-#sidebar p {
-	margin-bottom: 18px;
+	font-family: Arial, Verdana, Monospace;
+	font-size: 16px;
 }
 
 #footer {
@@ -95,8 +79,9 @@ body {
 
 #header h1#site-title {
 	font-family: Arial, FreeSans;
-	font-size: 47px;
+	font-size: 41px;
 	margin-left: 8px;
+	margin-top: 5px;
 }
 
 #header h1 a, #header h1 a.visited, #header h1 a:hover {
@@ -106,7 +91,7 @@ body {
 
 #header h3#site-desc {
 	font-family: Arial, FreeSans;
-	font-size: 25px;
+	font-size: 23px;
 	margin-left: 8px;
 	font-weight: normal;
 }
@@ -172,6 +157,15 @@ code {
 	margin-top: 4px;
 }
 
+#content a, #content a:visited {
+	color: #c60000;
+	text-decoration: none;
+}
+
+#content a:hover {
+	text-decoration: underline;
+}
+
 #content ul {
 	padding-left: 15px;
 }
@@ -193,18 +187,9 @@ code {
 	padding: 4px;
 }
 
-#content form.miras input.button {
+#content input.button, #content button.button {
 	font-size: 24px;
 	padding: 2px 18px;
-}
-
-#content a, #content a:visited {
-	color: #c60000;
-	text-decoration: none;
-}
-
-#content a:hover {
-	text-decoration: underline;
 }
 
 /*
@@ -214,6 +199,10 @@ code {
 .lef { text-align: left; }
 .mid { text-align: center; }
 .rig { text-align: right; }
+.green { color: #1A6C1A; }
+.red { color: #c60000; }
+.upper { text-transform: uppercase;}
+.vtop { vertical-align: top; }
 
 /* Flash Message */
 .flash {
@@ -232,5 +221,25 @@ code {
 
 .flash-error {
 	border: 1px solid #c60000;
+	background: #FFC0CB;
+}
+
+table {
+	border: 1px solid #ccc;
+	border-bottom: none;
+}
+table th {
+	background-color: #ccc;
+	padding: 5px 2px 5px 4px;
+}
+
+table td {
+	padding: 4px;
+	border-bottom: 1px solid #ccc;
+}
+table tr.ok {
+	background: #90EE90;
+}
+table tr.failed {
 	background: #FFC0CB;
 }
