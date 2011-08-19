@@ -1,3 +1,2 @@
-cache/**/*
+cache/**/*.php
 !.gitignore
-mr/version_info.php

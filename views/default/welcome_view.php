@@ -30,7 +30,7 @@
 			dan belum mencapai status versi <strong>stable</strong>. Oleh karena itu kami sangat
 			tidak menganjurkan untuk digunakan dalam lingkungan live production. Versi stable
 			kemungkinan baru akan dicapai pada rilis v1.2. Jadi stay updates dengan 
-			mengunjungi <a href="http://miras.raweet.og/">miras.raweet.org</a> atau 
+			mengunjungi <a href="http://miras.raweet.org/">miras.raweet.org</a> atau 
 			lewat twitter <a href="http://twitter.com/MirasFramework">@MirasFramework</a>.</p>
 		</div>
 		<!-- END CONTENT -->
