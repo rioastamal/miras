@@ -1,9 +1,12 @@
 <?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * File ini berisi konfigurasi utama untuk framework
+ * File ini berisi konfigurasi utama untuk aplikasi
  *
- * @package mr
- * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
+ * @package Miras
+ * @subpackage Mr
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
  
 // Alamat Base URL dari aplikasi, harus diakhiri dengan '/' SLASH

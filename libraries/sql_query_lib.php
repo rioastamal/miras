@@ -1,10 +1,13 @@
 <?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * File ini menyimpan kumpulan fungsi-fungsi untuk membantu mempermudah
- * mengkonstruksi suatu query
+ * File ini berisi fungsi-fungsi yang digunakan untuk melakukan query ke 
+ * database.
  *
- * @package libraries
- * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
+ * @package Miras
+ * @subpackage Libraries
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
 /**

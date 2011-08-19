@@ -1,10 +1,13 @@
 <?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * File ini berfungsi untuk meloading semua file library atau
- * konfigurasi yang diperlukan
+ * File berisi rutin code meload beberapa file agar dapat digunakan oleh 
+ * installer, tidak semua fitur framework diload pada script installer ini.
  *
- * @package mr
- * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
+ * @package Miras
+ * @subpackage Installer
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
 include_once(BASE_PATH . '/mr/' . 'version_info.php');

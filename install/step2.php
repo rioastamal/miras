@@ -1,4 +1,14 @@
-<?php
+<?php 
+/**
+ * File berisi rutin code untuk menyimpan konfigurasi database yang akan
+ * digunakan.
+ *
+ * @package Miras
+ * @subpackage Installer
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
+ */
 error_reporting(E_ALL);
 
 // deklarasi BASE_PATH

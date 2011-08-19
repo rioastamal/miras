@@ -1,10 +1,13 @@
-<?php
+<?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
  * File ini berisi fungsi-fungsi yang membantu mempermudah penggunaan tag HTML 
  * pada controllers atau views
- * 
- * @package helper
- * @copyright 2011 Bajol Startup Team
+ *
+ * @package Miras
+ * @subpackage Helpers
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
 /**

@@ -30,7 +30,12 @@ function tugu_pahlawan_index($data_view=NULL) {
 
 function tugu_pahlawan_proses_login() {
 	try {
-		$data->sess->username = $_POST['username'];
+		$data->sess->username = trim($_POST['username']);
+		
+		if (empty($data->sess->username)) {
+			throw new Exception('Mohon username diisi.');
+		}
+		
 		$user = get_user_login($_POST['username'], $_POST['password']);
 		
 		// jika sampai disini berarti tidak ada error (proses autentikasi berhasil)

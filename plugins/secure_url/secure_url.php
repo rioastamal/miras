@@ -1,6 +1,15 @@
-<?php
-
-add_hook('pre_routing', 'secure_url');
+<?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
+/**
+ * File ini berisi fungsi-fungsi utama yang digunakan oleh hampir semua bagian
+ * dari aplikasi.
+ *
+ * @package Miras
+ * @subpackage Plugins
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @copyright 2011 Alfa Radito <qwertqwe16@yahoo.co.id>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
+ */
 
 /**
  * Fungsi untuk men-secure dari URL Attack

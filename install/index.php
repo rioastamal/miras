@@ -1,4 +1,14 @@
-<?php
+<?php 
+/**
+ * File berisi rutin code untuk installasi step pertama, yang dilakukan adalah
+ * mengecek system requirements.
+ *
+ * @package Miras
+ * @subpackage Installer
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
+ */
 error_reporting(E_ALL);
 
 // deklarasi BASE_PATH
@@ -34,7 +44,7 @@ if (extension_loaded('mysqli') === FALSE) {
 	$data->next_step = FALSE;
 }
 
-// check if db_config.php is writeable or not
+// check apakah db_config.php dapat ditulis atau tidak
 clearstatcache();
 $config_db_file = BASE_PATH . '/mr/db_config.php';
 $requirements[3]->message = 'Is file <em>' . $config_db_file . '</em> writeable?';
@@ -48,6 +58,8 @@ if (is_writable($config_db_file) === FALSE) {
 	$data->next_step = FALSE;
 }
 
+
+// check apakah direktori cache/query dapat ditulis atau tidak
 $cache_dir = BASE_PATH . '/mr/cache/query';
 $requirements[4]->message = 'Is directory <em>' . $cache_dir . '</em> writeable?';
 $requirements[4]->yours = 'Yes';
@@ -60,6 +72,7 @@ if (is_writable($config_db_file) === FALSE) {
 	$data->next_step = FALSE;
 }
 
+// check apakah direktori cache/query dapat ditulis atau tidak
 $cache_dir = BASE_PATH . '/mr/cache/content';
 $requirements[5]->message = 'Is directory <em>' . $cache_dir . '</em> writeable?';
 $requirements[5]->yours = 'Yes';

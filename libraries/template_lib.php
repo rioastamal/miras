@@ -1,11 +1,14 @@
-<?php
-
+<?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * File ini berisi fungsi-fungsi (query) yang berhubungan manipulasi template
- * (views)
+ * File ini berisi fungsi-fungsi yang digunakan sistem templating, seperti
+ * penambahan menu. Kedepan sistem menu akan menggunakan library tree bukan
+ * array biasa.
  *
- * @package libraries
- * @copyright 2011 Bajol Startup Team
+ * @package Miras
+ * @subpackage Libraries
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
 /**

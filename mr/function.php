@@ -1,9 +1,14 @@
 <?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * File ini menyimpan kumpulan fungsi-fungsi dasar yang digunakan framework
+ * File ini berisi fungsi-fungsi utama yang digunakan oleh hampir semua bagian
+ * dari aplikasi.
  *
- * @package mr
- * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
+ * @package Miras
+ * @subpackage Mr
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @copyright 2011 Irianto Bunga Pratama <me@iriantobunga.com>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
 /**

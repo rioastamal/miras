@@ -1,12 +1,16 @@
 <?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * Ini adalah file untuk melakukan test tree library
+ * File menunjukkan sebuah demonstrasi sederhana penggunakan library tree
  *
  * Penggunaan:
  * Arahkan browser ke lokasi file test_ctl.php misal:
  *  -> http://example.com/index.php/test/tree
  *
- * @author Rio Astamal <me@rioastamal.net>
+ * @package Miras
+ * @subpackage Controllers
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
 // karena BASE_PATH dipindah ke index maka create konstanta BASE_PATH secara manual

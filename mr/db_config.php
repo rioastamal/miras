@@ -1,18 +1,20 @@
 <?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * File konfigurasi untuk koneksi ke database
+ * File ini berisi configurasi dasar untuk database
  *
- * @package mr
+ * @package Miras
+ * @subpackage Mr
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
  * @copyright 2011 Rio Astamal <me@rioastamal.net>
- * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
 // database name
-define('DB_NAME', 'test');
+define('DB_NAME', 'miras');
 // database user
-define('DB_USER', 'root');
+define('DB_USER', 'miras_admin');
 // database pass
-define('DB_PASS', 'b3nsql');
+define('DB_PASS', 'lima-persen');
 // database host
 define('DB_HOST', 'localhost');
 // database prefix

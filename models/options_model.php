@@ -1,10 +1,14 @@
-<?php
-
+<?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * File ini berisi fungsi-fungsi (query) yang berhubungan dengan tabel options
+ * File ini berisi fungsi-fungsi yang berhubungan dengan manipulasi tabel options
  *
- * @package models
- * @copyright 2011 Bajol Startup Team
+ * @package Miras
+ * @subpackage Models
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @copyright 2011 Irianto Bunga Pratama<me@iriantobunga.com>
+ * @copyright 2011 Alfa Radito <qwertqwe16@yahoo.co.id>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
 /**

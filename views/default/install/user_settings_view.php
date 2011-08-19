@@ -19,7 +19,7 @@
 				<label>Email</label>
 				<input class="text" type="text" name="email" id="email" value="<?php echo (@$data->sess->email);?>" size="16" />
 				<br/>
-				<div class="rig"><input class="button" type="submit" name="user-submit" id="user-submit" value="FINISH" /></div>
+				<div class="rig"><input class="button" type="submit" name="user-submit" id="user-submit" value="STEP 4" /></div>
 			</form>
 		</div>
 		<!-- END CONTENT -->

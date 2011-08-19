@@ -1,9 +1,14 @@
-<?php
+<?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * File ini berisi fungsi-fungsi yang berhubungan dengan sistem plugin
+ * File ini berisi fungsi-fungsi yang berhubungan dengan sistem plugin dari
+ * Miras seperti meload plugin, memasang dan menjalankan hooks.
  *
- * @package libraries
- * @copyright 2011 Bajol Startup Team
+ * @package Miras
+ * @subpackage Libraries
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @copyright 2011 Irianto Bunga Pratama <me@iriantobunga.com>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
 /**

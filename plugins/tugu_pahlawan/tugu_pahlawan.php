@@ -1,5 +1,14 @@
 <?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
-
+/**
+ * File mendemonstrasikan bagaimana membuat dan menggunakan sebuah plugin.
+ *
+ * @package Miras
+ * @subpackage Plugins
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
+ */
+ 
 tpl_add_menu(array(
 	'label' => 'Tugu Pahlawan',
 	'id' => 'tugu_pahlawan',

@@ -1,4 +1,14 @@
 <?php
+/**
+ * File berisi rutin code melakukan eksekusi dari semua step yang dilakukan
+ * sebelumnya yaitu konfigurasi database dan user.
+ *
+ * @package Miras
+ * @subpackage Installer
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
+ */
 error_reporting(E_ALL);
 
 // deklarasi BASE_PATH

@@ -1,9 +1,14 @@
-<?php 
+<?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * File ini berisi fungsi-fungsi yang berhubungan dengan pembuatan tree
- * 
- * @package libraries
- * @copyright 2011 Bajol Startup Team
+ * File ini berisi fungsi-fungsi yang digunakan membangun sebuah unlimited
+ * tree dari array untuk diubah ke berbagai format misal plain text atau
+ * HTML.
+ *
+ * @package Miras
+ * @subpackage Libraries
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
 /**

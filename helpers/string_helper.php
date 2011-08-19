@@ -1,9 +1,13 @@
 <?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * File ini berisi fungsi-fungsi (query) yang berhubungan dengan tabel options
+ * File ini berisi fungsi-fungsi pembantu dalam melakukan manipulasi string
+ * seperti generating, formatting, filterisasi, dll.
  *
- * @package models
- * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
+ * @package Miras
+ * @subpackage Helpers
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
 /**

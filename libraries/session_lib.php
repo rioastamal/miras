@@ -1,10 +1,14 @@
 <?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * File ini menyimpan kumpulan fungsi-fungsi yang berhubungan
- * dengan manajemen session
+ * File ini berisi fungsi-fungsi yang digunakan untuk melakukan manipulasi
+ * session pada database. Kedepan selain database mungkin akan dibahkan
+ * storage lain seperti APC, memcache, dll.
  *
- * @package libraries
- * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
+ * @package Miras
+ * @subpackage Libraries
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
 // load model yang dibutuhkan

@@ -1,0 +1,125 @@
+INSTALASI MIRAS
+---------------
+
+Daftar Isi
+----------
+  1. Kebutuhan Sistem
+  2. Buat Database
+  3. Extract Paket Distribusi
+  4. Jalankan Installer
+  5. Selesai
+  6. Contoh
+     a. Asumsi
+     b. Langkah-langkah
+     c. Test
+  
+1. KEBUTUHAN SISTEM
+-------------------
+ * Web Server dengan PHP Support
+ * PHP versi 5.1.6 dengan MySQLi extension
+ * MySQL 4.1+
+ 
+2. KONFIGURASI DATABASE
+-----------------------
+Sebelum memulai installer anda harus menyediakan sebuah database untuk 
+digunakan oleh Miras. Anda dapat membutnya lewat MySQL command line atau lewat
+tools seperti phpMyAdmin.
+
+3. EXTRACT DISTRIBUSI
+---------------------
+Paket distribusi Miras ada dalam bentauk tarball .tar.gz atau zipball .zip. 
+Extract Miras-x.y.z.tar.gz ke direktori yang dapat diakses web server anda.
+
+4. JALANKAN INSTALLER
+---------------------
+Arahkan browser anda ke alamat htt://hostname/miras/install. 
+Ikuti step-by-step instalasinya sampai selesai.
+
+5. SELESAI
+----------
+Hapus direktori install karena tidak diperlukan dan untuk alasan keamanan. 
+Selanjutnya coba test dengan mengunjungi http://hostname/miras/. Jika semuanya
+berjalan baik, maka anda akan melihat halaman selamat datang dari Miras.
+
+6. CONTOH
+---------
+Berikut ini adalah contoh langkah-langkah instalasi dengan asumsi-asumsi 
+yang akan disebutkan.
+
+a. ASUMSI
+---------
+ * Sistem operasi yang dignakan adalah Linux
+ * Lokasi document root dari web server adalah /var/www
+ * Hostname yang digunakan adalah localhost
+ * Direktori /var/www dapat ditulis oleh user yang menjalankan perintah
+ * Paket distribusi miras-v1.0.1.tar.gz lokasinya ada di /tmp
+ * Paket akan diextract di /var/www
+ * Database yang akan dibuat bernama 'miras' dengan user dan password
+   berturut-turut adalah 'miras_admin' dan 'iamnotdrunk'
+ * Database dibuat menggunakan MySQL command line interface
+ 
+ Silahkan sesuaikan sendiri dengan kondisi sistem anda.
+ 
+b. LANGKAH-LANGKAH
+------------------
+ 1. Masuk ke direktori /var/www
+    $ cd /var/www
+ 
+ 2. Extract paket
+    $ tar -zxvf /tmp/miras-v1.0.1.tar.gz -C ./
+    
+ 3. Chmod 777 file mr/db_config.php agar nantinya dapat ditulis oleh Installer.
+    $ chmod 0777 miras/mr/db_config.php
+    
+ 4. Lakukan hal yang sama untuk direktori cache/query dan cache/content
+    $ chmod 0777 miras/cache/query
+    $ chmod 0777 miras/cache/content
+    
+ 5. Buat Database baru (dalam contoh digunakan root untuk membuat database)
+    $ mysql -u root -p
+    mysql> CREATE DATABASE miras;
+    
+ 6. Buat user untuk database tersebut
+    mysql> GRANT ALL PRIVILEGES ON miras.* TO 'miras_admin'@'localhost'
+         > IDENTIFIED BY 'iamnotdrunk';
+    mysql> quit
+ 
+ 7. Buka browser anda dan arahkan ke http://localhost/miras/install
+ 
+ 8. Periksa semua requirements, jika OK maka click STEP 2
+ 
+ 9. Selanjutnya adalah konfigurasi database masukkan datatanya sebagai berikut
+    Database Host: localhost
+    Database Name: miras
+    Database User: miras_admin
+    Database Password: iamnotdrunk
+    Table Prefix: mr_
+    
+    lalu klik STEP 3
+
+10. Step berikunya yaitu STEP 3 adalah mengisi user account untuk super admin,
+    isikan sebagai berikut:
+    Username: admin
+    First Name: Super
+    Last Name: Admin
+    Password: admin123
+    Repeat: admin123
+    Email: admin@localhost.org
+    
+    klik FINISH
+
+11. Lakukan cleaning up
+    $ rm -rf miras/install
+    $ rm -rf miras/views/default/install
+    
+c. TEST
+-------
+ 1. Kunjungi http://localhost/miras
+ 2. Klik menu Tugu Pahlawan
+ 3. Klik 'Dokumen Rahasia' (Akan muncul pesan error)
+ 4. Masukkan username admin dan password admin123
+ 5. Klik kembali 'Dokumen Rahasia'
+ 6. Jika anda berhasil melihat halaman tersebut maka proses autentikasi yang 
+    melibatkan session berhasil.
+    
+ 

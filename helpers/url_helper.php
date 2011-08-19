@@ -1,12 +1,15 @@
 <?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * File ini menyimpan kumpulan fungsi-fungsi yang berhubungan akses atau
- * manipulasi terkait URL
+ * File ini berisi fungsi-fungsi yang digunakan untuk manipulasi URL
  *
- * @package helpers
- * @copyright 2011 CV. Astasoft Indonesia (http://www.astasoft.co.id/)
+ * @package Miras
+ * @subpackage Helpers
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @copyright 2011 Alfa Radito <qwertqwe16@yahoo.co.id>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
-
+ 
 /**
  * Fungsi untuk mendapatkan argumen berdasarkan $key.
  *
