@@ -10,7 +10,7 @@
  * @copyright 2011 Alfa Radito <qwertqwe16@yahoo.co.id>
  * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
-
+ 
 /**
  * Fungsi untuk men-secure dari URL Attack
  *
@@ -38,3 +38,5 @@ function secure_url_on_activate() {}
 function secure_url_on_deactivate() {}
 function secure_url_on_upgrade() {}
 function secure_url_role() {}
+
+add_hook('pre_routing', 'secure_url');
