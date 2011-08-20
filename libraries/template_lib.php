@@ -100,3 +100,35 @@ function set_active_menu($menu) {
 	
 	$_MR['active_menu'][] = $menu;
 }
+
+/**
+ * Fungsi untuk melakukan inisialisasi theme awal, dimana theme akan diambil
+ * dari option yang disimpan pada tabel options
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.2
+ *
+ * @return void
+ */
+function tpl_init_theme() {
+	global $_MR;
+	
+	$theme = get_option('site_theme');
+	
+	// jika option theme tidak ada set ke default
+	if (!$theme) {
+		$theme = 'default';
+	}
+	
+	// cek direktorinya ada atau tidak
+	$theme_path = BASE_PATH . '/views/' . $theme;
+	if (file_exists($theme_path) == FALSE) {
+		mr_clean_up();
+		exit('Path untuk theme ' . $theme . ' tidak ditemukan!');
+	}
+	
+	$_MR['theme'] = $theme;
+	site_debug("theme name: {$theme}", 'THEME INITIALIZATION');
+}
+
+add_hook('boot_post_libraries_load', 'tpl_init_theme');
