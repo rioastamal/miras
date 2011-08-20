@@ -24,7 +24,7 @@ $_MR['time_start'] = microtime(TRUE);
 // site config
 include_once(BASE_PATH . '/mr/' . 'site_config.php');
 include_once(BASE_PATH . '/mr/' . 'db_config.php');
-include_once(BASE_PATH . '/mr/' . 'function.php');
+include_once(BASE_PATH . '/mr/' . 'functions.php');
 
 // manual load library plugin karena fungsi run_hooks diperlukan oleh banyak
 // proses awal
@@ -78,6 +78,10 @@ if (mysqli_connect_error()) {
 // hooks setelah koneksi db
 run_hooks('boot_post_db_conn');
 
+// set all options from database to global variabel
+set_all_options();
+run_hooks('boot_post_options_load');
+
 // load menu
 include_once(BASE_PATH . '/mr/' . 'menu.php');
 
@@ -85,10 +89,6 @@ run_hooks('boot_pre_session_init');
 // init session
 mr_session_construct();
 run_hooks('boot_post_session_init');
-
-// set all options from database to global variabel
-set_all_options();
-run_hooks('boot_post_options_load');
 
 // load plugins
 load_plugins();

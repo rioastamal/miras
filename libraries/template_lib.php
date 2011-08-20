@@ -123,12 +123,13 @@ function tpl_init_theme() {
 	// cek direktorinya ada atau tidak
 	$theme_path = BASE_PATH . '/views/' . $theme;
 	if (file_exists($theme_path) == FALSE) {
+		echo('Path untuk theme <strong>' . $theme . '</strong> tidak ditemukan!');
 		mr_clean_up();
-		exit('Path untuk theme ' . $theme . ' tidak ditemukan!');
+		exit;
 	}
 	
 	$_MR['theme'] = $theme;
 	site_debug("theme name: {$theme}", 'THEME INITIALIZATION');
 }
 
-add_hook('boot_post_libraries_load', 'tpl_init_theme');
+add_hook('boot_post_options_load', 'tpl_init_theme');
