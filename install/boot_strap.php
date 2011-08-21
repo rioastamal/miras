@@ -17,7 +17,7 @@ $_MR = array();
 
 // site config
 include_once(BASE_PATH . '/mr/' . 'site_config.php');
-include_once(BASE_PATH . '/mr/' . 'function.php');
+include_once(BASE_PATH . '/mr/' . 'functions.php');
 
 load_helper('url');
 load_helper('string');
