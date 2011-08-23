@@ -50,14 +50,32 @@ function get_argument_by($key) {
  * Fungsi untuk meload url yang sedang diakses.
  *
  * @author Alfa Radito 
+ * @author Rio Astamal <me@rioastamal.net>
  * @since Version 1.0
+ * @changelog
+ *  => Fungsi untuk mendapatkan protocol dipecah ke fungsi sendiri
  *
  * @return void
  */
 function get_current_url() {
 	$request_uri = $_SERVER['REQUEST_URI'];
 	$host = $_SERVER['HTTP_HOST'];
+	$protocol = get_current_protocol();
 	
+	$current_url = $protocol . $host . $request_uri;
+	return $current_url;
+}
+
+/**
+ * Fungsi untuk mendapatkan jenis protokol yang digunakan HTTP atau
+ * HTTPS
+ * 
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.3
+ * 
+ * @return string
+ */
+function get_current_protocol() {
 	// jika port 80 maka http selain itu 
 	$protocol = 'http://';
 	
@@ -69,8 +87,7 @@ function get_current_url() {
 		}
 	}
 	
-	$current_url = $protocol . $host . $request_uri;
-	return $current_url;
+	return $protocol;
 }
 
 /**

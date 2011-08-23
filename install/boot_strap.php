@@ -21,8 +21,21 @@ $_MR = array();
 // site config
 include_once(BASE_PATH . '/mr/' . 'site_config.php');
 include_once(BASE_PATH . '/mr/' . 'functions.php');
-
 load_helper('url');
+
+// agar fungsi get_base_url() dapat berjalan sesuai ekspektasi pada
+// script install maka kita perlu melakukan 'hacking' pada agar
+// nilai $_MR['base_url']
+
+// split direktori install
+$_uri = explode('/install', $_SERVER['REQUEST_URI']);
+
+// susun base_url
+// base url = part ke 0
+$base_url = $_SERVER['HTTP_HOST'] . $_uri[0] . '/';
+$base_url = get_current_protocol() . $base_url;
+$_MR['base_url'] = $base_url;
+
 load_helper('string');
 load_helper('email');
 $_mr_auto_libs = array(
