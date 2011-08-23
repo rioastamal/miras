@@ -10,6 +10,8 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
+// -------------- MAGIC QUOTES GPC COMPAT --------------------------- //
+
 /**
  * Fungsi untuk melakukan un-escape pada setiap data yang ada di
  * COOKIE, POST, atau GET. Pada versi yang lebih lama PHP < 5.3

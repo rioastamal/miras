@@ -5,9 +5,7 @@ secara prosedural.
 
 VERSI
 -----
-Versi yang disertakan dalam distribusi adalah Miras v1.0.1. Mohon diingat, 
-status dari versi ini adalah experimental untuk itu tidak disarankan digunakan
-pada live production.
+Silahkan lihat file VERSION.txt
 
 DOKUMENTASI
 -----------

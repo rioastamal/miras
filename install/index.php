@@ -17,6 +17,8 @@ define('BASE_PATH', realpath(dirname( dirname(__FILE__) . '/../..')));
 // loading boot-strap file
 include_once (BASE_PATH . '/install/boot_strap.php');
 
+DEFINE('MIRAS_PHP_REQUIRE', '5.2.0');
+
 set_active_menu('step_1');
 set_page_title('Step 1 - Requirements Check');
 
@@ -26,10 +28,10 @@ $data->step2_url = get_base_url() . 'install/step2.php';
 $requirements = array();
 
 // check PHP version
-$requirements[1]->message = 'PHP version at least 5.1.6';
+$requirements[1]->message = 'PHP version at least ' . MIRAS_PHP_REQUIRE;
 $requirements[1]->yours = 'PHP ' . PHP_VERSION;
 $requirements[1]->status = 'ok';
-if (version_compare(PHP_VERSION, '5.1.6') < 0) {
+if (version_compare(PHP_VERSION, MIRAS_PHP_REQUIRE) < 0) {
 	$requirements[1]->status = 'failed';
 	$data->next_step = FALSE;
 }

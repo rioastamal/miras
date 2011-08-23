@@ -4,9 +4,7 @@ Miras is a PHP framework that use MVC pattern with procedural style approach.
 
 VERSION
 -----
-Current version shipped with this distribution is Miras v1.0.1. Remember, 
-current status of this version is marked as EXPERIMENTAL, so we do not 
-recommend using it in production environment.
+See file VERSION.txt
 
 DOCUMENTATION
 -------------
