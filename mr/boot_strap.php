@@ -12,6 +12,9 @@
 
 include_once(BASE_PATH . '/mr/' . 'version_info.php');
 
+// include compatibility routine
+include_once(BASE_PATH . '/mr/' . 'compat.php');
+
 // global variabel
 $_MR = array();
 
