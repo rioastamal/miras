@@ -62,26 +62,26 @@ if (is_writable($config_db_file) === FALSE) {
 
 
 // check apakah direktori cache/query dapat ditulis atau tidak
-$cache_dir = BASE_PATH . '/mr/cache/query';
+$cache_dir = BASE_PATH . '/cache/query';
 $requirements[4]->message = 'Is directory <em>' . $cache_dir . '</em> writeable?';
 $requirements[4]->yours = 'Yes';
 $requirements[4]->status = 'ok';
-if (is_writable($config_db_file) === FALSE) {
+if (is_writable($cache_dir) === FALSE) {
 	$requirements[4]->status = 'failed';
-	$octal_perm = substr(sprintf('%o', fileperms($config_db_file)), -4);
+	$octal_perm = substr(sprintf('%o', fileperms($cache_dir)), -4);
 	$requirements[4]->yours = "No ({$octal_perm})";
 	$requirements[4]->message .= '<br/><br/>Solution:<br/>Please chmod the directory to 0777';
 	$data->next_step = FALSE;
 }
 
 // check apakah direktori cache/query dapat ditulis atau tidak
-$cache_dir = BASE_PATH . '/mr/cache/content';
+$cache_dir = BASE_PATH . '/cache/content';
 $requirements[5]->message = 'Is directory <em>' . $cache_dir . '</em> writeable?';
 $requirements[5]->yours = 'Yes';
 $requirements[5]->status = 'ok';
-if (is_writable($config_db_file) === FALSE) {
+if (is_writable($cache_dir) === FALSE) {
 	$requirements[5]->status = 'failed';
-	$octal_perm = substr(sprintf('%o', fileperms($config_db_file)), -4);
+	$octal_perm = substr(sprintf('%o', fileperms($cache_dir)), -4);
 	$requirements[5]->yours = "No ({$octal_perm})";
 	$requirements[5]->message .= '<br/><br/>Solution:<br/>Please chmod the directory to 0777';
 	$data->next_step = FALSE;
