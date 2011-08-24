@@ -1,0 +1,165 @@
+INSTALASI MIRAS SECARA MANUAL
+-----------------------------
+
+Daftar Isi
+----------
+  1. Kebutuhan Sistem
+  2. Extract Distribusi
+  3. Buat Database
+  4. Buat User
+  5. Edit File Konfigurasi Database
+  6. Edit File Konfigurasi Utama
+  7. Ubah Permission Direktori
+  8. Selesai
+  9. Troubleshooting
+  
+  
+1. KEBUTUHAN SISTEM
+-------------------
+ * Web Server dengan PHP Support
+ * PHP versi 5.2.0 dengan MySQLi extension
+ * MySQL 4.1+
+ 
+ 
+2. EXTRACT DISTRIBUSI
+---------------------
+Catatan: Silahkan sesuaikan jika anda menggunakan sistem operasi lain.
+
+Dalam contoh file akan diextract ke /var/www (pastikan user yang 
+melakukan perintah dapat menulis direktori tersebut, jadi root bila
+perlu)
+
+$ tar -zxvf /lokasi/file/miras-vX.Y.Z-dev.tar.gz -C /var/www/
+(dimana X.Y.Z adalah versi dari Miras)
+
+
+3. BUAT DATABASE
+----------------
+Catatan: Anda dapat menggunakan PHPMyadmin untuk langkah-langkah ini.
+
+Login sebagai user root pada mysql server untuk membuat database baru,
+contoh dengan nama 'miras'.
+
+mysql> CREATE DATABASE miras;
+mysql> USE miras;
+
+Langkah selanjutnya import file SQL miras, dalam contoh file diextract
+ke /var/www jadi lokasi file SQLnya adalah:
+/var/www/miras/install/data/miras.manual.sql
+
+mysql> \. /var/www/miras/install/data/miras.manual.sql
+
+
+4. BUAT USER
+------------
+Contoh berikut menggunakan 
+username: miras_admin 
+password: lima-persen
+
+mysql> GRANT ALL PRIVILEGES ON miras.* TO 'miras_admin'@'localhost'
+     > IDENTIFIED BY 'lima-persen';
+mysql> FLUSH PRIVILEGES;
+mysql> quit
+
+
+5. EDIT FILE KONFIGURASI DATABASE
+---------------------------------
+File konfigurasi database terletak pada file miras/mr/db_config.php,
+edit file tersebut sesuai dengan langkah no 4. Contoh
+
+<?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
+/**
+ * File ini berisi configurasi dasar untuk database
+ *
+ * @package Miras
+ * @subpackage Mr
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
+ */
+
+// database name
+define('DB_NAME', 'miras');
+// database user
+define('DB_USER', 'miras_admin');
+// database pass
+define('DB_PASS', 'lima-persen');
+// database host
+define('DB_HOST', 'localhost');
+// database prefix
+define('DB_PREFIX', 'mr_');
+
+/**
+ * Global variabel untuk menampung resource database
+ */
+
+// menyimpan koneksi database
+$_MR['db'] = NULL;
+
+// ----- akhir file ---
+
+Simpan kembali file tersebut
+
+
+7. EDIT FILE KONFIGURASI UTAMA
+------------------------------
+Selanjutnya yang perlu diedit adalah file miras/mr/site_config.php. 
+Konfigurasi minimal yang perlu diubah adalah base_url. Sesuaikan isi
+dari base_url dengan URL dimana anda menginstall miras.
+
+Contoh, karena saya mengextract ke /var/www yang berarti adalah dokumen
+root dari web server saya maka konfigurasinya
+
+$_MR['base_url'] = 'http://localhost/miras/';
+
+Jika anda menginstall didirektori yang lebih dalam misal 
+/var/www/contoh/aplikasi maka konfigurasinya adalah
+
+$_MR['base_url'] = 'http://localhost/contoh/aplikasi/miras/';
+
+Hal yang sama bila anda mengakses dari IP bukan domain misal webserver
+hanya diakses lewat IP 192.168.1.1 maka konfigurasinya
+
+$_MR['base_url'] = 'http://192.168.1.1/miras/';
+
+JANGAN LUPA untuk selalu memberi tanda '/' SLASH diakhir.
+
+
+7. UBAH PERMISSION DIREKTORI
+----------------------------
+Pastikan user punya privileges untuk melakukan perintah berikut
+(jalankan sebagai root bila perlu)
+ 
+$ chmod 0777 /var/www/miras/cache/query
+$ chmod 0777 /var/www/miras/cache/content
+
+
+8. SELESAI
+----------
+Sekarang coba akses miras lewat browser sesuai dengan alamat 
+dari konfigurasi base_url anda, contoh:
+
+http://localhost/miras/
+
+Lakukan beberapa test berikut:
+ 1. Klik menu Tugu Pahlawan
+ 2. Klik 'Dokumen Rahasia' (Akan muncul pesan error)
+ 3. Masukkan username admin dan password admin123
+ 4. Klik kembali 'Dokumen Rahasia'
+ 5. Jika anda berhasil melihat halaman tersebut maka proses autentikasi yang 
+    melibatkan session berhasil.
+
+
+9. TROUBLESHOOTING
+------------------
+Jika masih terdapat error pastikan langkah-langkah diatas sudah benar,
+namun jika sudah benar tapi tetep tidak bisa. Mungkin anda menemukan 
+sebuah bug, silahkan posting masalah anda dimilis MIRAS dialamat 
+
+http://groups.google.com/group/miras-id
+
+atau posting ke Issue Tracker
+
+http://code.google.com/p/miras-framework/issues/list
+
+

@@ -85,9 +85,6 @@ run_hooks('boot_post_db_conn');
 set_all_options();
 run_hooks('boot_post_options_load');
 
-// load menu
-include_once(BASE_PATH . '/mr/' . 'menu.php');
-
 run_hooks('boot_pre_session_init');
 // init session
 mr_session_construct();
@@ -96,6 +93,9 @@ run_hooks('boot_post_session_init');
 // load plugins
 load_plugins();
 run_hooks('boot_post_plugins_load');
+
+// load menu
+include_once(BASE_PATH . '/mr/' . 'menu.php');
 
 // init user role
 run_hooks('boot_pre_user_role');
