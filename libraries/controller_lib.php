@@ -127,9 +127,11 @@ function map_controller() {
 			// $matches yang ber-index 1
 			site_debug($controller, 'CONTROLLER DIRECTORY');
 
-			// ubah hypen(-) ke underscore jika memang terdapat simbol tersebut
-			$real_controller = str_replace('-', '_', $parts[1]);
-			if ($real_controller == '') {
+			// cek isi dari parts ke-1 kosong atau tidak
+			if (isset($parts[1])) {
+				$real_controller = $parts[1];
+			} else {
+				// isikan dengan default controller
 				$real_controller = $_MR['default_controller'];
 			}
 			
