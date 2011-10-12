@@ -125,6 +125,25 @@ function get_site_url() {
 }
 
 /**
+ * Fungsi untuk mengembalikan nilai dari konfigurasi base_url + index_page + '/' + nama_direktori_backend
+ *
+ * Contoh jika konfigurasi index_page adalah index.php 
+ * dan nama direktori backend adalah control_panel maka output dari fungsi
+ * ini adalah:
+ * http://example.com/index.php/control-panel
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.3
+ *
+ * @return string base url + index_page + nama_direktori_backend dari aplikasi
+ */
+function get_backend_url() {
+	global $_MR;
+	
+	return $_MR['base_url'] . $_MR['index_page'] . '/' . str_replace('_', '-', $_MR['backend_dir']);
+}
+
+/**
  * Fungsi untuk mengembalikan nilai dari konfigurasi base_url + nama theme + '/' 
  * yang saat ini digunakan. Views dapat menggunaman fungsi ini untuk meload URL 
  * lengkap css dan javascript.

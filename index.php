@@ -15,6 +15,15 @@ try {
 	run_hooks('pre_routing');
 	$controller = map_controller();
 	run_hooks('post_routing', $controller);
+	
+	// load menu
+	if (get_backend_status()) {
+		include_once(BASE_PATH . '/mr/' . 'menu_backend.php');
+	} else {
+		include_once(BASE_PATH . '/mr/' . 'menu.php');
+	}
+	site_debug((int)$_MR['is_backend_controller'], 'BACKEND STATUS');
+	
 	include_once ($controller);
 	run_hooks('post_controller', $controller);
 } catch (Exception $e) {

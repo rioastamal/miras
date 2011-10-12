@@ -94,9 +94,6 @@ run_hooks('boot_post_session_init');
 load_plugins();
 run_hooks('boot_post_plugins_load');
 
-// load menu
-include_once(BASE_PATH . '/mr/' . 'menu.php');
-
 // init user role
 run_hooks('boot_pre_user_role');
 init_user_role();

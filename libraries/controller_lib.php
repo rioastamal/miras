@@ -29,6 +29,8 @@
  * @changelog
  *   => 2011-08-24 Dalam melakukan pemecahan URI fungsi yang digunakan diganti 
                    dari preg_match ke preg_split
+     => 2011-08-27 Menambahkan pengecekan nama controller apakah berakhiran 
+                   '_backend' atau atau tidak
  *
  * @return string lokasi dari file controller
  * @throws Exception
@@ -101,6 +103,11 @@ function map_controller() {
 				$_MR['controller_arguments'] = array_slice($parts, 3);
 			}
 			
+			// set backend status
+			if (strpos($real_controller, '_backend') !== FALSE) {
+				set_backend_status(TRUE);
+			}
+			
 			$controller = $controller . '/' . $real_controller;
 		} else {
 			
@@ -108,6 +115,11 @@ function map_controller() {
 			// jika controller tidak disebutkan asumsikan default_controller
 			if ($controller == '') {
 				$controller = $_MR['default_controller'];
+			}
+			
+			// set backend status
+			if (strpos($controller, '_backend') !== FALSE) {
+				set_backend_status(TRUE);
 			}
 			
 			// karena bukan direktori berari index dimulai dari 2
@@ -130,9 +142,15 @@ function map_controller() {
 			// cek isi dari parts ke-1 kosong atau tidak
 			if (isset($parts[1])) {
 				$real_controller = $parts[1];
+				$real_controller = str_replace('-', '_', $real_controller);
 			} else {
 				// isikan dengan default controller
 				$real_controller = $_MR['default_controller'];
+			}
+			
+			// set backend status
+			if (strpos($real_controller, '_backend') !== FALSE) {
+				set_backend_status(TRUE);
 			}
 			
 			$_MR['controller_arguments'] = array_slice($parts, 2);
@@ -163,7 +181,7 @@ function map_controller() {
 }
 
 /**
- * Funcgis untuk mendapatkan argument yang dipassing ke halaman controller
+ * Fungsi untuk mendapatkan argument yang dipassing ke halaman controller
  *
  * @author Rio Astamal <me@rioastamal.net>
  * @since Version 1.0
@@ -183,4 +201,37 @@ function get_argument($index=0) {
 	
 	// jika sampai disini berarti index array tidak ada
 	return FALSE;
+}
+
+/**
+ * Fungsi untuk menset controller ke status backend atau tidak
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.5
+ *
+ * @param boolean $status Status yang diberikan berupa TRUE atau FALSE
+ * @return void
+ */
+function set_backend_status($status) {
+	global $_MR;
+	
+	if (!is_bool($status)) {
+		throw Exception('Nilai parameter dari set_backend_status harus bertipe boolean.');
+	}
+	$_MR['is_backend_controller'] = $status;
+}
+
+/**
+ * Fungsi untuk mendapatkan status dari suatu controller, apakah dia
+ * berupa backend atau tidak
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.5
+ *
+ * @return boolean
+ */
+function get_backend_status() {
+	global $_MR;
+	
+	return $_MR['is_backend_controller'];
 }

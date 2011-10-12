@@ -1,0 +1,9 @@
+{
+	"name": "User Manager (Core)",
+	"version": "1.0",
+	"author": "Rio Astamal",
+	"email": "me@rioastamal.net",
+	"website": "http://rioastamal.net/",
+	"description": "Plugin untuk manajemen user",
+	"priority": "0"
+}

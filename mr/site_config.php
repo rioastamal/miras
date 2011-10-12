@@ -41,6 +41,10 @@ $_MR['super_admin_id'] = 1;
 // Guest User ID
 $_MR['guest_user_id'] = 2;
 
+// nama direktori untuk control panel Miras (ada didalam direktori controllers)
+// default adalah 'control_panel'
+$_MR['backend_dir'] = 'control_panel';
+
 // ------------------ AKHIR KONFIGURASI ----------------------------- //
 
 /* TIDAK PERLU MENGGANTI KONFIGURASI DIBAWAH INI KECUALI ANDA TAHU APA YANG
@@ -121,3 +125,7 @@ $_MR['sessions'] = array(
 	'action' => NULL,
 	'id' => NULL
 );
+
+// variabel/flag yang menyimpan status apakah suatu controller adalah
+// merupakan control panel (backend) atau tidak
+$_MR['is_backend_controller'] = FALSE;

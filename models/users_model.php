@@ -96,6 +96,9 @@ function get_acl_role($uid, $user_type_id) {
 	return $role;
 }
 
+function get_user_by($where=array()) {
+	
+}
 
 function get_user_login($username, $password) {
 	$db_user = DB_PREFIX . 'users u';

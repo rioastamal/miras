@@ -203,3 +203,127 @@ function mr_escape_string($string) {
 	
 	return $_MR['db']->real_escape_string($string);
 }
+
+/**
+ * Fungsi sederhana untuk membangun query select dari array
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.4
+ *
+ * @param array|string $data	Array Field yang akan diquery
+ * @param string $from			Nama tabel yang akan di select
+ * @return string
+ */
+function mr_query_select($data, $from='') {
+	$result = array();
+	
+	if (is_array($data)) {
+		// gabungkan item dengan separator koma
+		$result = implode(', ', $data);
+	} else {
+		// kembalikan apa adanya karena berupa string
+		$result = $data;
+	}
+	
+	if ($from) {
+		$result = $result . ' FROM ' . $from;
+	}
+	
+	return 'SELECT ' . $result;
+}
+
+/**
+ * Fungsi sederhana untuk membangun query WHERE dari array, struktur dari
+ * parameter pertama adalah sebagai berikut:
+ *
+ * <code>
+ * array(
+ *		'field_name' => array(
+ *							'value' => 'someval',
+ *							'op'	=> '='
+ *						),
+ *						array(
+ *							'value'		=> 'someval2',
+ *							'op'		=> '!=',
+ *							// opsional jika diisi maka data tidak akan coba
+ *							// dicasting oleh fungsi
+ *							'nocast'	=> TRUE	
+ *						)
+ * );
+ * </code>
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.4
+ *
+ * @param array|string $data	Item yang akan diubah menjadi klausa query
+ * @param string $operator		String operator AND atau OR
+ * @return string
+ */
+function mr_query_where($data, $operator='AND') {
+	$result = array();
+	
+	// cek apakah data merupakan array atau berupa string
+	if (is_array($data)) {
+		foreach ($data as $field => $item) {
+			// escape string untuk keamananan data
+			$item['value'] = mr_escape_string($item['value']);
+			
+			// jika value berupa string dan tidak terdapat item dengan key 'nocast'
+			// maka tambahkan penutup single quote pada value tersebut
+			if (is_string($item['value']) && !isset($item['nocast'])) {
+				$item['value'] = "'{$item['value']}'";
+			}
+			
+			// cek apakah operator mengandung kata like jika iya maka UPPERCASE-kan
+			if (stripos($item['op'], 'like') !== FALSE) {
+				$item['op'] = strtoupper(trim($item['op']));
+				$item['op'] = " {$item['op']} ";
+			}
+			// masukkan sementara ke array result
+			$result[] = "{$field}{$item['op']}{$item['value']}";
+		}
+		
+		// gabungkan hasil dengan $operator yang ditentukan pada parameter-2
+		$result = implode(" {$operator} ", $result);
+	} else {
+		// sepertinya user lebih suka membangun query sendiri ;)
+		$result = $data;
+	}
+	return 'WHERE ' . $result;
+}
+
+/**
+ * Fungsi sederhana untuk membangun query join dari array, bentuk dari parameter
+ * array yang diterima adalah:
+ *
+ * <code>
+ * array(
+ *		'type' 	=> 'left', // bisa 'right' atau 'inner'
+ *		'table'	=> 'some_table st',	// nama table yang akan dijoin
+ *		'field'	=> 'st.nama_kolom=tb.nama_kolom,	// kolom yang dicocokkan
+ * );
+ * </code>
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.4
+ *
+ * @param array|string		Item data yang akan dijoin
+ * @return string
+ */
+function mr_query_join($data) {
+	$result = array();
+	
+	if (is_array($data)) {
+		foreach ($data as $join) {
+			$_join = strtoupper($join['tipe']) . ' JOIN ';
+			$_join .= $join['table'] . ' ON ';
+			$_join .= $join['field'];
+			$result[] = $_join;
+		}
+		$result = implode("\n", $result);
+	} else {
+		$result = $data;
+	}
+	
+	return $result;
+}
