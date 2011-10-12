@@ -262,6 +262,11 @@ function mr_query_select($data, $from='') {
 function mr_query_where($data, $operator='AND') {
 	$result = array();
 	
+	// cek apakah data kosong (bernilai FALSE) atau tidak
+	if (!$data) {
+		return '';
+	}
+	
 	// cek apakah data merupakan array atau berupa string
 	if (is_array($data)) {
 		foreach ($data as $field => $item) {
