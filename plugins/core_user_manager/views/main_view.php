@@ -3,7 +3,7 @@
 		<div id="content">
 			<h1>Action</h1>
 			<p>
-				<button></button>
+				<button>Create New User</button>
 			</p>
 			
 			<h1>List of Users</h1>
@@ -14,7 +14,7 @@
 					<th>Email</th>
 					<th>Role</th>
 					<th>Status</th>
-					<th><input type="checkbox" /></th>
+					<th><input id="user-check-all" type="checkbox" /></th>
 				</tr>
 				<?php $i = 0; foreach ($data->users as $user) : ?>
 				<tr>
@@ -23,9 +23,21 @@
 					<td><?php echo ($user->user_email);?></td>
 					<td><?php echo ($user->user_type_name);?></td>
 					<td><?php echo ($user->user_status_label);?></td>
-					<td><input type="checkbox" name="user_id[<?php echo ($user->user_id);?>]" id="user-id-<?php echo ($user->user_id);?>" /></td>
+					<td><input class="user-checkbox" type="checkbox" name="user_id[<?php echo ($user->user_id);?>]" id="user-id-<?php echo ($user->user_id);?>" /></td>
 				</tr>
 				<?php endforeach; ?>
 			</table>
+			<div id="bulk-action-div">
+				<select name="bulk-action" id="bulk-action">
+					<option value="">Bulk Action</option>
+				</select>
+			</div>
 		</div>
 		<!-- END CONTENT -->
+
+		<script type="text/javascript">
+			document.getElementById('user-check-all').onclick = function() {
+				status = this.checked;
+				$('.user-checkbox').attr('checked', status);
+			}
+		</script>
