@@ -96,8 +96,22 @@ function get_acl_role($uid, $user_type_id) {
 	return $role;
 }
 
-function get_user_by($where=array()) {
+function get_user_by($where=array(), $order_by='') {
+	$db_user = DB_PREFIX . 'users u';
+	$db_user_type = DB_PREFIX . 'user_type ut';
+	$query = "SELECT u.*, ut.* FROM {$db_user} 
+			  LEFT JOIN {$db_user_type} ON ut.user_type_id=u.user_type_id";
+	$query .= mr_query_where($where);
+	$query .= "\n" . $order_by;
 	
+	$result = mr_query($query);
+	if (!$result) {
+		throw new Exception ('Tidak ada user yang ditemukan.');
+	}
+	
+	run_hooks('get_user_by', $result);
+	
+	return $result;
 }
 
 function get_user_login($username, $password) {
@@ -188,6 +202,28 @@ function get_user_status_number($status) {
 		case 'active':	return 3; break;
 		default:
 			return -1;
+		break;
+	}
+}
+
+/**
+ * Fungsi untuk melakukan mapping dari user status berupa string ke
+ * user status angka
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param int $status - Integer status yang ingin didapatkan namanya
+ * @return string
+ */
+function get_user_status_label($status) {
+	switch ($status) {
+		case 0: return 'deleted'; break;
+		case 1: return 'pending'; break;
+		case 2: return 'blocked'; break;
+		case 3: return 'active'; break;
+		default:
+			return 'unknown';
 		break;
 	}
 }
