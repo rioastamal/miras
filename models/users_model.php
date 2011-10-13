@@ -227,3 +227,20 @@ function get_user_status_label($status) {
 		break;
 	}
 }
+
+/**
+ * Fungsi untuk mengembalikan daftar status dari user
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.3
+ *
+ * @return array
+ */
+function get_user_status_list() {
+	return array(
+		0 => 'Deleted',
+		1 => 'Pending',
+		2 => 'Blocked',
+		3 => 'Active'
+	);
+}
