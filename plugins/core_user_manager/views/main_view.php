@@ -3,7 +3,7 @@
 		<div id="content">
 			<h1>Action</h1>
 			<p>
-				<button>Create New User</button>
+				<a href="<?php echo ($data->plugin_url);?>">Create New User</a>
 			</p>
 			
 			<h1>List of Users</h1>

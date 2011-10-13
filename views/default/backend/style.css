@@ -185,7 +185,7 @@ code {
 	font-size: 18px;
 }
 
-#content form.miras input.text {
+#content form.miras input.text, #content form.miras select {
 	font-size: 37px;
 	border: 1px solid #ccc;
 	margin-bottom: 4px;
@@ -196,6 +196,11 @@ code {
 #content form.miras input.button {
 	font-size: 24px;
 	padding: 2px 18px;
+}
+
+#content form.miras select {
+	font-size: 30px;
+	padding: 2px;
 }
 
 #content a, #content a:visited {

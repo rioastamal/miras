@@ -1,6 +1,6 @@
 <?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * Controller untuk menampilkan daftar user
+ * Controller untuk menambahkan user baru
  *
  * @package Miras
  * @subpackage Plugins
@@ -19,12 +19,9 @@ $data->user = get_user();
 $data->site_url = get_site_url();
 $data->plugin_url = $data->site_url . '/core-user-manager/new-backend';
 
-$users = get_user_by();
-$data->users = $users;
-
 mr_add_js('jquery', '1.6.4');
 
 load_view('backend/header');
-load_view('main', $data, 'core_user_manager');
+load_view('new_user', $data, 'core_user_manager');
 load_view('backend/sidebar');
 load_view('backend/footer');
