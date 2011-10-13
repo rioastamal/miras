@@ -16,9 +16,11 @@ try {
 	$controller = map_controller();
 	run_hooks('post_routing', $controller);
 	
-	// load menu
 	if (get_backend_status()) {
+		// load menu
 		include_once(BASE_PATH . '/mr/' . 'menu_backend.php');
+		// load autentikasi untuk backend
+		include_once(BASE_PATH . '/mr/' . 'auth_backend.php');
 	} else {
 		include_once(BASE_PATH . '/mr/' . 'menu.php');
 	}

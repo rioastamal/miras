@@ -45,6 +45,10 @@ $_MR['guest_user_id'] = 2;
 // default adalah 'control_panel'
 $_MR['backend_dir'] = 'control_panel';
 
+// nama session pengenal untuk backend control panel
+// (disimpan pada session database)
+$_MR['cp_session_name'] = 'miras_cpanel';
+
 // ------------------ AKHIR KONFIGURASI ----------------------------- //
 
 /* TIDAK PERLU MENGGANTI KONFIGURASI DIBAWAH INI KECUALI ANDA TAHU APA YANG
