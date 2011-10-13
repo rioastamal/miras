@@ -1,7 +1,6 @@
 <?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
 /**
- * File ini berisi fungsi-fungsi utama yang digunakan oleh hampir semua bagian
- * dari aplikasi.
+ * Plugin untuk melakukan pengamanan terhadap karakter yang ada di URL
  *
  * @package Miras
  * @subpackage Plugins
