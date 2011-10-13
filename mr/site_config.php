@@ -83,6 +83,17 @@ $_MR['loaded_helpers'] = array();
 // variabel yang menyimpan nama-nama plugin yang diload
 $_MR['loaded_plugins'] = array();
 
+/**
+ * variabel yang menyimpan nama-nama script javascript yang telah diload ke 
+ * pada page head.
+ *
+ * <code>
+ *  // contoh
+ *  $_MR['loaded_javascript']['jsname-1.0'] = 'http://example.com/views/default/jsname-1.0.js';
+ * </code>
+ */
+$_MR['loaded_javascripts'] = array();
+
 // variabel yang menyimpan nama-nama plugin yang gagal diload
 $_MR['error_plugins'] = array();
 

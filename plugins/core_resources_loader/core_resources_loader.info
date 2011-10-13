@@ -1,0 +1,9 @@
+{
+	"name": "Resource Loader (Core)",
+	"version": "1.0",
+	"author": "Rio Astamal",
+	"email": "me@rioastamal.net",
+	"website": "http://rioastamal.net/",
+	"description": "Plugin untuk meload HTML resource seperti Javascript dan CSS",
+	"priority": "0"
+}
