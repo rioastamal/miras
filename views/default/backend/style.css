@@ -46,7 +46,7 @@ body {
 	padding-top: 10px;
 	position: relative;
 	float: left;
-	width: 29%;
+	width: 27%;
 	padding-left: 2px;
 }
 
@@ -233,4 +233,25 @@ code {
 .flash-error {
 	border: 1px solid #c60000;
 	background: #FFC0CB;
+}
+
+table {
+	border: 1px solid #ccc;
+	border-collapse: collapse;
+	width: 98%;
+}
+
+table th {
+	padding: 8px 4px;
+	background: #f1f1f1;
+	text-align: left;
+}
+
+table tr:hover {
+	background: #FFFFB9;
+}
+
+table td {
+	padding: 4px 2px;
+	border-bottom: 1px solid #ccc;
 }

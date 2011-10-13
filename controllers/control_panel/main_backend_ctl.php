@@ -21,7 +21,7 @@ if (isset($_POST['login-submit'])) {
 	try {
 		get_user_login($username, $password);
 		
-		mr_session_setdata('miras_cpanel', TRUE);
+		mr_session_setdata($_MR['cp_session_name'], TRUE);
 		set_flash_message('Login sucsessful, redirecting...');
 	} catch (Exception $e) {
 		set_flash_message($e->getMessage());

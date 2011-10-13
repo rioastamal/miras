@@ -1,19 +1,31 @@
 
 		<!-- BEGIN CONTENT -->
 		<div id="content">
-		<h1>Tugu Pahlawan Surabaya</h1>
-			<p>Berikut ini adalah beberapa contoh controller yang disertakan
-			dalam plugin Tugu Pahlawan.</p>
-			<ul>
-				<?php if ($data->user->role->is_guest): ?>	
-				<li><a href="<?php echo ($data->site_url);?>/tugu-pahlawan/login">Login</a></li>
-				<?php else: ?>	
-				<li><a href="<?php echo ($data->site_url);?>/tugu-pahlawan/login/action/logout">Logout</a></li>
-				<li><a href="<?php echo ($data->site_url);?>/tugu-pahlawan/my-profile">My Profile</a></li>
-				<?php endif; ?>
-				<li><a href="<?php echo ($data->site_url);?>/tugu-pahlawan/secret-document/the-most-wanted-document-in-the-history-of-mankind">Dokumen Rahasia</a></li>
-				<li><a href="<?php echo ($data->site_url);?>/tugu-pahlawan/ganti-deskripsi">Ganti Deskripsi</a></li>
-				<li><a href="<?php echo ($data->site_url);?>/tugu-pahlawan/bung-tomo/pahlawan-revolusi-kemerdekaan-indonesia">Bung Tomo</a></li>
-			</ul>
+			<h1>Action</h1>
+			<p>
+				<button></button>
+			</p>
+			
+			<h1>List of Users</h1>
+			<table>
+				<tr>
+					<th>No</th>
+					<th>Full Name</th>
+					<th>Email</th>
+					<th>Role</th>
+					<th>Status</th>
+					<th><input type="checkbox" /></th>
+				</tr>
+				<?php $i = 0; foreach ($data->users as $user) : ?>
+				<tr>
+					<td><?php echo (++$i);?></td>
+					<td><?php echo ($user->user_fullname);?></td>
+					<td><?php echo ($user->user_email);?></td>
+					<td><?php echo ($user->user_type_name);?></td>
+					<td><?php echo ($user->user_status_label);?></td>
+					<td><input type="checkbox" name="user_id[<?php echo ($user->user_id);?>]" id="user-id-<?php echo ($user->user_id);?>" /></td>
+				</tr>
+				<?php endforeach; ?>
+			</table>
 		</div>
 		<!-- END CONTENT -->
