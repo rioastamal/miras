@@ -1,4 +1,4 @@
-Miras version 1.0.3 build 305
+Miras version 1.0.3 build 306
 
 Note:
 -----
