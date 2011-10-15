@@ -24,7 +24,7 @@ $_MR['index_page'] = 'index.php';
 $_MR['debug_mode'] = TRUE;
 
 // berapa lama default session expired (dalam detik)
-$_MR['session_expires'] = 900;	// default 15 menit
+$_MR['session_expires'] = 1800;	// default 30 menit
 
 // nama cookie untuk session
 $_MR['session_name'] = 'miras_session';
