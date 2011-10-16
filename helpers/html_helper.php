@@ -52,6 +52,16 @@ function mr_selected_if($val1, $val2, $padleft=' ', $padright='') {
 	return '';
 }
 
+/**
+ * Fungsi untuk melakukan validasi form 
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.4
+ *
+ * @param array $rules - Kumpulan label dan aturan yang perlu dilakukan pada field
+ * @param array $config - Array konfigurasi yang berhubungan dengan ouput error
+ * @return string
+ */ 
 function mr_form_validation($rules, $config=array()) {
 	$errors = array();
 	$error_string = '';
@@ -65,20 +75,17 @@ function mr_form_validation($rules, $config=array()) {
 	
 	$config = $config + $default;
 	
-	foreach ($rules as $element => $actions) {
-		// pecah id (0) dan nama label (1)
-		$element = explode('|', $element);
-		
+	foreach ($rules as $element_id => $el) {
 		// cek setiap aturan action yang ditujukan untuk elemen tersebut
-		$actions = explode('|', $actions);
+		$actions = explode('|', $el['rules']);
 		foreach ($actions as $act) {
 			// jika variabel error untuk elemen tertentu sudah terisi
 			// maka tidak perlu melakukan pengecekan
-			if (!isset($errors[$element[0]])) {
+			if (!isset($errors[$element_id])) {
 				// apply rules
-				$retval = _apply_rules($element, $act);
+				$retval = _apply_rules($element_id, $act, $rules);
 				if ($retval !== TRUE) {
-					$errors[$element[0]] = $config['open_tag'] . $retval . $config['close_tag'];
+					$errors[$element_id] = $config['open_tag'] . $retval . $config['close_tag'];
 				}
 			}
 		}
@@ -93,19 +100,29 @@ function mr_form_validation($rules, $config=array()) {
 	return $error_string;
 }
 
-function _apply_rules($element, $action_name) {
-	$id = $element[0];
-	$label = $element[1];
+/**
+ * Fungsi untuk menjalankan proses validasi sebuah field
+ * -- Ini adalah fungsi PRIVATE --
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.4
+ *
+ * @param string $id - Nama ID dari field HTML yang akan diproses
+ * @param string $action_name - Nama aturan atau validasi yang akan dijalankan
+ * @param array $rules - Array original dari aturan (saat ini hanya digunakan pada matches rules)
+ */
+function _apply_rules($id, $action_name, $rules) {
+	$label = $rules[$id]['label'];
 	
 	switch ($action_name) {
 		case 'required':
 			if (is_array($_POST[$id])) {
 				if (count($_POST[$id]) == 0) {
-					return sprintf('Field &quot;%s&quot; tidak boleh kosong.', $label);
+					return sprintf('The field &quot;%s&quot; cannot be empty.', $label);
 				}
 			} else {
 				if (trim($_POST[$id]) == '') {
-					return sprintf('Field &quot;%s&quot; tidak boleh kosong.', $label);
+					return sprintf('The field &quot;%s&quot; cannot be empty.', $label);
 				}
 			}
 		break;
@@ -117,18 +134,141 @@ function _apply_rules($element, $action_name) {
 		case 'valid_email':
 			load_helper('email');
 			if (!valid_email($_POST[$id])) {
-				return sprintf('Email tidak valid untuk field %s.', $label);
+				return sprintf('The field &quot;%s&quot; must contain valid email address.', $label);
+			}
+		break;
+		
+		case 'alpha':
+			if (!preg_match('/^([a-zA-Z])+$/', $_POST[$id])) {
+				return sprintf('The field &quot;%s&quot; must contain alpha character only.', $label);
+			}
+		break;
+		
+		case 'numeric':
+			if (!preg_match('/^([0-9])+$/', $_POST[$id])) {
+				return sprintf('The field &quot;%s&quot; must contain alpha character only.', $label);
+			}
+		brea;
+		
+		case 'alpha_num':
+			if (!preg_match('/^([a-zA-Z0-9])+$/', $_POST[$id])) {
+				return sprintf('The field &quot;%s&quot; must contain only alpha numeric characters only.');
+			}
+		break;
+
+		case 'alpha_num_dash':
+			if (!preg_match('/^([a-zA-Z0-9\-])+$/', $_POST[$id])) {
+				return sprintf('The field &quot;%s&quot; must contain only alpha numeric and dash (-) characters only.', $label);
+			}
+		break;
+		
+		case 'alpha_num_underscore':
+			if (!preg_match('/^([a-zA-Z0-9_])+$/', $_POST[$id])) {
+				return sprintf('The field &quot;%s&quot; must contain only alpha numeric and underscore characters only.', $label);
+			}
+		break;
+		
+		case 'alpha_num_ud':
+			if (!preg_match('/^([a-zA-Z0-9_\-])+$/', $_POST[$id])) {
+				return sprintf('The field &quot;%s&quot; must contain only alpha numeric, underscore and dash characters only.', $label);
+			}
+		break;
+		
+		case 'alpha_space':
+			if (!preg_match('/^([a-zA-Z0-9\ )+$/', $_POST[$id])) {
+				return sprintf('The field &quot;%s&quot; must contain only alpha and space characters only.', $label);
+			}
+		break;
+		
+		case 'alpha_num_space':
+			if (!preg_match('/^([a-zA-Z0-9\ )+$/', $_POST[$id])) {
+				return sprintf('The field &quot;%s&quot; must contain only alpha numeric, and space characters only.', $label);
+			}
+		break;
+		
+		case 'alpha_num_uds':
+			if (!preg_match('/^([a-zA-Z0-9\_\-\ )+$/', $_POST[$id])) {
+				return sprintf('The field &quot;%s&quot; must contain only alpha numeric, underspace, dash and space characters only.', $label);
+			}
+		break;
+		
+		case 'common_username':
+			if (!preg_match('/^([a-zA-Z0-9_\-\.])+$/', $_POST[$id])) {
+				return sprintf('The field &quot;%s&quot; must contain only alpha numeric, dash, underscore and dot (.) characters only.', $label);
 			}
 		break;
 		
 		default:
+			// --- FIELD MATCHES --
 			// cek apakah action name matches=>nama_field
 			// ini digunakan untuk pencocokan field password yang memerlukan
 			// kesamaan dengan field yang lain
 			if (preg_match('/^matches\s?=>\s?(.*)/', $action_name, $matches)) {
-				$field = $matches[1];
-				if ($_POST[$id] !== $_POST[$field]) {
-					return sprintf('Isi field %s tidak sama.', $label);
+				$match_field = $matches[1];
+				if ($_POST[$id] !== $_POST[$match_field]) {
+					return sprintf('The value of field &quot;%s&quot; does not match with field &quot;%s&quot;.', $label, $rules[$match_field]['label']);
+				}
+				
+			// -- USER CALLBACK --
+			// cek apakah rules berakhiran dengan string '_callback'
+			// jika iya maka coba panggil fungsi tersebut (tanpa _callback)
+			} elseif (preg_match('/(^[a-zA-Z_]+[a-zA-Z_:0-9]*)_callback$/', $action_name, $matches)) {
+				$function_name = $matches[1];
+				
+				$param = array(
+								'field_name' => $id,
+								'data' => $_POST[$id]
+						);
+								
+				// cek apakah callback berupa fungsi murni atau sebuah static
+				// function dari class dengan melakukan pengecekan pada 
+				// string '::'
+				if (strpos($function_name, '::') === FALSE) {
+					if (function_exists($function_name)) {
+						$retval = call_user_func($function_name, $param);
+						if ($retval) {
+							// callback seharusnya mengembalikan non-empty 
+							// string jadi secara otomatis TRUE
+							return $retval;
+						}
+					}
+				} else {
+					// split class dan methodnya
+					list($class, $method) = explode('::', $function_name);
+					
+					// callback berupa class
+					if (class_exists($class)) {
+						if (method_exists($class, $method)) {
+							$retval = call_user_func(array($class, $method), $param);
+							if ($retval) {
+								return $retval;
+							}
+						}
+					}
+				}
+				
+			// -- MINIMUM LENGTH --
+			// cek apakah rules min_length=>NUMBER
+			} elseif (preg_match('/^min_length\s?=>\s?(.*)/', $action_name, $matches)) {
+				$length = (int)$matches[1];
+				if (strlen($_POST[$id]) < $length) {
+					return sprintf('The minimum length for field &quot;%s&quot; is %d character(s).', $label, $length);
+				}
+				
+			// -- MAXIMUM LENGTH --
+			// cek apakah rules max_length=>NUMBER
+			} elseif (preg_match('/^max_length\s?=>\s?(.*)/', $action_name, $matches)) {
+				$length = (int)$matches[1];
+				if (strlen($_POST[$id]) > $length) {
+					return sprintf('The maximum length for field &quot;%s&quot; is %d character(s).', $label, $length);
+				}
+				
+			// -- EXACT LENGTH --
+			// cek apakah rules exact_length=>NUMBER
+			} elseif (preg_match('/^exact_length\s?=>\s?(.*)/', $action_name, $matches)) {
+				$length = (int)$matches[1];
+				if (strlen($_POST[$id]) !== $length) {
+					return sprintf('The length for field &quot;%s&quot; must %d character(s) long.', $label, $length);
 				}
 			} else {
 				// user diperbolehkan menggunakan custom rules yang berisi
@@ -143,5 +283,6 @@ function _apply_rules($element, $action_name) {
 		break;
 	}
 	
+	// jika sampai disini maka field berhasil melewati semua rules
 	return TRUE;
 }
