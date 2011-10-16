@@ -19,6 +19,7 @@
  * @since Version 1.0
  *
  * @param string $query SQL Query yang akan dijalankan
+ * @param int $cache_time Lama waktu cache akan disimpan (masukkan 0 jika tidak ingin melakukan cache)
  * @return mixed
  */
 function mr_query($query, $cache_time=60) {
@@ -29,7 +30,7 @@ function mr_query($query, $cache_time=60) {
 	// cek apakah query merupakan SELECT atau tidak
 	if (mr_is_select_query($query)) {
 		// cek apakah query cache diaktifkan?
-		if (query_cache_status() === TRUE) {
+		if (query_cache_status() === TRUE && $cache_time > 0) {
 			// OK, query cache diaktifkan 
 			// sekarang mari coba ambil cache dari file
 			$result = query_cache_data($query, $cache_time);
@@ -62,7 +63,7 @@ function mr_query($query, $cache_time=60) {
 	
 	// masukkan hasil query ke cache
 	if (mr_is_select_query($query)) {
-		if (query_cache_status() === TRUE) {
+		if (query_cache_status() === TRUE && $cache_time > 0) {
 			site_debug(print_r($record, TRUE), "WRITE QUERY CACHE");
 			query_cache_write($query, $artikel);
 		}
@@ -331,4 +332,33 @@ function mr_query_join($data) {
 	}
 	
 	return $result;
+}
+
+function mr_query_build_insert($table_name, $values) {
+	$query = '';
+	
+	if (!is_array($values)) {
+		throw new Exception('Parameter kedua pada mr_query_build_insert harus bertipe Array.');
+	}
+	
+	// 1) filter semua input data
+	// 2) cek untuk pemberian quote jika tipe string
+	foreach ($values as $col => $val) {
+		$values[$col] = mr_escape_string($val);
+		
+		if (is_string($val)) {
+			$values[$col] = "'{$val}'";
+		}
+	}
+	
+	// gabungkan keys(column) dengan separator koma
+	$columns = implode(', ', array_keys($values));
+	
+	// gabungkan values dengan separator koma
+	$values = implode(', ', $values);
+	
+	$table_name = DB_PREFIX . $table_name;
+	$query = "INSERT INTO {$table_name} ({$columns}) VALUES ({$values})";
+	
+	return $query;
 }
