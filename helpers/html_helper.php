@@ -212,7 +212,7 @@ function _apply_rules($id, $action_name, $rules) {
 			// -- USER CALLBACK --
 			// cek apakah rules berakhiran dengan string '_callback'
 			// jika iya maka coba panggil fungsi tersebut (tanpa _callback)
-			} elseif (preg_match('/(^[a-zA-Z_]+[a-zA-Z_:0-9]*)_callback$/', $action_name, $matches)) {
+			} elseif (preg_match('/^callback=>([a-zA-Z_]+[a-zA-Z_:0-9]*)+$/', $action_name, $matches)) {
 				$function_name = $matches[1];
 				
 				$param = array(
