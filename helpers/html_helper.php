@@ -193,6 +193,13 @@ function _apply_rules($id, $action_name, $rules) {
 		break;
 		
 		case 'common_username':
+			$uname = trim($_POST[$id]);
+			// cek untuk beberapa username yang user tidak boleh menggunakan
+			$specials = 'admin|guest|administrator|superadmin|anonymous|username|miras';
+			if (preg_match('/(' . $specials . ')/i', $uname)) {
+				return sprintf( 'Cannot use &quot;%s&quot;, please choose another username.', $uname);
+			}
+			
 			if (!preg_match('/^([a-zA-Z0-9_\-\.])+$/', $_POST[$id])) {
 				return sprintf('The field &quot;%s&quot; must contain only alpha numeric, dash, underscore and dot (.) characters only.', $label);
 			}
