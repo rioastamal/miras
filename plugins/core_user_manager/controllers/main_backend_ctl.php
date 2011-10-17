@@ -39,6 +39,18 @@ foreach ($data->status_list as $code => $status) {
 	$data->bulk_action_list[] = $bulk_list;
 }
 
+$bulk_list = new stdClass();
+$bulk_list->id = '';
+$bulk_list->name = '-- Change Role --';
+$data->bulk_action_list[] = $bulk_list;
+
+foreach ($data->role_list as $role) {
+	$bulk_list = new stdClass();
+	$bulk_list->id = 'role-' . $role->user_type_id;
+	$bulk_list->name = ucwords($role->user_type_name);
+	$data->bulk_action_list[] = $bulk_list;
+}
+
 mr_add_js('jquery', '1.6.4');
 
 switch ($action) {
@@ -48,11 +60,11 @@ switch ($action) {
 			// karena seharusnya kedua user tersebut hanya perlu diedit secara
 			// individual bukan secara bersamaan (bulk)
 			$specials = array($_MR['super_admin_id'], $_MR['guest_user_id']);
-			$diff_user = array_diff($_POST['user_id'], $specials);
+			$target_user = array_diff($_POST['user_id'], $specials);
 		
 			$action = '';
 			
-			// cek untuk proses bulk update status
+			// --- UPDATE STATUS ---
 			$bulk_action = $_POST['bulk-action'];
 			if (preg_match('/^status\-([a-zA-Z_]+[a-zA-Z_0-9]*)+$/', $bulk_action, $matches)) {
 				// user status berdasarkan nama
@@ -63,7 +75,18 @@ switch ($action) {
 								'user_status' => get_user_status_number($status_name)
 				);
 				
-				main_backend_update($diff_user, $set_data);
+				main_backend_update($target_user, $set_data);
+			}
+			
+			// --- UPDATE ROLE ---
+			if (preg_match('/^role\-([0-9])+$/', $bulk_action, $matches)) {
+				$role_id = (int)$matches[1];
+				
+				$set_data = array(
+									'user_type_id' => $role_id
+				);
+				
+				main_backend_update($target_user, $set_data);
 			}
 		} else {
 			set_flash_message('No user selected.');
