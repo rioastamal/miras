@@ -108,7 +108,7 @@ function core_user_update($data, $where) {
 	
 	if (!$result) {
 		$user_id = $where['user_id']['value'];
-		$message = sprinf('There\'s some errors while updating user ID %s.', $user_id);
+		$message = sprintf('There\'s some errors while updating user ID %s.', $user_id);
 		throw new Exception($message);
 	}
 }
