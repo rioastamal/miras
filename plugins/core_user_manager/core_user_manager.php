@@ -17,7 +17,7 @@ function core_user_manager_on_upgrade() {}
 
 function core_user_manager_backend_menu() {
 	tpl_add_menu(array(
-		'label' => 'User Manager',
+		'label' => 'Users',
 		'id' => 'core_user_manager',
 		'title' => 'Manage User',
 		'url' => get_site_url() . '/core-user-manager/main-backend',

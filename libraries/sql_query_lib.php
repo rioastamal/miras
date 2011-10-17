@@ -254,7 +254,7 @@ function mr_query_select($data, $from='') {
  * </code>
  *
  * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.0.4
+ * @since Version 1.0.5
  *
  * @param array|string $data	Item yang akan diubah menjadi klausa query
  * @param string $operator		String operator AND atau OR
@@ -311,7 +311,7 @@ function mr_query_where($data, $operator='AND') {
  * </code>
  *
  * @author Rio Astamal <me@rioastamal.net>
- * @since Version 1.0.4
+ * @since Version 1.0.5
  *
  * @param array|string		Item data yang akan dijoin
  * @return string
@@ -334,6 +334,16 @@ function mr_query_join($data) {
 	return $result;
 }
 
+/**
+ * Fungsi untuk membangun klausa query INSERT
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.5
+ *
+ * @param string $table_name - Nama tabel tanpa prefix
+ * @param array $values - Associative array yang berisi index: nama kolom dan value: nilai dari kolom
+ * @return string
+ */
 function mr_query_build_insert($table_name, $values) {
 	$query = '';
 	
@@ -359,6 +369,52 @@ function mr_query_build_insert($table_name, $values) {
 	
 	$table_name = DB_PREFIX . $table_name;
 	$query = "INSERT INTO {$table_name} ({$columns}) VALUES ({$values})";
+	
+	return $query;
+}
+
+/**
+ * Fungsi untuk membangun klausa query UPDATE
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.5
+ *
+ * @param string $table_name - Nama tabel tanpa prefix
+ * @param array $values - Associative array yang berisi index: nama kolom dan value: nilai dari kolom yang akan diupdate
+ * @param array $where - Array untuk klausa where (fungsi mr_query_where untuk detail)
+ * @return string
+ */
+ 
+function mr_query_build_update($table_name, $values, $where) {
+	$query = '';
+	$set = array();
+	
+	if (!is_array($values)) {
+		throw new Exception('Parameter kedua pada mr_query_build_update harus bertipe Array.');
+	}
+	
+	// 1) filter semua input data
+	// 2) cek untuk pemberian quote jika tipe string
+	foreach ($values as $col => $val) {
+		$values[$col] = mr_escape_string($val);
+		
+		if (is_string($val)) {
+			$values[$col] = "'{$val}'";
+		}
+		
+		// tambahkan tanda sama dengan '=' sehingga menjadi sesuatu seperti
+		// foo=123 atau foo='bar'
+		$set[$col] = $col . '=' . $values[$col];
+	}
+	
+	// gambungkan untuk membuat klausa SET
+	$set = implode(', ', $set);
+	
+	// proses where
+	$where = mr_query_where($where);
+	
+	$table_name = DB_PREFIX . $table_name;
+	$query = "UPDATE {$table_name} SET {$set} {$where}";
 	
 	return $query;
 }

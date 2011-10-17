@@ -14,6 +14,8 @@ set_active_menu('core_user_manager');
 set_page_title('User Manager');
 load_model('core_user', 'core_user_manager');
 load_model('user_type');
+load_helper('html');
+load_helper('string');
 
 $action = get_argument_by('action');
 
@@ -43,15 +45,32 @@ function new_user_backend_save($data=NULL) {
 	if (isset($_POST['create-user-button'])) {
 		try {
 			$elements = array(
-				'username|Username' => 'required|trim',
-				'password|Password' => 'required|matches=>password2',
-				'password2|Confirmation Password' => 'required',
-				'firstname|First Name' => 'required|trim',
-				'lastname|Last Name' => 'required',
-				'email|Email' => 'required|trim|valid_email'
+							'username' => array(
+												'label' => 'Username',
+												'rules' => 'required|trim|common_username|callback=>new_user_name_check'
+							),
+							'password' => array(
+												'label' => 'Password',
+												'rules' => 'required|matches=>password2'
+							),
+							'password2' => array(
+												'label' => 'Retype Password',
+												'rules' => 'required'
+							),
+							'firstname' => array(
+												'label' => 'First Name',
+												'rules' => 'required|trim|min_length=>3|max_length=>30'
+							),
+							'lastname' => array(
+												'label' => 'Last Name',
+												'rules' => 'required|trim|min_length=>3|max_length=>50'
+							),
+							'email' => array(
+											'label' => 'Email',
+											'rules' => 'required|trim|valid_email|callback=>new_user_email_check'
+							)
 			);
 			
-			load_helper('html');
 			$errors = mr_form_validation($elements);
 			
 			$data->sess->username = $_POST['username'];
@@ -61,11 +80,34 @@ function new_user_backend_save($data=NULL) {
 			$data->sess->lastname = $_POST['lastname'];
 			$data->sess->email = $_POST['email'];
 			
+			// role
+			$data->sess->user_role = (int)$_POST['user-role'];
+			// status
+			$data->sess->user_status = (int)$_POST['user-status'];
+			
+			$salt = mr_random_string(8);
+			$password = md5($salt . $data->sess->password);
+			$user_data = array(
+				'user_name' => $data->sess->username,
+				'user_first_name' => $data->sess->firstname,
+				'user_last_name' => $data->sess->lastname,
+				'user_pass' => $password,
+				'user_salt' => $salt,
+				'user_email' => $data->sess->email,
+				'user_type_id' => $data->sess->user_role,
+				'user_status' => $data->sess->user_status
+			);
+			
 			if ($errors) {
 				throw new Exception($errors);
 			}
 			
-			set_flash_message('TEST');
+			// validasi berhasil terlewati, saatnya insert ke database
+			core_insert_user($user_data);
+			
+			$message = 'User %s has been successfully added.';
+			
+			set_flash_message( sprintf($message, $data->sess->username) );
 		} catch (Exception $e) {
 			set_flash_message($e->getMessage());
 			set_flash_class('flash-error');
@@ -73,6 +115,22 @@ function new_user_backend_save($data=NULL) {
 	}
 	
 	new_user_backend_index($data);
+}
+
+function new_user_name_check($param) {
+	try {
+		core_username_check($param['data']);
+	} catch (Exception $e) {
+		return $e->getMessage();
+	}
+}
+
+function new_user_email_check($param) {
+	try {
+		core_email_check($param['data']);
+	} catch (Exception $e) {
+		return $e->getMessage();
+	}
 }
 
 function new_user_backend_index($data=NULL) {
