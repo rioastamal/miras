@@ -115,7 +115,7 @@ function load_model($model_name, $plugin_name=NULL) {
 	// jika file tidak ada maka model tidak bisa diload
 	if (!file_exists($path_file)) {
 		// keluar dari sistem
-		exit ("Model '{$model_name}' tidak ada pada path system.");
+		throw new Exception ("Model '{$model_name}' tidak ada pada path system.");
 	}
 	
 	// masukkan $model_name ke daftar model yang sudah diload
@@ -163,7 +163,7 @@ function load_library($lib_name, $plugin_name=NULL) {
 	// jika file tidak ada maka library tidak bisa diload
 	if (!file_exists($path_file)) {
 		// keluar dari sistem
-		exit ("Library '{$lib_name}' tidak ada pada path system.");
+		throw new Exception ("Library '{$lib_name}' tidak ada pada path system.");
 	}
 	
 	// masukkan $lib_name ke daftar library yang sudah diload
