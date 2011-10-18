@@ -21,7 +21,7 @@
  */
 function mr_random_string($length=8) {
 	// kumpulan random string yang akan diambil
-	$string = '=-0987654321!@#$%^&*()_+\][poiuytrewqasdfghjkl;/.,mnbvcxzQWERTYUIOP{}|:LKJHGFDSAZXCVBNM<>?';
+	$string = '=-0987654321!@#%^&*()_+][poiuytrewqasdfghjkl;/.,mnbvcxzQWERTYUIOP{}|:LKJHGFDSAZXCVBNM<>?';
 	// digunakan untuk fungsi mt_rand
 	$str_len = strlen($string) - 1;	// minus 1 karena urutan dimulai dari 0
 	
