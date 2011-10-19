@@ -12,6 +12,8 @@
 			<table>
 				<tr>
 					<th>No</th>
+					<th>ID</th>
+					<th>Username</th>
 					<th>Full Name</th>
 					<th>Email</th>
 					<th>Role</th>
@@ -21,6 +23,8 @@
 				<?php $i = 0; foreach ($data->users as $user) : ?>
 				<tr>
 					<td><?php echo (++$i);?></td>
+					<td><?php echo ($user->user_id);?></td>
+					<td><?php echo ($user->user_name);?></td>
 					<td><?php echo ($user->user_fullname);?></td>
 					<td><?php echo ($user->user_email);?></td>
 					<td><?php echo ($user->user_type_name);?></td>
