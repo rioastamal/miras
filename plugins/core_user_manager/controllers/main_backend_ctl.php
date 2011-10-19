@@ -9,6 +9,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 mr_backend_auth();
+mr_check_privilege('can_view_user_core');
 
 set_active_menu('core_user_manager');
 set_page_title('User Manager');

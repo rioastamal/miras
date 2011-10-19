@@ -30,7 +30,7 @@ function core_user_manager_backend_menu() {
 
 function core_user_manager_role() {
 	return array(
-		'can_add_user_core'				=> 0,
+		'can_create_user_core'				=> 0,
 		'can_edit_user_core'			=> 0,
 		'can_delete_user_core'			=> 0,
 		'can_view_user_core'			=> 0
