@@ -11,7 +11,7 @@
  */
 
 // cek apakah session untuk admin telah ada
-if (mr_session_getdata('miras_cpanel')) {
+if (mr_session_getdata($_MR['cp_session_name'])) {
 		
 	// default backend menu
 	tpl_add_menu(array(
@@ -24,4 +24,13 @@ if (mr_session_getdata('miras_cpanel')) {
 	
 	// jalankan hooks yang berhubungan dengan manipulasi menu
 	run_hooks('add_more_backend_menu');
+	
+	// temporer logout link, kemungkinan dimasa datang tidak digunakan
+	tpl_add_menu(array(
+		'label' => 'Logout',
+		'id' => 'mr_logout',
+		'url' => get_backend_url() . '/main-backend/action/logout',
+		'title' => 'Logout Session',
+		'order' => 1
+	));	
 }

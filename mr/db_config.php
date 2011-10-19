@@ -20,6 +20,8 @@ define('DB_HOST', 'localhost');
 // database prefix
 define('DB_PREFIX', 'mr_');
 
+$_MR['db_trans'] = TRUE;
+
 /**
  * Global variabel untuk menampung resource database
  */

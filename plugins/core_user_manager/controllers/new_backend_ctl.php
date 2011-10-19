@@ -87,6 +87,9 @@ function new_user_backend_save($data=NULL) {
 			
 			$salt = mr_random_string(8);
 			$password = md5($salt . $data->sess->password);
+			
+			site_debug($salt . ' + ' . $data->sess->password . ' => ' . $password);
+			
 			$user_data = array(
 				'user_name' => $data->sess->username,
 				'user_first_name' => $data->sess->firstname,

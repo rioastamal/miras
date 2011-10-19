@@ -3,7 +3,7 @@
 		<div id="content">
 		<?php echo (get_flash_message()); ?>	
 		<h1>Control Panel Login</h1>
-		<form class="miras" action="<?php echo (get_backend_url());?>/main-backend" method="post">
+		<form class="miras" action="<?php echo ($data->action_url);?>" method="post">
 			<label class="label">Username</label>
 			<input class="text" type="text" name="username" value="<?php echo (@$data->sess->username);?>" id="username" size="16" />
 			<label class="label">Password</label>

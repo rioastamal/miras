@@ -10,6 +10,38 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
+function mr_begin_trans() {
+	global $_MR;
+	
+	if ($_MR['db_trans']) {
+		$_MR['db']->set_autocommit(FALSE);
+	}
+}
+
+function mr_end_trans() {
+	global $_MR;
+	
+	if ($_MR['db_trans']) {
+		$_MR['db']->set_autocommit(TRUE);
+	}
+}
+
+function mr_query_commit() {
+	global $_MR;
+	
+	if ($_MR['db_trans']) {
+		$_MR['db']->commit();
+	}
+}
+
+function mr_query_rollback() {
+	global $_MR;
+	
+	if ($_MR['db_trans']) {
+		$_MR['db']->rollback();
+	}
+}
+
 /**
  * Fungsi untuk melakukan wrapper query, setiap rutin kode yang melakukan query
  * database SEHARUSNYA menggunakan fungsi ini agar query yang dilakukan dapat
