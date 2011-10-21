@@ -471,3 +471,26 @@ function mr_clean_up() {
 	// show debugging info
 	show_debug();
 }
+
+/**
+ * Fungsi untuk melakukan pengecekan session control panel
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.5
+ *
+ * @param string $privilege_name - Nama privilege yang akan dicheck
+ * @return void
+ */
+function mr_check_privilege($privilege_name, $message='Anda tidak memiliki hak untuk mengakses halaman ini.') {
+	global $_MR;
+	
+	// cek dari user yang aktif pada session sekarang
+	if (isset($_MR['user']->role->$privilege_name)) {
+		$privilege = (int)$_MR['user']->role->$privilege_name;
+		if ($privilege == 0) {
+			throw new Exception ($message);
+		}
+	} else {
+		throw new Exception ($message);
+	}
+}
