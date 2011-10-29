@@ -36,3 +36,29 @@ function get_user_type($order_by='') {
 	
 	return $result;
 }
+
+/**
+ * Fungsi untuk mendapatkan role default dari sebuah tipe user
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.5
+ *
+ * @param array $where - Query where
+ * @return array
+ */
+function get_user_type_acl($where) {
+	$db_user_type = DB_PREFIX . 'user_type ut';
+	$query = mr_query_select(array('ut.acl_key', 'ut.acl_value'));
+	$query .= mr_query_where($where);
+	
+	try {
+		$result = mr_query($query);
+		if (!$result) {
+			throw new Exception ('Tidak ditemukan record untuk role yang dicari');
+		}
+		
+		return $result;
+	} catch (Exception $e) {
+		throw new Exception($e->getMessage());
+	}
+}
