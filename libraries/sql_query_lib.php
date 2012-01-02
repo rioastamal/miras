@@ -10,6 +10,16 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
  */
 
+/**
+ * Fungsi untuk memulai session database transaksi. Ini hanya berlaku untuk
+ * storage engine yang mendukung fitur TRANSACTION seperti InnoDB, ExtraDB,
+ * atau lainnya.
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.5
+ *
+ * @return void
+ */
 function mr_begin_trans() {
 	global $_MR;
 	
@@ -18,6 +28,16 @@ function mr_begin_trans() {
 	}
 }
 
+/**
+ * Fungsi untuk mengakhiri session database transaksi. Ini hanya berlaku untuk
+ * storage engine yang mendukung fitur TRANSACTION seperti InnoDB, ExtraDB,
+ * atau lainnya.
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.5
+ *
+ * @return void
+ */
 function mr_end_trans() {
 	global $_MR;
 	
@@ -26,6 +46,15 @@ function mr_end_trans() {
 	}
 }
 
+/**
+ * Fungsi untuk melakukan query COMMIT pada database, sehingga perubahan
+ * yang dilakukan tersimpan.
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.5
+ *
+ * @return void
+ */
 function mr_query_commit() {
 	global $_MR;
 	
@@ -34,6 +63,15 @@ function mr_query_commit() {
 	}
 }
 
+/**
+ * Fungsi untuk melakukan query ROLLBACK pada database, sehingga perubahan yang
+ * dilakukan diabaikan oleh mysql server.
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0.5
+ *
+ * @return void
+ */
 function mr_query_rollback() {
 	global $_MR;
 	
@@ -49,12 +87,14 @@ function mr_query_rollback() {
  *
  * @author Rio Astamal <me@rioastamal.net>
  * @since Version 1.0
+ * @changelog:
+ * 		2011-29-10	=> Default nilai parameter kedua diubah dari 60 menjadi 0 (no-cache)
  *
  * @param string $query SQL Query yang akan dijalankan
  * @param int $cache_time Lama waktu cache akan disimpan (masukkan 0 jika tidak ingin melakukan cache)
  * @return mixed
  */
-function mr_query($query, $cache_time=60) {
+function mr_query($query, $cache_time=0) {
 	global $_MR;
 	
 	$query = trim($query);
