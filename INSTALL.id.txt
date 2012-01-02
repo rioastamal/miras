@@ -47,7 +47,7 @@ Langkah selanjutnya import file SQL miras, dalam contoh file diextract
 ke /var/www jadi lokasi file SQLnya adalah:
 /var/www/miras/install/data/miras.manual.sql
 
-mysql> \. /var/www/miras/install/data/miras.manual.sql
+mysql> \. /var/www/miras/miras.sql
 
 
 4. BUAT USER
