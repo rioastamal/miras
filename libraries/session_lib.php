@@ -67,10 +67,21 @@ function mr_session_construct() {
 				// session telah expired, set action ke DELETE
 				$_MR['sessions']['action'] = 'delete';
 			} else {
-				// session belum expired jadi set action ke UPDATE
-				$_MR['sessions']['action'] = 'update';
+				// cek apakah last_activity dari user masih berada dalam toleransi
+				// session_time_to_update atau tidak
+				$diff = $now - (int)$row->session_last_activity;
+				// jika selisih waktu aktifitas melebihi time_to_update maka
+				// last_activity perlu diupdate
+				if ($diff > $_MR['session_time_to_update']) {
+					// update session
+					$_MR['sessions']['action'] = 'update';
+				}
 			}
-			mr_session_setdata($session_data);
+			
+			// jangan melakukan force_update karena akan mempengaruhi cara kerja
+			// session_time_to_update, biarkan logika diatas yang menentukan
+			// apakah akan diupdate atau tidak.
+			mr_session_setdata($session_data, NULL, FALSE);
 		} else {
 			// generate session id baru karena yang lama telah dihapus dari 
 			// database (akibat dari cleaning up session yang expire)
@@ -113,12 +124,14 @@ function mr_session_unset($data_name) {
  *
  * @author Rio Astamal <me@rioastamal.net>
  * @since Version 1.0
+ * @changelog: 2012-02-01 => Menambahkan parameter ketiga yaitu $force_update
  *
  * @param string|array $data_name Nama session key atau jika array maka session data (array dalam bentuk associative)
  * @param mixed $data_value Session data yang akan dimasukkan
+ * @param boolean $force_update apakah perlu dilakukan query update saat akhir script atau tidak.
  * @return void 
  */
-function mr_session_setdata($data_name, $data_value=NULL) {
+function mr_session_setdata($data_name, $data_value=NULL, $force_update=TRUE) {
 	global $_MR;
 	
 	// jika $data_name merupakan array maka langsung masukkan 
@@ -129,6 +142,13 @@ function mr_session_setdata($data_name, $data_value=NULL) {
 	} else {
 		// masukkan ke associative array 
 		$_MR['sessions']['data'][$data_name] = $data_value;
+	}
+	
+	// force untuk melakukan query update pada akhir script jika diperlukan
+	if ($force_update) {
+		if ($_MR['sessions']['action'] !== 'insert') {
+			$_MR['sessions']['action'] = 'update';
+		}
 	}
 }
 

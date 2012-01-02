@@ -29,6 +29,9 @@ $_MR['session_expires'] = 1800;	// default 30 menit
 // nama cookie untuk session
 $_MR['session_name'] = 'miras_session';
 
+// lama jeda waktu session activity untuk diupdate
+$_MR['session_time_to_update'] = 180;	// default 3 menit
+
 // apakah user agent dan IP address dicocokkan
 $_MR['session_strict_check'] = TRUE;
 
