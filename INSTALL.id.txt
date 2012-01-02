@@ -1,19 +1,18 @@
-INSTALASI MIRAS
----------------
+INSTALASI MIRAS SECARA MANUAL
+-----------------------------
 
 Daftar Isi
 ----------
   1. Kebutuhan Sistem
-  2. Buat Database
-  3. Extract Paket Distribusi
-  4. Jalankan Installer
-  5. Selesai
-  6. Contoh
-     a. Asumsi
-     b. Langkah-langkah
-     c. Test
-  7. Catatan
-  8. Troubleshooting
+  2. Extract Distribusi
+  3. Buat Database
+  4. Buat User
+  5. Edit File Konfigurasi Database
+  6. Edit File Konfigurasi Utama
+  7. Ubah Permission Direktori
+  8. Selesai
+  9. Troubleshooting
+  
   
 1. KEBUTUHAN SISTEM
 -------------------
@@ -21,131 +20,89 @@ Daftar Isi
  * PHP versi 5.2.0 dengan MySQLi extension
  * MySQL 4.1+
  
-
-2. KONFIGURASI DATABASE
------------------------
-Sebelum memulai installer anda harus menyediakan sebuah database untuk 
-digunakan oleh Miras. Anda dapat membutnya lewat MySQL command line atau 
-lewat tools seperti phpMyAdmin.
-
-
-3. EXTRACT DISTRIBUSI
+ 
+2. EXTRACT DISTRIBUSI
 ---------------------
-Paket distribusi Miras ada dalam bentauk tarball .tar.gz atau zipball 
-.zip. Extract Miras-x.y.z-b123.tar.gz ke direktori yang dapat diakses 
-web server anda.
+Catatan: Silahkan sesuaikan jika anda menggunakan sistem operasi lain.
+
+Dalam contoh file akan diextract ke /var/www (pastikan user yang 
+melakukan perintah dapat menulis direktori tersebut, jadi root bila
+perlu)
+
+$ tar -zxvf /lokasi/file/miras-vX.Y.Z-dev.tar.gz -C /var/www/
+(dimana X.Y.Z adalah versi dari Miras)
 
 
-4. JALANKAN INSTALLER
----------------------
-Arahkan browser anda ke alamat htt://hostname/miras/install. 
-Ikuti step-by-step instalasinya sampai selesai.
+3. BUAT DATABASE
+----------------
+Catatan: Anda dapat menggunakan PHPMyadmin untuk langkah-langkah ini.
+
+Login sebagai user root pada mysql server untuk membuat database baru,
+contoh dengan nama 'miras'.
+
+mysql> CREATE DATABASE miras;
+mysql> USE miras;
+
+Langkah selanjutnya import file SQL miras, dalam contoh file diextract
+ke /var/www jadi lokasi file SQLnya adalah:
+/var/www/miras/install/data/miras.manual.sql
+
+mysql> \. /var/www/miras/install/data/miras.manual.sql
 
 
-5. SELESAI
-----------
-Hapus direktori install karena tidak diperlukan dan untuk alasan 
-keamanan. Selanjutnya coba test dengan mengunjungi 
-http://hostname/miras/. Jika semuanya berjalan baik, maka anda akan 
-melihat halaman selamat datang dari Miras.
+4. BUAT USER
+------------
+Contoh berikut menggunakan 
+username: miras_admin 
+password: lima-persen
+
+mysql> GRANT ALL PRIVILEGES ON miras.* TO 'miras_admin'@'localhost'
+     > IDENTIFIED BY 'lima-persen';
+mysql> FLUSH PRIVILEGES;
+mysql> quit
 
 
-6. CONTOH
----------
-Berikut ini adalah contoh langkah-langkah instalasi dengan asumsi-asumsi 
-yang akan disebutkan.
+5. EDIT FILE KONFIGURASI DATABASE
+---------------------------------
+File konfigurasi database terletak pada file miras/mr/db_config.php,
+edit file tersebut sesuai dengan langkah no 4. Contoh
+
+<?php if (!defined('BASE_PATH')) { exit('Access Forbidden'); }
+/**
+ * File ini berisi configurasi dasar untuk database
+ *
+ * @package Miras
+ * @subpackage Mr
+ * @copyright 2011 CV. Astasoft Indonesia <http://www.astasoft.co.id/>
+ * @copyright 2011 Rio Astamal <me@rioastamal.net>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GPLv2
+ */
+
+// database name
+define('DB_NAME', 'miras');
+// database user
+define('DB_USER', 'miras_admin');
+// database pass
+define('DB_PASS', 'lima-persen');
+// database host
+define('DB_HOST', 'localhost');
+// database prefix
+define('DB_PREFIX', 'mr_');
+
+/**
+ * Global variabel untuk menampung resource database
+ */
+
+// menyimpan koneksi database
+$_MR['db'] = NULL;
+
+// ----- akhir file ---
+
+Simpan kembali file tersebut
 
 
-a. ASUMSI
----------
- * Sistem operasi yang dignakan adalah Linux
- * Lokasi document root dari web server adalah /var/www
- * Hostname yang digunakan adalah localhost
- * Direktori /var/www dapat ditulis oleh user yang menjalankan perintah
- * Paket distribusi miras-v1.0.1-b280.tar.gz lokasinya ada di /tmp
- * Paket akan diextract di /var/www
- * Database yang akan dibuat bernama 'miras' dengan user dan password
-   berturut-turut adalah 'miras_admin' dan 'iamnotdrunk'
- * Database dibuat menggunakan MySQL command line interface
- 
- Silahkan sesuaikan sendiri dengan kondisi sistem anda.
- 
-b. LANGKAH-LANGKAH
-------------------
- 1. Masuk ke direktori /var/www
-    $ cd /var/www
- 
- 2. Extract paket
-    $ tar -zxvf /tmp/miras-v1.0.1-b123.tar.gz -C ./
-    
- 3. Chmod 777 file mr/db_config.php agar nantinya dapat ditulis oleh 
-    Installer.
-    $ chmod 0777 miras/mr/db_config.php
-    
- 4. Lakukan hal yang sama untuk direktori cache/query dan cache/content
-    $ chmod 0777 miras/cache/query
-    $ chmod 0777 miras/cache/content
-    
- 5. Buat Database baru (dalam contoh digunakan root untuk membuat 
-    database)
-    $ mysql -u root -p
-    mysql> CREATE DATABASE miras;
-    
- 6. Buat user untuk database tersebut
-    mysql> GRANT ALL PRIVILEGES ON miras.* TO 'miras_admin'@'localhost'
-         > IDENTIFIED BY 'iamnotdrunk';
-    mysql> FLUSH PRIVILEGES;
-    mysql> quit
- 
- 7. Buka browser anda dan arahkan ke http://localhost/miras/install
- 
- 8. Periksa semua requirements, jika OK maka click STEP 2
- 
- 9. Selanjutnya adalah konfigurasi database masukkan datatanya sebagai 
-    berikut
-    
-    Database Host: localhost
-    Database Name: miras
-    Database User: miras_admin
-    Database Password: iamnotdrunk
-    Table Prefix: mr_
-    
-    lalu klik STEP 3
-
-10. Step berikunya yaitu STEP 3 adalah mengisi user account untuk super 
-    admin, isikan sebagai berikut:
-    
-    Username: admin
-    First Name: Super
-    Last Name: Admin
-    Password: admin123
-    Repeat: admin123
-    Email: admin@localhost.org
-    
-    klik STEP 4
-
-11. Pada step ini ditunjukkan proses query dan penulisan file konfigurasi. Jika
-    semuanya benar akan muncul tombol 'Finish'. Klik tombol tersebut untuk
-    menyelesaikan instalasi.
-
-12. Lakukan cleaning up
-    $ rm -rf miras/install
-    $ rm -rf miras/views/default/install
-
-    
-c. TEST
--------
- 1. Kunjungi http://localhost/miras (sesuaikan dengan alamat base_url)
- 2. Klik menu Tugu Pahlawan
- 3. Klik 'Dokumen Rahasia' (Akan muncul pesan error)
- 4. Masukkan username admin dan password admin123
- 5. Klik kembali 'Dokumen Rahasia'
- 6. Jika anda berhasil melihat halaman tersebut maka proses autentikasi yang 
-    melibatkan session berhasil.
-    
-
-7. CATATAN
-----------
+7. EDIT FILE KONFIGURASI UTAMA
+------------------------------
 Selanjutnya yang perlu diedit adalah file miras/mr/site_config.php. 
 Konfigurasi minimal yang perlu diubah adalah base_url. Sesuaikan isi
 dari base_url dengan URL dimana anda menginstall miras.
@@ -165,12 +122,35 @@ hanya diakses lewat IP 192.168.1.1 maka konfigurasinya
 
 $_MR['base_url'] = 'http://192.168.1.1/miras/';
 
-JANGAN LUPA untuk selalu memberi tanda '/' SLASH diakhir. Jika proses 
-instalasi menggunakan installer gagal, coba gunakan cara  instalasi 
-manual, silahkan baca file MANUAL-INSTALL.txt.
+JANGAN LUPA untuk selalu memberi tanda '/' SLASH diakhir.
 
 
-8. TROUBLESHOOTING
+7. UBAH PERMISSION DIREKTORI
+----------------------------
+Pastikan user punya privileges untuk melakukan perintah berikut
+(jalankan sebagai root bila perlu)
+ 
+$ chmod 0777 /var/www/miras/cache/query
+$ chmod 0777 /var/www/miras/cache/content
+
+
+8. SELESAI
+----------
+Sekarang coba akses miras lewat browser sesuai dengan alamat 
+dari konfigurasi base_url anda, contoh:
+
+http://localhost/miras/
+
+Lakukan beberapa test berikut:
+ 1. Klik menu Tugu Pahlawan
+ 2. Klik 'Dokumen Rahasia' (Akan muncul pesan error)
+ 3. Masukkan username admin dan password admin123
+ 4. Klik kembali 'Dokumen Rahasia'
+ 5. Jika anda berhasil melihat halaman tersebut maka proses autentikasi yang 
+    melibatkan session berhasil.
+
+
+9. TROUBLESHOOTING
 ------------------
 Jika masih terdapat error pastikan langkah-langkah diatas sudah benar,
 namun jika sudah benar tapi tetep tidak bisa. Mungkin anda menemukan 
@@ -180,4 +160,5 @@ http://groups.google.com/group/miras-id
 
 atau posting ke Issue Tracker
 
-http://code.google.com/p/miras-framework/issues/list
+https://github.com/astasoft/miras/issues
+
