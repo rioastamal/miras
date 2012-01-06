@@ -10,7 +10,14 @@
  */
  
 // Alamat Base URL dari aplikasi, harus diakhiri dengan '/' SLASH
-$_MR['base_url'] = 'http://localhost/miras/';
+// Misal: http://example.com/ atau http://example.com/path/to/miras/
+// ---
+// Apabila diisi dengan 'auto' maka Miras akan mencoba untuk melakukan
+// penyusunan secara otomatis base_url
+// ---
+// Tips: Sebaiknya isi nilainya untuk menghemat beberapa bytes memory karena
+// terbuang untuk pengecekan base_url
+$_MR['base_url'] = 'auto';
 
 // tema yang digunakan
 $_MR['theme'] = 'default';

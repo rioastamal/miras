@@ -26,6 +26,38 @@ $_MR['time_start'] = microtime(TRUE);
 
 // site config
 include_once(BASE_PATH . '/mr/' . 'site_config.php');
+
+// cek configurasi base_url apabila kosong atau auto, maka coba isi
+// secara otomatis.
+if ($_MR['base_url'] === 'auto' || $_MR['base_url'] === '') {
+	// kita belum bisa menggunakan helper apapun untuk membantu karena masih
+	// dalam tahap bootstraping paling awal
+	// Step-by-step
+	// 1. Identifikasi Protokol
+	// 2. Identifikasi Hostname
+	// 3. Identifikasi Path
+	
+	// jika port 80 maka http
+	$protocol = 'http://';
+	
+	// jika nilai $_SERVER['HTTPS'] ada dan tidak berisi 'off' (untuk IIS server)
+	// maka protokol yang digunakan adalah https://
+	if (isset($_SERVER['HTTPS'])) {
+		if ($_SERVER['HTTPS'] !== 'off') {
+			$protocol = 'https://';
+		}
+	}
+	
+	// set nama host
+	$host = $_SERVER['HTTP_HOST'];
+	
+	// dapatkan path, kita ambil nilai dari variabel SCRIPT_NAME
+	// lalu hanya ambil direktorinya + '/'
+	$path = pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME) . '/';
+	
+	$_MR['base_url'] = $protocol . $host . $path;
+}
+
 include_once(BASE_PATH . '/mr/' . 'db_config.php');
 include_once(BASE_PATH . '/mr/' . 'functions.php');
 
