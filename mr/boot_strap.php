@@ -53,7 +53,13 @@ if ($_MR['base_url'] === 'auto' || $_MR['base_url'] === '') {
 	
 	// dapatkan path, kita ambil nilai dari variabel SCRIPT_NAME
 	// lalu hanya ambil direktorinya + '/'
-	$path = pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME) . '/';
+	$path = pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME);
+	
+	// jika path kosong (FALSE) maka dapat diartikan bahwa bahwa
+	// document tidak memiliki direktori
+	if (strlen($path) > 0) {
+		$path = $path . '/';
+	}
 	
 	$_MR['base_url'] = $protocol . $host . $path;
 }
