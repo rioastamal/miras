@@ -45,12 +45,6 @@ $_MR['session_strict_check'] = TRUE;
 // path untuk cookie 
 $_MR['cookie_path'] = '/';
 
-// Super-admin User ID
-$_MR['super_admin_id'] = 1;
-
-// Guest User ID
-$_MR['guest_user_id'] = 2;
-
 // nama direktori untuk control panel Miras (ada didalam direktori controllers)
 // default adalah 'control_panel'
 $_MR['backend_dir'] = 'control_panel';
@@ -63,6 +57,12 @@ $_MR['cp_session_name'] = 'miras_cpanel';
 
 /* TIDAK PERLU MENGGANTI KONFIGURASI DIBAWAH INI KECUALI ANDA TAHU APA YANG
    ANDA LAKUKAN */
+   
+// Super-admin User ID
+$_MR['super_admin_id'] = 1;
+
+// Guest User ID
+$_MR['guest_user_id'] = 2;
 
 // default nama title dari halaman, seharusnya nanti akan di-overwrite 
 // oleh controller

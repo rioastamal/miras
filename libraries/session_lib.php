@@ -52,12 +52,12 @@ function mr_session_construct() {
 			if ($_MR['session_strict_check']) {
 				// cek kecocokan IP dan User Agent string
 				if ($row->session_user_agent !== $_SERVER['HTTP_USER_AGENT']) {
-					mr_session_destroy();
+					mr_session_destroy(TRUE);
 					throw new Exception ("Session Error: User Agent tidak sama");
 				}
 				
 				if ($row->session_ip_addr != $_SERVER['REMOTE_ADDR']) {
-					mr_session_destroy();
+					mr_session_destroy(TRUE);
 					throw new Exception ("Session Error: IP Address tidak sama");
 				}
 			}
@@ -212,14 +212,28 @@ function mr_session_id() {
  *
  * @author Rio Astamal <me@rioastamal.net>
  * @since Version 1.0
+ * @changelog:
+ *   7 January 2012 (v1.0.7) => Menambahkan parameter $full_destroy
  *
+ * @param boolean $full_destroy - Apakah cookie juga akan dihapus.
  * @return void
  */
-function mr_session_destroy() {
+function mr_session_destroy($full_destroy=FALSE) {
 	global $_MR;
 	
-	$_MR['sessions']['data'] = array();
-	_mr_session_update();
+	// paksa untuk menghapus cookie, sehingga cookie lama tidak digunakan.
+	if ($full_destroy === TRUE) {
+		$sess_name = $_MR['session_name'];
+		site_debug($sess_name, 'DESTROY COOKIE');
+		setcookie($sess_name, 'foo', time() - 3600, $_MR['cookie_path']);
+		
+		// langsung hapus session yang ada pada database
+		mr_session_delete_id($_COOKIE[$sess_name]);
+	} else {
+		// cukup update session datanya dengan data kosong
+		$_MR['sessions']['data'] = array();
+		_mr_session_update();
+	}
 }
 
 /**
@@ -293,7 +307,7 @@ function _mr_session_clean() {
 	$jackpot = mt_rand(0, 100);	// random number max 100
 	
 	site_debug($jackpot, 'JACKPOT');
-	// jika $jakcpot salah satu diantara $lucky_number lakkan pembersihan
+	// jika $jakcpot salah satu diantara $lucky_number lakukan pembersihan
 	// session yang expired
 	if (in_array($jackpot, $lucky_numbers)) {
 		$expire = $_MR['session_expires'];

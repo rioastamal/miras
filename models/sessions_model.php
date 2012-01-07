@@ -97,7 +97,28 @@ function mr_session_update($sid, $sval, $sactivity) {
 function mr_session_delete($expire) {
 	$db_name = DB_PREFIX . 'sessions';
 	$query = "DELETE FROM {$db_name} WHERE (session_last_activity + %d) < UNIX_TIMESTAMP()";
+	$expire = mr_escape_string($expire);
 	$query = sprintf($query, $expire);
+	
+	mr_query_delete($query);
+}
+
+
+/**
+ * Fungsi untuk melakukan SQL Delete pada tabel sessions berdasarkan ID dari 
+ * session.
+ *
+ * @author Rio Astamal <me@rioastamal.net>
+ * @since Version 1.0
+ *
+ * @param string $sess_id Nama session id yang akan dihapus
+ * @return void
+ * @throw Exception
+ */
+function mr_session_delete_id($sess_id) {
+	$db_name = DB_PREFIX . 'sessions';
+	$query = "DELETE FROM {$db_name} WHERE session_id='%s'";
+	$query = sprintf($query, $sess_id);
 	
 	mr_query_delete($query);
 }
