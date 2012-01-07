@@ -52,12 +52,14 @@ if ($_MR['base_url'] === 'auto' || $_MR['base_url'] === '') {
 	$host = $_SERVER['HTTP_HOST'];
 	
 	// dapatkan path, kita ambil nilai dari variabel SCRIPT_NAME
-	// lalu hanya ambil direktorinya + '/'
+	// lalu hanya ambil direktorinya
 	$path = pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME);
 	
-	// jika path kosong (FALSE) maka dapat diartikan bahwa bahwa
-	// document tidak memiliki direktori
-	if (strlen($path) > 0) {
+	// $path akan otomatis hanya berisi '/' jika aplikasi ada di document_root
+	// web server, jadi tidak perlu diberi trailing '/'
+	if ($path !== '/') {
+		// aplikasi bukan ada di document_root jadi pasti ada path tambahan
+		// jadi tambahkan trailing slash
 		$path = $path . '/';
 	}
 	
