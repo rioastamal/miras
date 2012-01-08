@@ -15,6 +15,7 @@ include_once(BASE_PATH . '/mr/' . 'version_info.php');
 // include compatibility routine
 include_once(BASE_PATH . '/mr/' . 'compat.php');
 
+
 // global variabel
 $_MR = array();
 
@@ -73,15 +74,6 @@ include_once(BASE_PATH . '/mr/' . 'functions.php');
 // proses awal
 include_once(BASE_PATH . '/libraries/' . 'plugin_lib.php');
 $_MR['loaded_libraries'][] = 'plugin';
-
-// check keberadaan direktori install, jika masih ada langsung lempar 
-// ke exception
-if (file_exists(BASE_PATH . '/install')) {
-	// jika debugging mode maka tidak perlu di throw
-	if ($_MR['debug_mode'] === FALSE) {
-		throw new Exception ('Mohon untuk menghapus direktori <strong>install</strong> terlebih dahulu.');
-	}
-}
 
 site_debug(FRAMEWORK_FULL_NAME, 'FRAMEWORK NAME');
 
