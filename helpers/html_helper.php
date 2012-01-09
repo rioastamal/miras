@@ -175,19 +175,19 @@ function _apply_rules($id, $action_name, $rules) {
 		break;
 		
 		case 'alpha_space':
-			if (!preg_match('/^([a-zA-Z0-9\ )+$/', $_POST[$id])) {
+			if (!preg_match('/^([a-zA-Z0-9\ ])+$/', $_POST[$id])) {
 				return sprintf('The field &quot;%s&quot; must contain only alpha and space characters only.', $label);
 			}
 		break;
 		
 		case 'alpha_num_space':
-			if (!preg_match('/^([a-zA-Z0-9\ )+$/', $_POST[$id])) {
+			if (!preg_match('/^([a-zA-Z0-9\ ])+$/', $_POST[$id])) {
 				return sprintf('The field &quot;%s&quot; must contain only alpha numeric, and space characters only.', $label);
 			}
 		break;
 		
 		case 'alpha_num_uds':
-			if (!preg_match('/^([a-zA-Z0-9\_\-\ )+$/', $_POST[$id])) {
+			if (!preg_match('/^([a-zA-Z0-9\_\-\ ])+$/', $_POST[$id])) {
 				return sprintf('The field &quot;%s&quot; must contain only alpha numeric, underspace, dash and space characters only.', $label);
 			}
 		break;
