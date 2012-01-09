@@ -117,6 +117,8 @@ function mr_session_unset($data_name) {
 	if (array_key_exists($data_name, $_MR['sessions']['data'])) {
 		unset($_MR['sessions']['data'][$data_name]);
 	}
+	
+	$_MR['sessions']['action'] = 'update';
 }
 
 /**
